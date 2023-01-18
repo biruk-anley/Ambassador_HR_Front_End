@@ -1,5 +1,6 @@
 import React from "react";
 import HomeIcon from '@material-ui/icons/Home'
+
 import {
     Box,
     Container,
@@ -8,7 +9,7 @@ import {
     FooterLink,
     Heading,
 } from "./FooterStyle";
-
+const ambassadorIcon = process.env.PUBLIC_URL + "/img/ambassadoricon.png";
 const UpperFooter = () => {
     return (
         <Box>
@@ -17,8 +18,19 @@ const UpperFooter = () => {
                 textAlign: "center",
                 marginTop: "-50px" }}>
 
-                <HomeIcon style={{color:'#B0C6BB',width:'80px',height:'70px',marginBottom:'-20px'}}> </HomeIcon>
-                <span style={{color: '#ee662d'}}>A</span>genagn
+                <img
+                    src={ambassadorIcon}
+                    alt=""
+                    width="10%"
+                    
+                    style={{
+                    borderRadius: "8px",
+                    marginTop: "20px",
+                    marginLeft: "20px",
+                    marginBottom: "-20px",
+            }}
+          />
+                <span style={{color: '#ee662d'}}>A</span>mbassador
             </h1>
             <Container>
                 <Row>
@@ -30,10 +42,10 @@ const UpperFooter = () => {
                     </Column>
                     <Column>
                         <Heading>Services</Heading>
-                        <FooterLink href="#">Contact with Owner</FooterLink>
-                        <FooterLink href="#">Accept User Calls</FooterLink>
-                        <FooterLink href="#">Contact with Broker</FooterLink>
-                        <FooterLink href="#">Find less Press Houses</FooterLink>
+                        <FooterLink href="#">Vote</FooterLink>
+                        <FooterLink href="#">Payment</FooterLink>
+                        <FooterLink href="#">Evaluation</FooterLink>
+                        <FooterLink href="#">Notice Board</FooterLink>
                     </Column>
                     <Column>
                         <Heading>Contact Us</Heading>
