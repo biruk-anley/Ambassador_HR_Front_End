@@ -9,7 +9,6 @@ import Detail from "./pages/Details/";
 /*import LoginRegister from './pages/Authentication/LoginRegister'*/
 //comment
 import LoginRegister from "./pages/Authentication/Login";
-import Footer from "./components/Footer";
 import Signup from "./pages/Authentication/Signup";
 import RegisterHouse from "./pages/Addhouse/New";
 import Dashboard from "./pages/dashboard";
@@ -193,7 +192,7 @@ function App() {
         </Container>
       </BrowserRouter>
       <UpperFooter></UpperFooter>
-      <Footer />
+     
     </div>
   );
 }
