@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: "nowrap",
         background: "white",
         borderRadius: "15px",
-        height: "650px",
+        height: "550px",
         padding: 10,
         "& a": {
           color: "#3A6351",
@@ -272,7 +272,7 @@ function Login() {
           <img
             src={SignupImage}
             alt=""
-            width="75%"
+            width="60%"
             
             style={{
               borderRadius: "8px",
@@ -284,7 +284,7 @@ function Login() {
         </div>
 
         <div
-          style={{ display: "flex", flexDirection: "column", heigh: "auto",  marginTop:'50px',marginLeft:'-60px' }}
+          style={{ display: "flex", flexDirection: "column", heigh: "auto",  marginTop:'20px',marginLeft:'-110px' }}
         >
           
           <form className={classes.form} noValidate >
@@ -351,37 +351,11 @@ function Login() {
             >
               Log in
             </Button>
-            <Typography
-            align="center"
+        
+           
+          
+           
             
-            variant="body2"
-            style={{ padding: 10 }}
-            className={classes.texts}
-          >
-           Or
-          </Typography>
-            <Button
-              id="login"
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              style={{backgroundColor:'#3F51B5'}}
-              onClick={handleGoogleSignIn}
-            >
-              Sign in with Gmail
-            </Button>
-            <div container justify="center">
-              <div >
-                <Box  style={{ fontWeight: "800",marginLeft:'60px' }}>
-                  Don't have an account?
-                  <Link href="/signup" variant="body2" id="gotoSignup">
-                    {" Sign Up"}
-                  </Link>
-                </Box>
-              </div>
-            </div>
           </form>
         </div>
       </div>
