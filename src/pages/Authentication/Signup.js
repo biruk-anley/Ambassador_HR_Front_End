@@ -14,16 +14,17 @@ import flags from "react-phone-number-input/flags";
 import Typography from "@material-ui/core/Typography";
 import backEndApi from "../../services/api";
 const SignupImage = process.env.PUBLIC_URL + "/img/new.png";
+const backgroundimages = process.env.PUBLIC_URL + "/img/background.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "center",
-    background: "#EEEEEE",
-
-    width: "100%",
-    paddingLeft: "60px",
-    paddingRight: "60px",
+    backgroundImage: `url(${backgroundimages})`,
+    height:'150vh',
+    width: "90%",
+    paddingLeft: "90px",
+    paddingRight: "90px",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: 5,
       paddingRight: 5,
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     background: "white",
     borderRadius: "17px",
     height: "600px",
-    padding: 10,
+    padding: 1,
     "& a": {
       color: "#3A6351",
     },
@@ -367,264 +368,25 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const SignUpPhone = () => {
-  const [error, setError] = useState("");
-  const [flag, setFlag] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [result, setResult] = useState("");
-  const { setUpRecaptha } = useUserAuth();
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const { logIn, googleSignIn } = useUserAuth();
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+const Noticeborad = () => {
+ 
 
   const historys = useHistory();
-  const getOtp = async (e) => {
-    e.preventDefault();
-    console.log(phoneNumber);
-
-    setError("");
-    validateInput();
-    if (phoneNumber === "" || phoneNumber === undefined)
-      return setError("Please enter a valid phone number!");
-    try {
-      validateInput();
-      const response = await setUpRecaptha(phoneNumber);
-      setResult(response);
-      setFlag(true);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  // backend
-  const signUpApiRequest = async (signUpDetails) => {
-    const { data } = await backEndApi.post("/signUpUser", signUpDetails);
-    if (data === "userExist") {
-      setErrorMessage("The phonenumber that you have provided is already in use.");
-    } else {
-      setErrorMessage("");
-      setSuccessMessage("You have successfully  Signed Up.");
-    }
-  };
-
-  const validateInput = () => {
-    const signUpUser = {
-      phoneNumber: phoneNumber,
-      password: password,
-    };
-    if (phoneNumber && password) {
-      if (password.length < 6) {
-        setErrorMessage("Password should be more than 6 characters");
-      }
-      {
-        if (errorMessage === "") {
-          signUpApiRequest(signUpUser);
-          /*/!*axios.post('http://localhost:5000/signUpUser', signupUser)*!/
-                axios.post('https://damp-fjord-23317.herokuapp.com/signUpUser', signUpUser)
-                    .then(res => {
-                        }
-                    )*/
-        }
-      }
-    } else {
-      setErrorMessage("Please fill all the inputs.");
-    }
-  };
-  const onPasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
   const classes = useStyles();
-  const verifyOtp = async (e) => {
-    e.preventDefault();
-    setError("");
-    if (otp === "" || otp === null) return;
-    try {
-      await result.confirm(otp);
-      console.log("yes");
-
-      historys.push("/login");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-  const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      const googleauthe=await googleSignIn();
-      console.log(googleauthe)
-      console.log("helow it works");
-      historys.push("/dashboard");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   return (
     <div className={classes.container}>
-      <div className={classes.root}>
-        <div className={classes.imgHolder}>
-          <img
-            src={SignupImage}
-            alt=""
-            width="93%"
-            height="420px"
-            style={{
-              borderRadius: "20px",
-              marginTop: "20px",
-              marginLeft: "20px",
-              marginBottom: "-20px",
-            }}
-          />
-        </div>
-        <div className={classes.authentication}>
-          <Paper
-            elevation={0}
-            sx={{
-              borderRadius: "15px",
-              backgroundColor: "#eeeeee70 ",
-              marginBottom: "10px",
-            }}
-          >
-            <div className={classes.phoneauth}>
-              <Typography
-                align="center"
-                component="h3"
-                variant="h4"
-                className={classes.texts}
-              >
-                Sign Up
-              </Typography>
-              {error && <Alert variant="danger">{error}</Alert>}
-
-              <Form
-                onSubmit={getOtp}
-                style={{ display: !flag ? "block" : "none" }}
-              >
-                <Form.Group className="mb-4" controlId="formBasicmail">
-                  <PhoneInput
-                    flags={flags}
-                    className={classes.phoneinput}
-                    defaultCountry="ET"
-                    value={phoneNumber}
-                    onChange={setPhoneNumber}
-                    placeholder="Enter Phone Number"
-                    inputProps={{
-                      name: "phone",
-                      country: "us",
-                      required: true,
-                      autoFocus: true,
-                    }}
-                    containerStyle={{ margin: "20px" }}
-                    dropdownStyle={{ height: "50px" }}
-                  />
-                  {/* <TextField
-                  label="Phone number"
-                  name="phone"
-                  
-                  // onChange={onPhoneNumberChanged}
-                  // value={phoneNumber}
-                  placeholder="eg, 925762589"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">+251</InputAdornment>
-                    ),
-                   
-                  }}
-                /> */}
-                  <div className={classes.inputsContainer}>
-                    <input
-                      name="SquareMeter"
-                      type="password"
-                      placeholder="Enter Your password here"
-                      className={classes.passwordinput}
-                      onChange={onPasswordChange}
-                    />
-                  </div>
-
-                  <div
-                    id="recaptcha-container"
-                    style={{
-                      borderRadius: "8px",
-                      paddingTop: "20px",
-                      paddingLeft: "70px",
-                    }}
-                  ></div>
-                </Form.Group>
-                <div className="button-right">
-                  <Link></Link>
-                </div>
-                <div className={classes.buttons}>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    className={classes.buttonone}
-                  >
-                    continue with phone-number
-                  </Button>
-                </div>
-              </Form>
-
-              <Form
-                onSubmit={verifyOtp}
-                style={{
-                  display: flag ? "flex" : "none",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <input
-                  type="otp"
-                  className={classes.otpinput}
-                  placeholder="Enter OTP"
-                  onChange={(e) => setOtp(e.target.value)}
-                />
-
-                <div className={classes.buttonss}>
-                  <Link to="/">
-                    <Button variant="primary" className={classes.buttonverify}>
-                      Cancel
-                    </Button>
-                  </Link>
-
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    className={classes.buttonverify}
-                  >
-                    Verify
-                  </Button>
-                </div>
-              </Form>
-            </div>
-          </Paper>
-
-          <div className={classes.buttons}>
-            <Typography
-              align="center"
-              component="h1"
-              variant="h6"
-              className={classes.texts}
-            >
-              Or
-            </Typography>
-            <Button
-              id="SignUp"
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.email}
-              onClick={handleGoogleSignIn}
-            >
-              Sign up with email
-            </Button>
-          </div>
-        </div>
+      <div className={classes.upper}>
+        <h3>Ambassader Human resoursy system</h3>
+        <div>Check Out list of Announcements</div>
+        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit potenti porta purus venenatis turpis molestie varius, ac dapibus elementum ultrices senectus massa cursus id parturient volutpat rhoncus nulla. Pulvinar condimentum aenean potenti vel himenaeos mattis praesent litora </p>
+      </div>
+      <br></br>
+      <div className={classes.lower}>
+          <h2>Events</h2>
       </div>
     </div>
   );
 };
 
-export default SignUpPhone;
+export default Noticeborad;
