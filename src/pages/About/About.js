@@ -88,25 +88,13 @@ class About extends Component {
                         <div
                             className="aboutContent"
                             style={{textAlign: "center", margin: "2em "}}>
-                            <Typography variant="h4">Agenagn</Typography>
+                            <Typography variant="h4">Ambassador</Typography>
 
                                 <Typography>
                                     <p className={classes.paragraphStyling}>
-                                        Agenagn is a solution for looking for house available for rent.
-                                        The system connects strangers who looking for house rent and
-                                        administrator of the system. The service capable of showing the
-                                        detailed information about the house such as number of bedrooms,
-                                        bathrooms, price of rent, location where the house is found. In
-                                        addition, the strangers can filter the available house with
-                                        respect to the ranges of price they can afford. The service would
-                                        not provide online payment since online payment is another
-                                        challenge in Ethiopia. The system reduces strangers’ time, energy
-                                        and money spent by looking for house. It reduces an additional
-                                        money spent for brokers from both strangers and owner.
-                                        Furthermore, it facilitates house rent to be taken earlier. In
-                                        terms of boundary Agenagn works for house found around Addis Ababa
-                                        for now. But, for sure Agenagn will expand to the rest of
-                                        Ethiopia.
+                                    Ambassador human resource system is a solution which is used to manage human resource system for 
+                                    Ambassador's human resouces. It handles voting system, Dashboard and also payment status. The system 
+                                    is built in to simplify and make the resource management system effecient and easy to manage.
                                     </p>
                                 </Typography>
 
@@ -116,75 +104,7 @@ class About extends Component {
                         <FeedBack onSubmit={this.onSubmit}/>
                     </div>
                 </Card>
-                <Card><div className={classes.footer1}>
-                    <div className={classes.card1}>
-                        <ContactCard></ContactCard>
-                    </div>
-                    <div className={classes.contactInfo}>
-
-                                Contact Information
-                                <Card>
-                                    <CardContent>
-                                        Company: Agenagn Trading P.L;C Address: Firdu
-                                        Commercial Building, 3rd Floor Office no 308. P.O.box:
-                                        54178 Tel: 1 +251-974 082036 Tel: 2 +251-974 082037
-                                    </CardContent>
-                                </Card>
-                                <Card className={classes.contact}>
-                                    <CardContent>
-                                        Email:
-                                        <Link
-                                            component="button"
-                                            variant="body2"
-                                            onClick={() => {
-                                                console.info("I'm a button.");
-                                            }}
-                                        >
-                                            girmaytadese@gmail.com
-                                        </Link>
-                                        <Link
-                                            component="button"
-                                            variant="body2"
-                                            onClick={() => {
-                                                console.info("I'm a button.");
-                                            }}
-                                        >
-                                            girmaytadese@gmail.com
-                                        </Link>
-                                        <Typography>What’s up No: +251 974082037</Typography>
-                                        <Link
-                                            component="button"
-                                            variant="body2"
-                                            onClick={() => {
-                                                console.info("I'm a button.");
-                                            }}
-                                        >
-                                            girmaytadese@gmail.com
-                                        </Link>
-                                    </CardContent>
-                                </Card>
-                                <Card>
-                                    <CardContent>
-                                        <Typography>Follow us on: </Typography>
-
-                                        <FacebookIcon color="primary"></FacebookIcon>
-
-                                        <TelegramIcon color="primary"></TelegramIcon>
-
-
-                                        <LinkedInIcon color="primary"></LinkedInIcon>
-
-                                        <TwitterIcon color="primary"></TwitterIcon>
-
-
-                                        <InstagramIcon color="primary"></InstagramIcon>
-
-                                    </CardContent>
-                                </Card>
-
-                    </div>
-                </div>
-                </Card>
+                
 
         </div>
         );
