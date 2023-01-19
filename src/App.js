@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#EEEEEE",
   },
   mainParts: {
-    paddingTop: "100px",
+    paddingTop: "68px",
   },
 }));
 
@@ -126,23 +126,7 @@ function App() {
             />
           </Route>
 
-          <Route path="/SignUpEmail" exact>
-            {" "}
-            <SignupEmail
-              setSideBar={setSideBar}
-              // setToken={setToken}
-              // getToken={getToken}
-            />
-          </Route>
-
-          <Route path="/SignUpPhone" exact>
-            {" "}
-            <SignUpPhone
-              setSideBar={setSideBar}
-              // setToken={setToken}
-              // getToken={getToken}
-            />
-          </Route>
+       
           
           <Route path="/dashboard" exact>
             {" "}
@@ -151,7 +135,7 @@ function App() {
               // getToken={getToken}
             />
           </Route>
-          <Route path="/register" component={Signup} />
+          <Route path="/Noticeborad" component={Signup} />
           <Route path="/addhouse">
             {" "}
             <RegisterHouse
