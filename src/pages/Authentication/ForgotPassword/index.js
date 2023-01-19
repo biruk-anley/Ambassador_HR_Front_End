@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import backEndApi from '../../../services/api'
-const loginImage = process.env.PUBLIC_URL + '/img/99.png';
+const loginImage = process.env.PUBLIC_URL + '/img/ambassadoricon.png';
 const useStyles = theme => ({
     root: {
 
@@ -198,7 +198,7 @@ class ForgotPassword extends React.Component {
                 <Grid container className={classes.root}>
 
                     <Grid item xs={12} md={5} className={classes.loginImgHolder} >
-                        <img src={loginImage} alt="" height='420px' width='420px' className={classes.loginImg}/>
+                        <img src={loginImage} alt="" height='300vh' width='100%' className={classes.loginImg}/>
                     </Grid>
                     <Grid item xs={1} md={2}> {/*<Divider orientation='vertical'/>*/}</Grid>
 
