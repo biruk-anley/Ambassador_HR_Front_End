@@ -174,19 +174,7 @@ class ResetPassword extends React.Component {
         if (this.state.password && this.state.confirmPassword) {
             if (this.state.password === this.state.confirmPassword) {
                 this.resetPasswordApiRequest(logindetails);
-                /*/!*axios.post("http://localhost:5000/changePassword", {params: logindetails},)*!/
-                axios.post("https://damp-fjord-23317.herokuapp.com/changePassword", {params: logindetails})
-                    .then(res => {
-                        const token = res.data.token;
-
-                        if (res.data.message === "Password Changed") {
-                            this.setState({isPasswordChange: true});
-                            this.props.setToken({token : token});
-
-                        }  else {
-                            this.setState({errorMessage: "There was a Problem on resetting password."})
-                        }
-                    })*/
+               
             } else {
                 this.setState({errorMessage: 'The passwords that you have entered does not match.'})
             }
@@ -204,23 +192,7 @@ class ResetPassword extends React.Component {
         const token = this.props.match.params.id;
         console.log(token);
         this.checkTokenApiRequest(token);
-        /*/!*axios.post('http://localhost:5000/resetPasswordToken', {params: {token: token}})*!/
-        axios.post('https://damp-fjord-23317.herokuapp.com/resetPasswordToken', {params: {token: token}})
-
-            .then(res => {
-                console.log(res.data);
-                switch (res.data) {
-                    case "Invalid Token" :
-                        this.setState({resetToken : "Invalid Token"});
-                        break;
-                    case "Token Expired":
-                        this.setState({resetToken : "Token Expired"});
-                        break;
-                    default:
-                        this.setState({resetPasswordEmail: res.data})
-
-                }
-            })*/
+        
     }
 
     render() {
