@@ -145,8 +145,8 @@ function NavTabs(props) {
             </Link>
           </ListItem>
           <ListItem>
-            <Link to="register" className={classes.links}>
-              <Button className={classes.links}>Register</Button>
+            <Link to="Noticeborad" className={classes.links}>
+              <Button className={classes.links}>Notice Board</Button>
             </Link>
           </ListItem>
           <ListItem>
