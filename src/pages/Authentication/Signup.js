@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import backEndApi from "../../services/api";
 import Grid from '@mui/material/Grid'; 
+import Box from '@mui/material/Box';
 import bell from '../images/notifybell.svg'
 import { style } from "@mui/system";
 const backgroundimages = process.env.PUBLIC_URL + "/img/newa.png";
@@ -25,9 +26,10 @@ const useStyles = makeStyles((theme) => ({
    
     
     backgroundClip:'cover',
-    height:'900px',
+    height:'500px',
     width: "100%",
     paddingLeft: "90px",
+  
 
     [theme.breakpoints.down("sm")]: {
       paddingLeft: 5,
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "17px",
     // border: '2px solid red',
   },
-    height: "1200px",
+    height: "80vw",
     padding: 1,
     "& a": {
       color: "#3A6351",
@@ -54,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
       "& form": {
         padding: 0,
       },
+      "& root": {
+        height: "80vw",
+      }
     },
   },
   
@@ -61,10 +66,21 @@ lower: {
     flexDirection: "column",
     alignItems:'center',
     justifyContent: "center",
-   
+   marginTop:'70px',
     borderRadius: "15px",
     display: 'flex',
     width: "70%",
+    fontSize:'1.5rem'
+   
+  },
+  cardss: {
+    flexDirection: "column",
+    alignItems:'center',
+    justifyContent: "center",
+   
+    borderRadius: "15px",
+    
+    marginLeft:'150px',
     fontSize:'1.5rem'
    
   },
@@ -95,24 +111,21 @@ lower: {
   buttonone: {
     paddingLeft: "20px",
     paddingRight: "20px",
-    background: "#3293A8",
+    background: "#FFE061",
     paddingTop: "13px",
-    border: "0.5px solid white",
-    paddingBottom: "13px",
+    border: "2px solid white",
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center',
+    paddingBottom: "10px",
     borderRadius: "5px",
-    marginLeft: "35px",
-    marginTop: "25px",
-    marginBottom: "25px",
-    color: "#fff",
+    marginLeft: "75px",
+    marginTop: "5px",
+    marginBottom: "7px",
+    color: "black",
     textTransform: "none",
-    width: "53%",
-
-    "@media (max-width:980px)": {
-      paddingLeft: "50px",
-      paddingRight: "50px",
-      display: "block",
-    },
-   
+    width: "50%",
+   fontSize:'18px',
   },
 }));
 const Noticeborad = () => {
@@ -139,30 +152,182 @@ const Noticeborad = () => {
         <div className={classes.lower}>
           <h2>Events</h2>
           <br></br>
-          <Grid  container spacing={2}>
-            <Grid  item lg={4} xs={14}  md={2.4}>
-              <Card sx={{ maxWidth: 355 }}>
+          <Grid  container spacing={3} className={classes.cardss}>
+            <Grid  item lg={4} xs={12}  md={4}>
+              <Card sx={{ maxWidth: 370}}>
                   <CardMedia
                     component="img"
                     alt="green iguana"
-                    height="90"
+                    height="140"
                     image={bell}
-                  />
+                />
+                <br></br>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" className={classes.textss}>
-                      Lizard
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  <br></br>
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
+                      There will be a meeting on salary <br></br> compensation and be there on time
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles, with over 6,000
-                      species, ranging across all continents except Antarctica
-                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                        m: 1,
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
+
+                  
+                  
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
               </Card>
             </Grid>
+
+            <Grid  item lg={4} xs={12}  md={4}>
+              <Card sx={{ maxWidth: 370}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image={bell}
+                />
+                <br></br>
+                  <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  <br></br>
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
+                      There will be a meeting on salary <br></br> compensation and be there on time
+                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                        m: 1,
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
+
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
+              </Card>
+            </Grid>
+
+            <Grid  item lg={4} xs={12}  md={4}>
+              <Card sx={{ maxWidth: 370}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image={bell}
+                />
+                <br></br>
+                  <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  <br></br>
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
+                      There will be a meeting on salary <br></br> compensation and be there on time
+                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                        m: 1,
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
+
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
+              </Card>
+            </Grid>
+
+            
+            
+
+
+            
+
+            
+
+
+            
             
 
 
