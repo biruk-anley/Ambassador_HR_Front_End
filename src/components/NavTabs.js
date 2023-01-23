@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     textDecoration: "none",
+    width:'100%',
     fontSize: "13px !important",
     fontWeight: "bold",
   },
@@ -74,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   listContainer: {
     display: "flex",
     justifyContent: "space-between",
+    width:'35rem'
   },
   listContainerMobile: {
     display: "flex",
@@ -141,22 +143,22 @@ function NavTabs(props) {
           {" "}
           <ListItem>
             <Link to="/" className={classes.links}>
-              <Button className={classes.links}>Home</Button>{" "}
+              <Button className={classes.links}>Notice Board</Button>{" "}
             </Link>
           </ListItem>
           <ListItem>
             <Link to="Noticeborad" className={classes.links}>
-              <Button className={classes.links}>Notice Board</Button>
+              <Button className={classes.links}>Vote</Button>
             </Link>
           </ListItem>
           <ListItem>
             <Link to="about" className={classes.links}>
-              <Button className={classes.links}>About</Button>
+              <Button className={classes.links}>Evaluation</Button>
             </Link>
           </ListItem>
           <ListItem>
             <Link to="login" className={classes.links}>
-              <Button className={classes.links}>Login</Button>
+              <Button className={classes.links}>Payment Status</Button>
             </Link>
           </ListItem>
         </React.Fragment>
