@@ -152,7 +152,7 @@ const Noticeborad = () => {
         <div className={classes.lower}>
           <h2>Events</h2>
           <br></br>
-          {/* <Grid  container spacing={3} className={classes.cardss}>
+          <Grid  container spacing={3} className={classes.cardss}>
             <Grid  item lg={4} xs={12}  md={4}>
               <Card sx={{ maxWidth: 370}}>
                   <CardMedia
@@ -336,55 +336,7 @@ const Noticeborad = () => {
             
             
             
-          </Grid> */}
-          <div className="container-fluid ">
-            <div className="row">
-                <div className="col-11 col-sm-4 d-flex align-items-baseline">
-                    <div className="card h-77 content__item">
-                        <div className="card-body">
-                            <image src={bell}/>
-                
-                            <h2 className="content__item--h2">አቱች</h2>
-                            <h6>found hot area </h6>
-                            <p>it is used to prevent some disease which is related to sun...like ምች ፣ ቊስል, ጉንፋን and others</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-11 col-sm-4 d-flex align-items-sm-baseline">
-                    <div className="card h-auto content__item">
-                        <div className="card-body">
-                            <image src={bell}/>
-                            
-                            <h2 className="content__item--h2">ቀጠጢና</h2>
-                            <h6>found in cold area </h6>
-                            <p>it is used to prevent some disease which is related to sun...like ምች ፣ ቊስል, ጉንፋን and others</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-11 col-sm-4 d-flex align-items-baseline">
-                    <div className="card h-77 content__item">
-                        <div className="card-body">
-                        <image src={bell}/>
-                        
-                        <h2 className="content__item--h2">አቱች</h2>
-                        <h6>found hot area </h6>
-                        <p>it is used to prevent some disease which is related to sun...like ምች ፣ ቊስል, ጉንፋን and others</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-11 col-sm-3 d-flex align-items-stretch">
-                    <div className="card h-77 content__item">
-                        <div className="card-body">
-                            <image src={bell}/>
-                
-                            <h2 className="content__item--h2">ዳማከሴ</h2>
-                            <h6>found anywhere </h6>
-                            <p>it is used to prevent some disease which is related to sun...like ምች ፣ ቊስል, ጉንፋን and others</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+          </Grid>
       </div>
       </div>
       

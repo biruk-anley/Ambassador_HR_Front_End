@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NavTabs from "./components/NavTabs";
 import MainBody from "./pages/Home";
 import Detail from "./pages/Details/";
+
 /*import LoginRegister from './pages/Authentication/LoginRegister'*/
 //comment
 import LoginRegister from "./pages/Authentication/Login";
@@ -24,6 +25,7 @@ import UpperFooter from "./components/UpperFooter";
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import ResetPassword from "./pages/Authentication/ForgotPassword/ResetPassword";
 import { getDashboardData } from "./features/dashboard/dashboardSlice";
+
 
 
 
@@ -74,7 +76,11 @@ function App() {
         <Container className={classes.mainParts} maxWidth={"xl"}>
           <Route path="/" exact>
             {" "}
-            <Search setSideBar={setSideBar} />
+            <LoginRegister
+              setSideBar={setSideBar}
+              // setToken={setToken}
+              // getToken={getToken}
+            />
           </Route>
           <Route
             path="/search"
@@ -107,14 +113,14 @@ function App() {
           <Route path="/userlist">
             <UserList setSideBar={setSideBar} />
           </Route>
-          <Route path="/login" exact>
+          {/* <Route path="/login" exact>
             {" "}
             <LoginRegister
               setSideBar={setSideBar}
               // setToken={setToken}
               // getToken={getToken}
             />
-          </Route>
+          </Route> */}
 
 
           <Route path="/signup" exact>
@@ -135,6 +141,7 @@ function App() {
               // getToken={getToken}
             />
           </Route>
+          {/* <Route path="/Userlist" component={UserPage} /> */}
           <Route path="/Noticeborad" component={Signup} />
           <Route path="/addhouse">
             {" "}
