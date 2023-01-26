@@ -25,6 +25,7 @@ import UpperFooter from "./components/UpperFooter";
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import ResetPassword from "./pages/Authentication/ForgotPassword/ResetPassword";
 import { getDashboardData } from "./features/dashboard/dashboardSlice";
+import Payment from "./components/PaymentStatus/Payment";
 
 
 
@@ -143,6 +144,7 @@ function App() {
           </Route>
           {/* <Route path="/Userlist" component={UserPage} /> */}
           <Route path="/Noticeborad" component={Signup} />
+          <Route path="/payment" component={Payment} />
           <Route path="/addhouse">
             {" "}
             <RegisterHouse
