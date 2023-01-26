@@ -25,7 +25,7 @@ import UpperFooter from "./components/UpperFooter";
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import ResetPassword from "./pages/Authentication/ForgotPassword/ResetPassword";
 import { getDashboardData } from "./features/dashboard/dashboardSlice";
-import Payment from "./components/PaymentStatus/Payment";
+import Payment from "./components/Payment";
 
 
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#EEEEEE",
   },
   mainParts: {
-    paddingTop: "68px",
+    paddingTop: "150px",
   },
 }));
 
