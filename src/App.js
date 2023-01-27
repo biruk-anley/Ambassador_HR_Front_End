@@ -32,7 +32,7 @@ import Payment from "./components/Payment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#EEEEEE",
+    backgroundColor: "white",
   },
   mainParts: {
     paddingTop: "150px",
