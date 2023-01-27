@@ -17,7 +17,7 @@ import { logoutUser } from "../features/auth/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#eeeeee",
+    backgroundColor: "white",
     maxHeight: 80,
     paddingRight: 10,
     paddingLeft: 20,
