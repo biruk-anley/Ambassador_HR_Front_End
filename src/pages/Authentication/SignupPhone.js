@@ -1,523 +1,437 @@
-import  { useState } from "react";
-import './style.css';
-
+import { useState } from "react";
+import "./style.css";
 import { useHistory } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import "react-phone-number-input/style.css";
-import Paper from '@mui/material/Paper';
-import PhoneInput from "react-phone-number-input";
-import { useUserAuth } from "../../context/UserAuthContext";
-import { Link } from "react-router-dom";
-import {  makeStyles, TextField} from "@material-ui/core";
-import flags from 'react-phone-number-input/flags'
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import backEndApi from "../../services/api";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import bell from '../images/notifybell.svg'
+import { style } from "@mui/system";
+const backgroundimages = process.env.PUBLIC_URL + "/img/back1.png";
 
-const SignupImage = process.env.PUBLIC_URL + "/img/new.jpg";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-      display:'flex',
-      justifyContent:'center',
-      
-      width: "100%",
-      paddingLeft: "6px",
-      paddingRight: "6px",
-      [theme.breakpoints.down("sm")]: {
-        paddingLeft: 5,
-        paddingRight: 5,
-      },
-    },
-    root: {
-      
-       
-      
-      display: "flex",
-      width:'80%',
-      border: "1px solid rgba(0, 0, 0, .2)",
-      justifyContent:'space-around',
-      flexWrap: "nowrap",
-      background: "white",
-      borderRadius: "15px",
-      height: "650px",
-      padding: 10,
-      "& a": {
-        color: "#3A6351",
-      },
-      
-  
-      [theme.breakpoints.down("sm")]: {
-        "& form": {
-          padding: 0,
-        },
-      },
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
+    display: "",
+    justifyContent: "center",
+    // backgroundImage: `url(${backgroundimages})`,
     
-    form: {
-      marginLeft:'205px',
-      width: "90%",
-      marginTop:'40px',
-      [theme.breakpoints.down("sm")]: {
-        /*width:'80%'*/
-      },
-      "@media (max-width:960px)": {
-        marginLeft:'55px',
-        marginTop:'10px'
-      },
-    },
-
-login:{
-  fontWeight:'800',
-  marginLeft:'65px',
-  "@media (max-width:760px)": {
-      
-      marginLeft:'15px'
-    },
-
-},
-phoneinput:{
-  width: "70%",
-  marginLeft:'auto',
-  marginRight:'auto',
-  
-  padding:'20px',
-},
-passwordinput:{
-  width: "60%",
-  display:'flex',
-  justifyContent:'center',
-  border:'5px solid red',
-  marginLeft:'100px',
-  marginRight:'auto',
-  paddingTop:'9px',
-  paddingBottom:'9px',
-  border: "1px solid rgba(0, 0, 0, .2)",
-     
-  background: "white",
-  borderRadius: "7px",
-  height: "45px",
-
-},
-textField: {
- 
-  border: "0px solid #eee",
-  borderLeftWidth: "7px",
-  borderLeftColor: "rgba(215,215,215,0.47)",
-  "& input": {
-    color: "rgba(57,50,50,0.25)",
-    border: "0px solid #eee",
-    height:'25px',
-    borderRadius: "10px",
-    width: "10%",
-  },
-  "@media (max-width:760px)": {
-    width: "80%",
-  },
-},
-texts:
-{marginLeft:'20px',
-"@media (max-width:760px)": {
-  marginLeft:'-105px',
-}},
-inputAdornment: {
-  background: "rgba(215,215,215,0.87)",
-  borderRadius: "7px 0px 0px 7px",
-},
-authentication:{
-  
-  flexDirection:'column',
-  alignItems:'center',
-  justifyContent:'center',
- 
-  borderRadius: "15px",
-  
-  marginLeft:'25px',
-  borderRadius: "15px",
-  marginBottom: "auto",
-  
-  width:"50%",
-  marginTop:'auto',
-  height: "auto",
- 
-  "@media (max-width:960px)": {
-    width: "80%",
-  },
-},
-
-phoneauth:{
-  
-  flexDirection:'column',
-  alignItems:'center',
-  justifyContent:'center',
- 
-  borderRadius: "15px",
-  
-  marginLeft:'25px',
-  borderRadius: "15px",
-  marginBottom: "auto",
-  
-  
-  marginTop:'auto',
-  height: "auto",
-  paddingBottom: "11px",
-  "@media (max-width:960px)": {
-    width: "80%",
-  },
-},
-PhoneInputInput:{
-  flex: "1 1",
-  
-  height: "30px",
-  borderRadius: "5px",
-  border: "1px solid red",
-  
-},
-email:{
-  background: "#3F51B5",
-  color:'white',
-  borderRadius: "5px",
-  width: "57%",
-  height: "47px",
-  
-  margin: theme.spacing(1, 0, 2),
-  "&:hover": {
-    background: "rgba(	63, 81, 181,0.79)",
-  }, 
-  marginLeft:'40px',
-  "@media (max-width:760px)": {
-    width:"80%"
-  },
-},
-buttons: {
-  display: "flex",
-  flexDirection:'column',
-  justifyContent: "center",
-  alignItems: "center",
-
-},
-
-buttonss: {
-  display: "flex",
-
-  justifyContent: "center",
-  alignItems: "center",
-
-},
-buttonone: {
-  paddingLeft: "20px",
-  paddingRight: "20px",
-  background: "#3293A8",
-  paddingTop: "13px",
-  border:'0.5px solid black',
-  paddingBottom: "13px",
-  borderRadius: "5px",
-  marginLeft: "20px",
-  marginTop: "25px",
-  marginBottom: "15px",
-  color: "#fff",
-  textTransform: "none",
-  width:'60%',
-
-  "@media (max-width:980px)": {
-    paddingLeft: "50px",
-    paddingRight: "50px",
-    display:'block',
-  },
-  textsField:{
-    width:'100%',
     
-    marginLeft:"1000px",
+    width: "100%",
+    paddingLeft: "90px",
+  
+
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: 1,
+      paddingRight: 1,
+    },
+      
+  root: {
+    display: "flex",
+    width: "80%",
+    border: "0px solid rgba(0, 0, 0, .2)",
+    justifyContent: "space-around",
+    flexWrap: "nowrap",
+    background: "white",
+    borderRadius: "17px",
+    // border: '2px solid red',
+  },
+    height: "80vw",
+    padding: 1,
+    "& a": {
+      color: "#3A6351",
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      "& form": {
+        padding: 0,
+      },
+      "& root": {
+        height: "80vw",
+      }
+    },
+  },
+  
+lower: {
+    flexDirection: "column",
+    alignItems:'center',
+    justifyContent: "center",
+   marginTop:'70px',
+    borderRadius: "15px",
+    display: 'flex',
+    width: "70%",
+    fontSize:'1.5rem'
    
   },
-  text:{
-    marginLeft: "400px",
-    textAlign:'center',
-  }
-  ,
-  inputsContainer: {
-    marginLeft: "400px",
-    width:'100%',
-  },
-  input: {
-    marginTop: "20px",
-    marginBottom: "20px",
-  width: "100%",
-  height: "40px",
-  border: "5px solid rgba(0, 0, 0, .5)",
-  justifyContent:'space-around',
- 
-  borderRadius: "5px",
-  
-  padding: 15,
-    background: "white",
-    borderRadius: "7px",
-  },
-  recaptha:{
-    marginLeft:'450px',
-  },
-  "&:hover": {
-    color: "black",
-    cursor: "pointer",
-    color: "rgba(215,215,215,0.9)",
-  },
-},
-buttontwo: {
- 
-  paddingLeft: "20px",
-  paddingRight: "20px",
-  background: "#3293A8",
-  paddingTop: "8px",
-  paddingBottom: "8px",
-  borderRadius: "5px",
-  marginLeft: "15px",
-  marginTop: "15px",
-  color: "#fff",
-  textTransform: "none",
-  width:'75%',
-  "@media (max-width:980px)": {
-    paddingLeft: "20px",
-    paddingRight: "25px",
-    display:'block',
-  },
-  recaptha:{
-    marginLeft:'450px',
-  },
-  "&:hover": {
-    color: "black",
-    cursor: "pointer",
-    color: "rgba(215,215,215,0.9)",
-  },
-},
-imgHolder: {
-
-  backgroundColor: "rgba(215,215,215,0.1)",
-  marginLeft:'25px',
-  borderRadius: "15px",
-  marginBottom: "auto",
-  display: "flex",
-  width:"70%",
-  marginTop:'auto',
-  height: "auto",
-  paddingBottom: "50px",
-  [theme.breakpoints.down("sm")]: {
-    display: "none",
-  },
-},
-}));
-const SignUpPhone = () => {
-  const [error, setError] = useState("");
-  const [number, setNumber] = useState("");
-  const [flag, setFlag] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [result, setResult] = useState("");
-  const { setUpRecaptha } = useUserAuth();
-  const [password, setPassword] = useState("");
-  const { logIn, googleSignIn } = useUserAuth();
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-
-  const historys = useHistory();
-  
-
-  const getOtp = async (e) => {
-    e.preventDefault();
-    console.log(number);
-    setError("");
-    if (number === "" || number === undefined)
-      return setError("Please enter a valid phone number!");
-    try {
-      const response = await setUpRecaptha(number);
-      setResult(response);
-      setFlag(true);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-  const onPasswordChange = (e) => {
-    // setState({ password: e.target.value });
-    setPassword(e.target.value);
-  };
-  const classes = useStyles();
-  const verifyOtp = async (e) => {
+  cardss: {
+    flexDirection: "column",
+    alignItems:'center',
+    justifyContent: "center",
+   
+    borderRadius: "15px",
     
-    e.preventDefault();
-    setError("");
-    if (otp === "" || otp === null) return;
-    try {
-      await result.confirm(otp);
-      console.log('yes')
-      historys.push('/login')
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-  const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      await googleSignIn();
-      historys.push("/home");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    marginLeft:'150px',
+    fontSize:'1.5rem'
+   
+  },
+  holder: {
+    flexDirection: "column",
+    alignItems:'start',
+    justifyContent: "start",
+    // border: '2px solid red',
+    borderRadius: "15px",
+    display: 'flex',
+    width: "100%",
+    marginTop:'70px',
+   
+    height: "100vh",
+
+    "@media (max-width:960px)": {
+      width: "80%",
+    },
+  },
+  textss: {
+  
+    fontSize: '20px',
+    lineHeight: '27px',
+    fontWeight:'500',
+    borderRadius: "15px",
+    color:'black'
+  },
+  buttonone: {
+    paddingLeft: "20px",
+    paddingRight: "20px",
+    background: "#FFE061",
+    paddingTop: "13px",
+    border: "2px solid white",
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center',
+    paddingBottom: "10px",
+    borderRadius: "5px",
+    marginLeft: "75px",
+    marginTop: "5px",
+    marginBottom: "7px",
+    color: "black",
+    textTransform: "none",
+    width: "50%",
+   fontSize:'18px',
+  },
+}));
+const Noticeborad = () => {
+ 
+  const historys = useHistory();
+  const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      <div className={classes.root}>
-      <div className={classes.imgHolder}>
-          <img
-            src={SignupImage}
-            alt=""
-            width="93%"
-            height="420px"
-            style={{
-              borderRadius: "8px",
-              marginTop: "20px",
-              marginLeft: "20px",
-              marginBottom: "-20px",
-            }}
-          />
-      </div> 
-      <div className={classes.authentication}>
-      <Paper elevation={0} sx={{ borderRadius: '15px', border:'3px solid black' }}>
-          <div className={classes.phoneauth}>
-          <Typography
-              align="center"
-              component="h3"
-              variant="h4"
-              className={classes.texts}
-              
-            >
-                  Sign Up
-            
-            </Typography>
-        {error && <Alert variant="danger">{error}</Alert>}
-        
-        <Form onSubmit={getOtp} style={{ display: !flag ? "block" : "none" }}>
-          <Form.Group className="mb-4" controlId="formBasicEmail">
-          
-            <PhoneInput
-              flags={flags}
-              className={classes.phoneinput}
-              defaultCountry="ET"
-              value={number}
-              onChange={setNumber}
-              placeholder="Enter Phone Number"
-              inputProps={{
-                name: 'phone',
-                country:'us',
-                required: true,
-                autoFocus: true
-              }}
-              
-            
-             containerStyle={{margin:'20px'}}
-    
-                dropdownStyle={{height:'50px'}}
-            />
-            {/* <TextField
-              variant="outlined"
-              id="outlined-name"
-              margin="none"
-              required
-              fullWidth
-              name="password"
-              onChange={onPasswordChange}
-              label="Password"
-              type="password"
-             
-              autoComplete="current-password"
-              inputProps={{
-                minLength: 6,
-              }}
-              className={classes.textsField}
-            /> */}
-            <div className={classes.inputsContainer}>
-                <input
-                      name="SquareMeter"
-                      type="password"
-                     
-                      placeholder="Enter Your password here"
-                      className={classes.passwordinput}
-                      onChange={onPasswordChange}
-                    />
-            </div>
-            
-            <div id="recaptcha-container" className={classes.recaptha}></div>
-          </Form.Group>
-          <div className="button-right">
-            <Link></Link>
-          </div>
-          <div className={classes.buttons}>
-          
-            <Button type="submit" variant="primary"  className= {classes.buttonone}>
-              Send 
-            </Button>
-          </div>
-        </Form>
+      <div className={classes.holder}>
+        <div className={classes.upper}>
 
+        <h3 style={{color:'red', fontSize:'22px', marginLeft:'55px'}}>Ambassader Human resource system</h3>
+          <div style={{ color: 'black', fontSize: '4rem', display: 'flex', textAlign: 'center', fontWeight: '900' }}>
+                Check Out <br></br>  list of <br></br> Announcements
+          </div>
+          <div className={classes.textss}>
+            <p>
+                This HR system will handle Announcements, employments information,<br>
+                </br> voting system for elections  payment status for the employess. It will <br></br> simplify the system and make it  easy to handle the human resource
+            </p>
+          </div>
+        </div>
+        <div className={classes.lower}>
+          <h2>Events</h2>
+          <br></br>
+          <Grid  container spacing={3} className={classes.cardss}>
+            <Grid  item lg={4} xs={12}  md={4}>
+              <Card sx={{ maxWidth: 370}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image={bell}
+                />
+                <br></br>
+                  <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  <br></br>
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
+                      There will be a meeting on salary <br></br> compensation and be there on time
+                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                        m: 1,
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
 
-        <Form onSubmit={verifyOtp} style={{ display: flag ? "block" : "none" }}>
-          
-            <TextField
-              type="otp"
-            
-              className={classes.input}
-              placeholder="Enter OTP"
-              onChange={(e) => setOtp(e.target.value)}
-            />
-        
-          <div className={classes.buttonss}>
-            <Link to="/">
-              <Button variant="primary"
-              className={classes.buttontwo}
-              >Cancel</Button>
-            </Link>
-          
-            <Button type="submit" variant="primary" className={classes.buttontwo}>
-              Verify
-            </Button>
-          </div>
-        </Form>
-          </div>
-        </Paper>
-          
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
+              </Card>
+            </Grid>
 
-          <div className={classes.buttons}>
-          <Typography
-              align="center"
-              component="h1"
-              variant="h6"
-              className={classes.texts}
-              
-            >
-                  Or 
-            
-            </Typography>
-            <Button
-                id="SignUp"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.email}
-                onClick={handleGoogleSignIn}
-              >
-                Sign up with email
-                
-              </Button>
-          </div>
+            <Grid  item lg={4} xs={12}  md={4}>
+              <Card sx={{ maxWidth: 370}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image={bell}
+                />
+                <br></br>
+                  <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  <br></br>
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
+                      There will be a meeting on salary <br></br> compensation and be there on time
+                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                        m: 1,
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
+
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
+              </Card>
+            </Grid>
+
+            <Grid  item lg={4} xs={12}  md={4}>
+              <Card sx={{ maxWidth: 370}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image={bell}
+                />
+                <br></br>
+                  <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  <br></br>
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
+                      There will be a meeting on salary <br></br> compensation and be there on time
+                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                        m: 1,
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
+
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
+              </Card>
+            </Grid>
+          </Grid>
+      </div>
       </div>
       
-      </div>
+      <br></br>
       
-
     </div>
   );
 };
 
-export default SignUpPhone;
+export default Noticeborad;
+
+
+// import React from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Grid from '@material-ui/core/Grid';
+// import Typography from '@material-ui/core/Typography';
+// import Card from '@material-ui/core/Card';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardMedia from '@material-ui/core/CardMedia';
+// const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   text: {
+//     padding: theme.spacing(2),
+//   },
+//   images: {
+//     width: '60%',
+    
+//     position: 'relative',
+//     top:'10',
+//     height: 'auto',
+//     padding: theme.spacing(2),
+//   },
+//   card: {
+//     width: '100%',
+//     height: 'auto',
+//     padding: theme.spacing(2),
+//   },
+//   textss: {
+//     fontSize: '20px',
+//      lineHeight: '27px',
+//     display: 'flex',
+//      justifyContent:'center',
+//      borderRadius: "15px",
+//      color:'black'
+//   },
+//   media: {
+//     height: 0,
+//     paddingTop: '56.25%', // 16:9
+//   },
+// }));
+
+// const MyComponent = () => {
+//   const classes = useStyles();
+
+//   return (
+//     <div className={classes.root}>
+//       <Grid container spacing={3}>
+//         <Grid container spacing={2}>
+//           <Grid item xs={6} >
+//             <h3 style={{ color: 'red', fontSize: '28px', marginLeft: '55px',textAlign:'center' }}>Ambassader Human resource system</h3>
+//             <div style={{ color: 'black', fontSize: '4rem', display: 'flex',alignItems:'center',justifyContent:'center', textAlign: 'center', fontWeight: '900' }}>
+//                 Check Out <br></br>  list of <br></br> Announcements
+//           </div>
+//             <div className={classes.textss}>
+//            <p>
+//                This HR system will handle Announcements, employments information,<br>
+//                 </br> voting system for elections  payment status for the employess. It will <br></br> simplify the system and make it  easy to handle the human resource
+//             </p>
+//           </div>
+//           </Grid>
+//           <Grid item xs={6}>
+//           <img src={ images} alt="Image" className={classes.images} />
+
+//           </Grid>
+//         </Grid>
+//         <Grid item xs={12}>
+//           <Card className={classes.card}>
+//             <CardMedia
+//               className={classes.media}
+//               image="card-image-1.jpg"
+//               title="Card 1"
+//             />
+//             <CardContent>
+//               <Typography variant="body2">
+//                 Card 1 content goes here
+//               </Typography>
+//             </CardContent>
+//           </Card>
+//           <Card className={classes.card}>
+//             <CardMedia
+//               className={classes.media}
+//               image="card-image-2.jpg"
+//               title="Card 2"
+//             />
+//             <CardContent>
+//               <Typography variant="body2">
+//                 Card 2 content goes here
+//               </Typography>
+//             </CardContent>
+//           </Card>
+//           <Card className={classes.card}>
+//             <CardMedia
+//               className={classes.media}
+//               image="card-image-3.jpg"
+//               title="Card 3"
+//             />
+//             <CardContent>
+//               <Typography variant="body2">
+//                 Card 3 content goes here
+//               </Typography>
+//             </CardContent>
+//           </Card>
+//         </Grid>
+//       </Grid>
+//     </div>)
+// }
+// export default MyComponent;

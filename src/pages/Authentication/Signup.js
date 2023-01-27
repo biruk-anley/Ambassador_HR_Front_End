@@ -1,174 +1,177 @@
-import { useState } from "react";
-import "./style.css";
-import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import backEndApi from "../../services/api";
-import Grid from '@mui/material/Grid'; 
-import Box from '@mui/material/Box';
-import bell from '../images/notifybell.svg'
-import { style } from "@mui/system";
-const backgroundimages = process.env.PUBLIC_URL + "/img/newa.png";
 
+
+
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@mui/material/CardActions';
+import Box from '@mui/material/Box';
+import bell from '../images/belll.svg'
+const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    backgroundImage: `url(${backgroundimages})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize:'cover',
-   
-    
-    backgroundClip:'cover',
-    height:'500px',
-    width: "100%",
-    paddingLeft: "90px",
-  
-
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: 5,
-      paddingRight: 5,
-    },
-      
   root: {
-    display: "flex",
-    width: "80%",
-    border: "0px solid rgba(0, 0, 0, .2)",
-    justifyContent: "space-around",
-    flexWrap: "nowrap",
-    background: "white",
-    borderRadius: "17px",
-    // border: '2px solid red',
+    flexGrow: 1,
   },
-    height: "80vw",
-    padding: 1,
-    "& a": {
-      color: "#3A6351",
-    },
+  text: {
+    padding: theme.spacing(2),
+  },
+  images: {
+    width:'75%',
 
-    [theme.breakpoints.down("sm")]: {
-      "& form": {
-        padding: 0,
-      },
-      "& root": {
-        height: "80vw",
-      }
-    },
-  },
+    position: 'relative',
+    top: '-140px',
+    left: '-10px',
+     "@media (max-width:960px)": {
+          top: '-570px',
+       left: '86px',
+        width:'45%',
+        },
+},
+    
   
-lower: {
-    flexDirection: "column",
-    alignItems:'center',
-    justifyContent: "center",
-   marginTop:'70px',
-    borderRadius: "15px",
+  imagesb:{
+    width: '12rem',
+    marginLeft:'25%',
     display: 'flex',
-    width: "70%",
-    fontSize:'1.5rem'
-   
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+  events:{
+    fontSize: "3rem",
+    position: 'relative',
+    top: '-50px',
+    left: '670px',
+     "@media (max-width:960px)": {
+          
+       left: '146px',
+        width:'45%',
+        },
+    
+     
+  },
+  card: {
+    width: '100%',
+    height: 'auto',
+    padding: theme.spacing(2),
   },
   cardss: {
-    flexDirection: "column",
-    alignItems:'center',
-    justifyContent: "center",
-   
-    borderRadius: "15px",
+    marginLeft: '20px',
+    marginRight: '20px',
     
-    marginLeft:'150px',
-    fontSize:'1.5rem'
+   
+     borderRadius: "150px",
+    
+     fontSize:'1.5rem'
    
   },
-  holder: {
-    flexDirection: "column",
-    alignItems:'start',
-    justifyContent: "start",
-    // border: '2px solid red',
-    borderRadius: "15px",
-    display: 'flex',
-    width: "100%",
-    marginTop:'70px',
-   
-    height: "100vh",
-
-    "@media (max-width:960px)": {
-      width: "80%",
-    },
-  },
-  textss: {
-  
-    fontSize: '20px',
-    lineHeight: '27px',
-    fontWeight:'500',
-    borderRadius: "15px", 
-    color:'black'
+  upper:{
+    marginTop:'500px'
   },
   buttonone: {
-    paddingLeft: "20px",
-    paddingRight: "20px",
+    paddingLeft: "15px",
+    paddingRight: "15px",
     background: "#FFE061",
-    paddingTop: "13px",
+    paddingTop: "8px",
     border: "2px solid white",
     display:'flex',
     alignItems: 'center',
     justifyContent:'center',
     paddingBottom: "10px",
     borderRadius: "5px",
-    marginLeft: "75px",
-    marginTop: "5px",
+    marginLeft: "115px",
+   
     marginBottom: "7px",
     color: "black",
     textTransform: "none",
-    width: "50%",
+    width: "40%",
    fontSize:'18px',
   },
+  textt: {
+    color: 'black',
+    fontSize: '4rem',
+    display: 'flex', alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontWeight: '900',
+      "@media (max-width:960px)": {
+          fontSize:'2rem'
+        },
+  },
+  texth: {
+    color: 'red',
+    fontSize: '28px',
+    marginLeft: '55px',
+    textAlign: 'center',
+    "@media (max-width:960px)": {
+      fontSize: '20px',
+       marginLeft: '2px',marginTop:'80px'
+        },
+  },
+  textss: {
+    fontSize: '20px',
+     lineHeight: '27px',
+    display: 'flex',
+     justifyContent:'center',
+     borderRadius: "15px",
+     color:'black'
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
 }));
-const Noticeborad = () => {
- 
-  const historys = useHistory();
+
+const MyComponent = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.container}>
-      <div className={classes.holder}>
-        <div className={classes.upper}>
-
-        <h3 style={{color:'red', fontSize:'22px', marginLeft:'55px'}}>Ambassader Human resource system</h3>
-          <div style={{ color: 'black', fontSize: '4rem', display: 'flex', textAlign: 'center', fontWeight: '900' }}>
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg={6} >
+            <h3  className={classes.texth} style={{  }}>Ambassader Human resource system</h3>
+            <div className={classes.textt} >
                 Check Out <br></br>  list of <br></br> Announcements
           </div>
-          <div className={classes.textss}>
-            <p>
-                This HR system will handle Announcements, employments information,<br>
+            <div className={classes.textss}>
+           <p>
+               This HR system will handle Announcements, employments information,<br>
                 </br> voting system for elections  payment status for the employess. It will <br></br> simplify the system and make it  easy to handle the human resource
-            </p>   
+            </p>
           </div>
-        </div>
-        <div className={classes.lower}>
-          <h2>Events</h2>
-          <br></br>
-          <Grid  container spacing={3} className={classes.cardss}>
-            <Grid  item lg={4} xs={12}  md={4}>
-              <Card sx={{ maxWidth: 370}}>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+          <img src={ images} alt="Image" className={classes.images} />
+
+          </Grid>
+        </Grid>
+        
+          <div className={classes.events}>Events</div>
+       
+        <Grid container spacing={5} className={classes.cardss}>
+          <Grid item lg={4} xs={12}>
+          
+            
+              <Card sx={{ maxWidth: 300}}>
                   <CardMedia
                     component="img"
                     alt="green iguana"
-                    height="140"
                     image={bell}
+                    className={classes.imagesb}
                 />
-                <br></br>
+                
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
                       Meeting on Salary
                   </Typography>
-                  <br></br>
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
-                      There will be a meeting on salary <br></br> compensation and be there on time
+                  
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
+                      There will be a meeting on salary  compensation and be there on time
                     </Typography>
                   
                   <div>
@@ -179,7 +182,7 @@ const Noticeborad = () => {
                         alignItems: 'center',
                         fontSize:'16px',
                         p: -1,
-                        m: 1,
+                      
                         bgcolor: 'background.paper',
                         borderRadius: 1,
                       }}
@@ -189,7 +192,115 @@ const Noticeborad = () => {
                       
                         fontSize: '18px',
                         p: -1,
-                        m: 1,
+                       
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
+
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
+              </Card>
+          </Grid>
+          <Grid  item lg={4} xs={12}>
+              <Card sx={{ maxWidth: 300}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    image={bell}
+                    className={classes.imagesb}
+                />
+                
+                  <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
+                      There will be a meeting on salary  compensation and be there on time
+                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                      
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                       
+                        color: '#7E7A7A',
+                       
+                      }}>14-19,January</Box>
+                          <Box >By Alemayehu Getahun</Box>
+                          
+                      </Box>
+                  </div>
+
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                <button className={classes.buttonone}>Read More</button>
+                    
+                </CardActions>
+              </Card>
+          </Grid>
+          <Grid  item lg={4} xs={12}>
+              <Card sx={{ maxWidth: 300}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    image={bell}
+                    className={classes.imagesb}
+                />
+                
+                  <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Meeting on Salary
+                  </Typography>
+                  
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
+                      There will be a meeting on salary  compensation and be there on time
+                    </Typography>
+                  
+                  <div>
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize:'16px',
+                        p: -1,
+                      
+                        bgcolor: 'background.paper',
+                        borderRadius: 1,
+                      }}
+                    >
+                      
+                      <Box sx={{
+                      
+                        fontSize: '18px',
+                        p: -1,
+                       
                         color: '#7E7A7A',
                        
                       }}>14-19,January</Box>
@@ -208,142 +319,9 @@ const Noticeborad = () => {
               </Card>
             </Grid>
 
-            <Grid  item lg={4} xs={12}  md={4}>
-              <Card sx={{ maxWidth: 370}}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="140"
-                    image={bell}
-                />
-                <br></br>
-                  <CardContent>
-                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Meeting on Salary
-                  </Typography>
-                  <br></br>
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
-                      There will be a meeting on salary <br></br> compensation and be there on time
-                    </Typography>
-                  
-                  <div>
-                      <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        fontSize:'16px',
-                        p: -1,
-                        m: 1,
-                        bgcolor: 'background.paper',
-                        borderRadius: 1,
-                      }}
-                    >
-                      
-                      <Box sx={{
-                      
-                        fontSize: '18px',
-                        p: -1,
-                        m: 1,
-                        color: '#7E7A7A',
-                       
-                      }}>14-19,January</Box>
-                          <Box >By Alemayehu Getahun</Box>
-                          
-                      </Box>
-                  </div>
-
-                  
-                  
-                  </CardContent>
-                  <CardActions>
-                <button className={classes.buttonone}>Read More</button>
-                    
-                </CardActions>
-              </Card>
-            </Grid>
-
-            <Grid  item lg={4} xs={12}  md={4}>
-              <Card sx={{ maxWidth: 370}}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="140"
-                    image={bell}
-                />
-                <br></br>
-                  <CardContent>
-                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Meeting on Salary
-                  </Typography>
-                  <br></br>
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center',lineHeight:'30px' }}>
-                      There will be a meeting on salary <br></br> compensation and be there on time
-                    </Typography>
-                  
-                  <div>
-                      <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        fontSize:'16px',
-                        p: -1,
-                        m: 1,
-                        bgcolor: 'background.paper',
-                        borderRadius: 1,
-                      }}
-                    >
-                      
-                      <Box sx={{
-                      
-                        fontSize: '18px',
-                        p: -1,
-                        m: 1,
-                        color: '#7E7A7A',
-                       
-                      }}>14-19,January</Box>
-                          <Box >By Alemayehu Getahun</Box>
-                          
-                      </Box>
-                  </div>
-
-                  
-                  
-                  </CardContent>
-                  <CardActions>
-                <button className={classes.buttonone}>Read More</button>
-                    
-                </CardActions>
-              </Card>
-            </Grid>
-
-            
-            
-
-
-            
-
-            
-
-
-            
-            
-
-
-            
-
-            
-            
             
           </Grid>
-      </div>
-      </div>
-      
-      <br></br>
-      
-    </div>
-  );
-};
-
-export default Noticeborad;
+      </Grid>
+    </div>)
+}
+export default MyComponent;
