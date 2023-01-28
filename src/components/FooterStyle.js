@@ -6,7 +6,7 @@ export const Box = styled.div`
   padding: 80px 60px;
   margin-top: 15%;
   margin-bottom:0%;  
-  background: #eeeeee;   
+  background: white;   
   position: relative;
   bottom: 0;
   width: 100%;

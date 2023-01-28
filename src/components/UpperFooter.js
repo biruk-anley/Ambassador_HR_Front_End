@@ -16,20 +16,10 @@ const UpperFooter = () => {
 
             <h1 style={{ color: "#443f3f",
                 textAlign: "center",
-                marginTop: "-50px" }}>
+                marginTop: "-50px",marginBottom:'50px' }}>
 
-                <img
-                    src={ambassadorIcon}
-                    alt=""
-                    width="10%"
-                    
-                    style={{
-                    borderRadius: "8px",
-                    marginTop: "20px",
-                    marginLeft: "20px",
-                    marginBottom: "-20px",
-            }}
-          />
+               
+          
                 <span style={{color: '#ee662d'}}>A</span>mbassador
             </h1>
             <Container>
