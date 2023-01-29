@@ -142,7 +142,7 @@ function NavTabs(props) {
         <React.Fragment>
           {" "}
           <ListItem>
-            <Link to="Noticeborad" className={classes.links}>
+            <Link to="Noticeboard" className={classes.links}>
               <Button className={classes.links}>Notice Board</Button>{" "}
             </Link>
           </ListItem>
