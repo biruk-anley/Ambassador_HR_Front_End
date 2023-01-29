@@ -215,10 +215,7 @@ function Login() {
     // setState({ email: e.target.value });
     setEmail(e.target.value);
   };
-  const onPhoneNumberChanged = (e) => {
-    // setState({ email: e.target.value });
-    setPhoneNumber(e.target.value);
-  };
+ 
   const onPasswordChange = (e) => {
     // setState({ password: e.target.value });
     setPassword(e.target.value);
@@ -258,7 +255,7 @@ function Login() {
     e.preventDefault();
     console.log('clicked')
     validateInput();
-    history.push("/dashboard");
+    history.push("/Noticeboard");
   };
 
   // if (redirect || props.getToken()) {
@@ -302,11 +299,11 @@ function Login() {
               margin="none"
               required
               fullWidth
-              id="PhoneNumber"
-              onChange={onPhoneNumberChanged}
-              label="Phone Number"
-              name="PhoneNumber"
-              autoComplete="Phone"
+              id="Email"
+              onChange={onEmailChange}
+              label="Email"
+              name="Email"
+              autoComplete="Email"
               autoFocus
               className={classes.textField}
             />
@@ -324,21 +321,6 @@ function Login() {
              
               className={classes.textField}
             />
-            
-
-           
-            
-            <Typography
-            align="center"
-            
-            variant="body2"
-            style={{ padding: 10 }}
-            className={classes.texts}
-          >
-           <Link href="/resetPassword" variant="body2">
-                Forgot password?
-              </Link>
-          </Typography>
             
             <Button
               id="login"
