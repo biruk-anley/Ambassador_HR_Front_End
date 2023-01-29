@@ -10,7 +10,7 @@ import Detail from "./pages/Details/";
 /*import LoginRegister from './pages/Authentication/LoginRegister'*/
 //comment
 import LoginRegister from "./pages/Authentication/Login";
-import Signup from "./pages/Authentication/Signup";
+import NoticeBoard from "./pages/Authentication/NoticeBoard";
 import RegisterHouse from "./pages/Addhouse/New";
 import Dashboard from "./pages/dashboard";
 import EditHouse from "./pages/Addhouse/EditHouse";
@@ -124,14 +124,6 @@ function App() {
           </Route> */}
 
 
-          <Route path="/signup" exact>
-            {" "}
-            <Signup
-              setSideBar={setSideBar}
-              // setToken={setToken}
-              // getToken={getToken}
-            />
-          </Route>
 
        
           
@@ -143,7 +135,7 @@ function App() {
             />
           </Route>
           {/* <Route path="/Userlist" component={UserPage} /> */}
-          <Route path="/Noticeborad" component={Signup} />
+          <Route path="/Noticeboard" component={NoticeBoard} />
           <Route path="/payment" component={Payment} />
           <Route path="/addhouse">
             {" "}
