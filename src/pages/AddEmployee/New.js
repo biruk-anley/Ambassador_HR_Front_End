@@ -710,7 +710,7 @@ function NewListing({ setSideBar }) {
                   />
                   <div className="form__label">
                     <label htmlFor="Name" className="form__labelss">
-                      Available date start from
+                      Date of Bith
                     </label>
                   </div>
                 </div>
@@ -719,7 +719,7 @@ function NewListing({ setSideBar }) {
                   id="DateOfBirthError"
                   className={classes.inputError}
                 >
-                  You have to Set Launch Data.
+                  You have to Set Date of birth.
                 </Typography>
               </div>
               <div className={classes.inputsContainer}>
