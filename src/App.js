@@ -6,14 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import NavTabs from "./components/NavTabs";
 import MainBody from "./pages/Home";
 import Detail from "./pages/Details/";
+import AddHouse from './pages/AddEmployee/New'
 
 /*import LoginRegister from './pages/Authentication/LoginRegister'*/
 //comment
 import LoginRegister from "./pages/Authentication/Login";
 import NoticeBoard from "./pages/Authentication/NoticeBoard";
-import RegisterHouse from "./pages/Addhouse/New";
+import RegisterHouse from "./pages/AddEmployee/New";
 import Dashboard from "./pages/dashboard";
-import EditHouse from "./pages/Addhouse/EditHouse";
+import EditHouse from "./pages/AddEmployee/EditHouse";
 import Search from "./pages/Home/Search";
 import AdminDetail from "./pages/dashboard/Admin-dashboard/AdminDetail";
 import UserList from "./pages/dashboard/Admin-dashboard/UserList";
@@ -173,7 +174,7 @@ function App() {
               />
             )}
           />
-          <Route path="/about" component={About} />
+          <Route path="/addEmployee" component={AddHouse} />
         </Container>
       </BrowserRouter>
       <UpperFooter></UpperFooter>
