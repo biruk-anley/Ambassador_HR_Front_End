@@ -8,7 +8,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import mainpic from "../images/main.png";
-import smallhouse from "../images/upright.png";
+import smallhouse from "../images/addd.png";
 import "./inputlocation.css";
 
 import TextField from "@mui/material/TextField";
@@ -216,25 +216,13 @@ function NewListing({ setSideBar }) {
     (state) => state.house
   );
 
-  setSideBar(false);
-  // const [state, setState] = useState({
-  //   location: "",
-  //   bedRoom: "",
-  //   monthlyPayment: "",
-  //   floor: "",
-  //   phoneNumber: "",
-  //   guestHouse: false,
-  //   description: "",
-  //   squareMeter: "",
-  //   file: null,
-  //   errorMessage: "",
-  //   isRedirectToHomepage: false,
-  // });
 
-  const [location, setLocation] = useState("");
-  const [bedRoom, setBedRoom] = useState("");
+  
+
+  const [Name, setName] = useState("");
+  const [Sex, setSex] = useState("");
   const [monthlyPayment, setMonthlyPayment] = useState("");
-  const [floor, setFloor] = useState("");
+  const [Gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [guestHouse, setGuestHouse] = useState(false);
   const [description, setDescription] = useState("");
@@ -242,7 +230,7 @@ function NewListing({ setSideBar }) {
   const [file, setFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isRedirectToHomepage, setRedirectToHomePage] = useState(false);
-  const [availabilityDate, setAvailableDate] = useState(new Date());
+  const [DateOfBirthDate, setAvailableDate] = useState(new Date());
   const [validity, setValidity] = useState(false);
 
   useEffect(() => {
@@ -267,45 +255,45 @@ function NewListing({ setSideBar }) {
 
   const validateForm = (e) => {
     const product = {
-      location: location,
-      bedRoom: parseInt(bedRoom),
+      Name: Name,
+      Sex: parseInt(Sex),
       monthlyPayment: parseInt(monthlyPayment),
-      floor: parseInt(floor),
+      Gender: parseInt(Gender),
       squareMeter: squareMeter,
       phoneNumber: parseInt(phoneNumber),
       guestHouse: guestHouse,
       description: description,
-      availabilityDate: moment(availabilityDate).format("DD-MM-YYYY"),
+      DateOfBirthDate: moment(DateOfBirthDate).format("DD-MM-YYYY"),
       listingStatus: listingStatusFilter(e),
       reviewStatus: e.currentTarget.value,
     };
     console.log("come 1 ");
-    if (!location) {
-      document.getElementById("locationError").style.display = "block";
+    if (!Name) {
+      document.getElementById("NameError").style.display = "block";
     }
-    if (!floor) {
-      document.getElementById("floorError").style.display = "block";
+    if (!Gender) {
+      document.getElementById("GenderError").style.display = "block";
     }
     if (!monthlyPayment) {
       document.getElementById("monthlyPaymentError").style.display = "block";
     }
-    if (!bedRoom) {
-      document.getElementById("bedRoomError").style.display = "block";
+    if (!Sex) {
+      document.getElementById("SexError").style.display = "block";
     }
 
     if (!phoneNumber) {
       document.getElementById("phoneNumberError").style.display = "block";
     }
 
-    if (!availabilityDate) {
-      document.getElementById("availabilityError").style.display = "block";
+    if (!DateOfBirthDate) {
+      document.getElementById("DateOfBirthError").style.display = "block";
     }
     // if (!file) {
     //   document.getElementById("dropZoneImage").style.display = "block";
     // }
     // console.log("come 2 ");
 
-    if (location && floor && monthlyPayment && bedRoom && phoneNumber) {
+    if (Name && Gender && monthlyPayment && Sex && phoneNumber) {
       setValidity(true);
       console.log("come 3 ");
       // pass the product as props
@@ -320,11 +308,11 @@ function NewListing({ setSideBar }) {
 
   const submitNewListingApiRequest = async (newLaunchDetails) => {
     const {
-      location,
+      Name,
       squareMeter,
-      bedRoom,
+      Sex,
       monthlyPayment,
-      floor,
+      Gender,
       phoneNumber,
       guestHouse,
       description,
@@ -333,17 +321,17 @@ function NewListing({ setSideBar }) {
     } = newLaunchDetails;
 
     const formDatas = {
-      location,
+      Name,
       squareMeter,
-      bedRoom,
+      Sex,
       monthlyPayment,
-      floor,
+      Gender,
       phoneNumber,
       guestHouse,
       description,
       listingStatus,
       reviewStatus,
-      availabilityDate,
+      DateOfBirthDate,
     };
     const formData = new FormData();
     file.forEach((fil) => {
@@ -380,15 +368,15 @@ function NewListing({ setSideBar }) {
     setRedirectToHomePage(true);
   };
 
-  const onLocationChanged = (e) => {
+  const onNameChanged = (e) => {
     if (e.target.value.length === 0) {
-      document.getElementById("locationError").style.display = "block";
+      document.getElementById("NameError").style.display = "block";
     } else {
-      document.getElementById("locationError").style.display = "none";
+      document.getElementById("NameError").style.display = "none";
     }
-    setLocation(e.target.value);
+    setName(e.target.value);
     if (e.target.value !== 1) {
-      setLocation(e.target.value);
+      setName(e.target.value);
     }
   };
 
@@ -396,13 +384,13 @@ function NewListing({ setSideBar }) {
     setDescription(e.target.value);
   };
 
-  const onFloorChanged = (e) => {
-    if (e.target.value === "Select Floor") {
-      document.getElementById("floorError").style.display = "block";
+  const onGenderChanged = (e) => {
+    if (e.target.value === "Select Gender") {
+      document.getElementById("GenderError").style.display = "block";
     } else {
-      document.getElementById("floorError").style.display = "none";
+      document.getElementById("GenderError").style.display = "none";
     }
-    setFloor(e.target.value);
+    setGender(e.target.value);
   };
 
   const onMonthlyPaymentChanged = (e) => {
@@ -415,13 +403,13 @@ function NewListing({ setSideBar }) {
     setMonthlyPayment(e.target.value);
   };
 
-  const onBedroomChanged = (e) => {
+  const onSexChanged = (e) => {
     if (e.target.value.length === "Select Bed Rooms") {
-      document.getElementById("bedRoomError").style.display = "block";
+      document.getElementById("SexError").style.display = "block";
     } else {
-      document.getElementById("bedRoomError").style.display = "none";
+      document.getElementById("SexError").style.display = "none";
     }
-    setBedRoom(e.target.value);
+    setSex(e.target.value);
   };
 
   const onPhoneNumberChanged = (e) => {
@@ -434,11 +422,11 @@ function NewListing({ setSideBar }) {
     setPhoneNumber(e.target.value);
   };
 
-  const onAvailabilityChanged = (date) => {
+  const onDateOfBirthChanged = (date) => {
     if (date === null) {
-      document.getElementById("availabilityError").style.display = "block";
+      document.getElementById("DateOfBirthError").style.display = "block";
     } else {
-      document.getElementById("availabilityError").style.display = "none";
+      document.getElementById("DateOfBirthError").style.display = "none";
     }
     setAvailableDate(date);
   };
@@ -458,12 +446,7 @@ function NewListing({ setSideBar }) {
     setGuestHouse(e.target.value === "yes");
   };
 
-  if (!localStorage.getItem("token")) {
-    return <Redirect to="/login" />;
-  }
-  if (isRedirectToHomepage) {
-    return <Redirect to="/dashboard" />;
-  }
+  
 
   if (validity) {
     return (
@@ -486,7 +469,7 @@ function NewListing({ setSideBar }) {
                       variant="h6"
                       style={{ marginBottom: "30px", marginTop: "35px" }}
                     >
-                      Add New House
+                      Add Employees
                     </Typography>
                   </div>
                 </div>
@@ -653,7 +636,7 @@ function NewListing({ setSideBar }) {
                       marginLeft: "-15px",
                     }}
                   >
-                    New House
+                    Employees
                   </Typography>
                 </div>
 
@@ -663,161 +646,58 @@ function NewListing({ setSideBar }) {
               <div className={classes.inputsContainer}>
                 <input
                   type="text"
-                  list="locationOfCondominium"
-                  id="location"
+                  list="NameOfCondominium"
+                  id="Name"
                   name="Myname"
                   className="form__input"
-                  placeholder="Location of condominium"
-                  onChange={onLocationChanged}
-                  value={location}
+                  placeholder="Full Name"
+                  onChange={onNameChanged}
+                  value={Name}
                 />
                 <div className="form__label">
-                  <label htmlFor="location" className="form__labels">
-                    Location
+                  <label htmlFor="Name" className="form__labels">
+                    Name
                   </label>
                 </div>
 
-                <datalist id="locationOfCondominium">
-                  <option value="Ayat Condominium" />
-                  <option value="Yeka Abado Condominium" />
-                  <option value="Submit Condominium" />
-                  <option value="Gelan Condominium" />
-                  <option value="Tuludimtu Condominium" />
-                  <option value="4 killo Condominium" />
-                  <option value="Gotera Condominium" />
-                  <option value="Balderas Condominium" />
-                  <option value="Mebrathail Condominium" />
-                </datalist>
                 <Typography
                   variant="body2"
-                  id="locationError"
+                  id="NameError"
                   className={classes.inputError}
                 >
-                  You have to entered Location of your condominium.
+                  Enter Your full name
                 </Typography>
               </div>
-              <div className={classes.inputsContainer}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Bedroom</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    sx={{ height: 42 }}
-                    label="Bedroom"
-                    onChange={onBedroomChanged}
-                    name="selectNumberOfBedrooms"
-                  >
-                    <MenuItem value="1">0 (studio)</MenuItem>
-                    <MenuItem value="1">1</MenuItem>
-                    <MenuItem value="2">2</MenuItem>
-                    <MenuItem value="3">3</MenuItem>
-                  </Select>
-                </FormControl>
-                <Typography
-                  type="number"
-                  variant="body2"
-                  id="bedRoomError"
-                  className={classes.inputError}
-                >
-                  You have to enter number of bed rooms.
-                </Typography>
-              </div>
+              
               <div className={classes.inputsContainer}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
-                    Select Floor
+                    Select Your  Gender
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     sx={{ height: 42 }}
-                    label="Select Floor"
-                    onChange={onFloorChanged}
-                    name="selectNumberOfBedrooms"
+                    label="Select Gender"
+                    onChange={onGenderChanged}
+                    name="selectNumberOfSexs"
                   >
-                    <MenuItem value="0">ground</MenuItem>
-                    <MenuItem value="1">+1</MenuItem>
-                    <MenuItem value="2">+2</MenuItem>
-                    <MenuItem value="3">+3</MenuItem>
-                    <MenuItem value="4">+4</MenuItem>
-                    <MenuItem value="5">+5</MenuItem>
-                    <MenuItem value="6">+6</MenuItem>
+                    <MenuItem value="0">Male</MenuItem>
+                    <MenuItem value="1">Female</MenuItem>
+                    
                   </Select>
                 </FormControl>
                 <Typography
                   variant="body2"
-                  id="floorError"
+                  id="GenderError"
                   className={classes.inputError}
                 >
-                  you have to select floor.
+                  you have to select Gender.
                 </Typography>
               </div>
 
+              
               <div className={classes.inputsContainer}>
-                <TextField
-                  label="Monthly payment"
-                  className={classes.input}
-                  onChange={onMonthlyPaymentChanged}
-                  value={monthlyPayment}
-                  placeholder="eg, 5000"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <span>
-                          <i class="fas fa-dollar-sign"></i>
-                        </span>
-                      </InputAdornment>
-                    ),
-                    className: classes.input,
-                  }}
-                />
-                <Typography
-                  variant="body2"
-                  id="monthlyPaymentError"
-                  className={classes.inputError}
-                >
-                  you have to enter monthly payment.
-                </Typography>
-              </div>
-              <div className={classes.inputsContainer}>
-                <input
-                  name="SquareMeter"
-                  type="text"
-                  list="squareMetersInput"
-                  placeholder="Square meter of your house"
-                  className="form__input"
-                  onChange={onSquareMeterChanged}
-                  value={squareMeter}
-                />
-                <datalist id="squareMetersInput">
-                  <option value="4 x 4"></option>
-                  <option value="3 x 4"></option>
-                  <option value="5 x 4"></option>
-                  <option value="5 x 3"></option>
-                </datalist>
-                <div className="form__label">
-                  <label htmlFor="location" className="form__labelss">
-                    Square meters{" "}
-                    <span style={{ opacity: "0.5" }}>(optional)</span>
-                  </label>
-                </div>
-              </div>
-              <div className={classes.inputsContainer}>
-                {/*                                         
-                                      selected={starterdate}
-                                      value={moment(availabilityDate).format("DD-MM-YYYY")} */}
-                {/* <TextField
-                                      label="Monthly payment"
-                                 
-                                      className={classes.input}
-                                      type="date"
-                                      
-                                      
-                                      value={moment(availabilityDate).format("YYYY-MM-DD")}
-                                      onChange={onAvailabilityChanged}
-                                      InputProps={{
-                                          
-                                          className: classes.input
-                                      }}
-                                  /> */}
+               
                 <div className={classes.dataPicker} id="date">
                   <DatePicker
                     name="date"
@@ -825,18 +705,18 @@ function NewListing({ setSideBar }) {
                     dayPlaceholder="21"
                     // selected={productLaunchDate}
                     className="form__input"
-                    onChange={onAvailabilityChanged}
-                    value={moment(availabilityDate).format("DD-MM-YYYY")}
+                    onChange={onDateOfBirthChanged}
+                    value={moment(DateOfBirthDate).format("DD-MM-YYYY")}
                   />
                   <div className="form__label">
-                    <label htmlFor="location" className="form__labelss">
+                    <label htmlFor="Name" className="form__labelss">
                       Available date start from
                     </label>
                   </div>
                 </div>
                 <Typography
                   variant="body2"
-                  id="availabilityError"
+                  id="DateOfBirthError"
                   className={classes.inputError}
                 >
                   You have to Set Launch Data.
