@@ -1,6 +1,6 @@
 // imports the React Javascript Library
 import React from "react";
-//Card
+//Card comoponent
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
