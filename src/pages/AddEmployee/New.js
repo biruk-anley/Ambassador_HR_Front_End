@@ -23,6 +23,8 @@ import { withStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
 import { addHouse, addHouseImg } from "../../features/house/houseSlice";
 
+const AmbassaderImage = process.env.PUBLIC_URL + "/img/new.png";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& input[type=number]": {
