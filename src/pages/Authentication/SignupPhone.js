@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "",
     justifyContent: "center",
-    // backgroundImage: `url(${backgroundimages})`,
+    
     
     
     width: "100%",
