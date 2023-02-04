@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#9FA2B4",
     fontSize: "18px",
     fontWeight: "bold",
-    //   display: "flex",
+   
     paddingTop: "1.25rem",
     padding: 0,
   },
