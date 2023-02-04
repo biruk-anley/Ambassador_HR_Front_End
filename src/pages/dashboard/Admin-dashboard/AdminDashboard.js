@@ -13,7 +13,6 @@ import moment from "moment";
 import backEndApi from "../../../services/api";
 import { Pagination } from "@mui/material";
 
-// import fas-fa home from "@mui/icons-material/AddCircleOutlined";
 import { Redirect, Link } from "react-router-dom";
 import usePagination from "../Pagination";
 import useStyles from "./AdminStyle";
