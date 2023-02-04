@@ -284,11 +284,7 @@ function EditHouse(props) {
       listingStatus === "Draft"
     ) {
       return "Submitted";
-    } /*else if (e.currentTarget.value === "Inactive" && listingStatus === "Active"){
-            return "Inactive"
-        }else if (e.currentTarget.value === "Active" && listingStatus === "Inactive"){
-            return "Active"
-        }*/ else {
+    }  else {
       return listingStatus;
     }
   };
@@ -353,19 +349,7 @@ function EditHouse(props) {
 
     dispatch(editHouseUpdate(newLaunchDetails));
 
-    // let response = await axios.post(
-    //   "http://localhost:5000/editHouseUpdate",
-    //   newLaunchDetails,
-    //   {
-    //     headers: {
-    //       "content-type": "multipart/form-data",
-    //       "x-access-token": JSON.parse(localStorage.getItem("token")),
-    //     },
-    //   }
-    // );
-    /*let resImage = await backEndApi.post('/uploadProductImage', formData, config);*/
-
-    // console.log("The files and Image success fully uploaded" + response);
+   
     setIsRedirectToHomepage(true);
   };
 
