@@ -21,7 +21,6 @@ import backEndApi from "../../services/api";
 import moment from "moment";
 import { withStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
-import { addHouse, addHouseImg } from "../../features/house/houseSlice";
 
 const AmbassaderImage = process.env.PUBLIC_URL + "/img/new.png";
 
@@ -221,9 +220,7 @@ function NewListing({ setSideBar }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { addHouseIsLoading, addHouseIsSuccess, addHouseIsFail } = useSelector(
-    (state) => state.house
-  );
+  
 
 
   
@@ -243,11 +240,6 @@ function NewListing({ setSideBar }) {
   const [isRedirectToHomepage, setRedirectToHomePage] = useState(false);
   const [validity, setValidity] = useState(false);
 
-  useEffect(() => {
-    if (addHouseIsSuccess) {
-      history.push("/dashboard");
-    }
-  }, [addHouseIsSuccess]);
 
   const onFormSubmit = (e) => {
     e.preventDefault();

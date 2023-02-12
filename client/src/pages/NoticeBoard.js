@@ -10,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
-import bell from '../images/belll.svg';
+import bell from '../pages/images/belll.svg';
 import { Link } from "react-router-dom";
 
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";

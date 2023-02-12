@@ -12,8 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import { compose } from "recompose";
-import AdminDrawer from "./AdminDrawer";
-import { logoutUser } from "../features/auth/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,52 +90,16 @@ const useStyles = makeStyles((theme) => ({
 function NavTabs(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLoginSuccess } = useSelector((state) => state.auth);
-  const { isSuccess, data } = useSelector((state) => state.dashboard);
   const [isHumActive, setHumActive] = useState(false);
 
   const classes = useStyles();
 
-  const onLogoutClicked = () => {
-    dispatch(logoutUser());
-    history.push("/");
-  };
+ 
   const onButtonClick = () => {
     setHumActive(!isHumActive);
   };
   const isAuthenticated = () => {
-    const token = localStorage.getItem("token");
-    if (isLoginSuccess || isSuccess) {
-      return (
-        <React.Fragment>
-          <ListItem>
-            <Link to="/" className={classes.links}>
-              {" "}
-              <Button className={classes.links}>Home</Button>{" "}
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link className={classes.links} to="/addhouse">
-              <Button className={classes.links}>Add House</Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link className={classes.links} to="/dashboard">
-              <Button className={classes.links}>Dashboard</Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Button
-              className={classes.links}
-              href="/"
-              onClick={onLogoutClicked}
-            >
-              LOGOUT
-            </Button>
-          </ListItem>
-        </React.Fragment>
-      );
-    } else {
+    
       return (
         <React.Fragment>
           {" "}
@@ -157,13 +119,13 @@ function NavTabs(props) {
             </Link>
           </ListItem>
           <ListItem>
-            <Link to="payment" className={classes.links}>
+            <Link to="Employee" className={classes.links}>
               <Button className={classes.links}>Employees</Button>
             </Link>
           </ListItem>
         </React.Fragment>
       );
-    }
+    
   };
 
   const navOptions = () => {
@@ -221,20 +183,7 @@ function NavTabs(props) {
             }}
           >
             <div style={{ display: "flex" }}>
-              {/* {props.sideBar ? (
-                isSuccess ? (
-                  data.auth == "Admin" ? (
-                    <AdminDrawer />
-                  ) : (
-                    ""
-                  )
-                ) : (
-                  ""
-                )
-              ) : (
-                ""
-              )} */}
-              {/* {props.isAdmin() && <AdminDrawer />} */}
+         
               <h3 style={{ fontSize: "30px", margin: 0, color: "black" }}>
                 <Link to={"/"} className={classes.LogoTextNavbar}>
                   <span style={{ color: "#ee662d" }}>A</span>mbassador
@@ -269,19 +218,8 @@ function NavTabs(props) {
         >
           <div>
             <div style={{ display: "flex" }}>
-              {props.sideBar ? (
-                isSuccess ? (
-                  data.auth == "Admin" ? (
-                    <AdminDrawer />
-                  ) : (
-                    ""
-                  )
-                ) : (
-                  ""
-                )
-              ) : (
-                ""
-              )}
+              
+                  
               <h3 style={{ fontSize: "30px", margin: 0, color: "black" }}>
                 <Link className={classes.LogoTextNavbar} to={"/"}>
                   <span style={{ color: "#ee662d" }}>A</span>mbassador

@@ -26,9 +26,9 @@ const UpperFooter = () => {
                 <Row>
                     <Column>
                         <Heading>About Us</Heading>
-                        <FooterLink href="/About">Aim</FooterLink>
-                        <FooterLink href="/About">Vision</FooterLink>
-                        <FooterLink href="/ABout">BackGround</FooterLink>
+                        <FooterLink href="#">Aim</FooterLink>
+                        <FooterLink href="#">Vision</FooterLink>
+                        <FooterLink href="#">BackGround</FooterLink>
                     </Column>
                     <Column>
                         <Heading>Services</Heading>

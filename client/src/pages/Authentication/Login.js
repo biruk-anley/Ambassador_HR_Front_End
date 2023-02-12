@@ -10,9 +10,8 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import { loginUser } from "../../features/auth/authSlice";
 import { useHistory } from "react-router-dom";
-import { useUserAuth } from "../../context/UserAuthContext";
+
 
 
 import backEndApi from "../../services/api";
@@ -145,48 +144,19 @@ const useStyles = makeStyles((theme) => ({
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loginData, loginErrorMessage, isLoginSuccess } = useSelector(
-    (state) => state.auth
-  );
+  
 
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber]= useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const { logIn, googleSignIn } = useUserAuth();
+  
   const [errorMessage, setErrorMessage] = useState("");
   const [token, setToken] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const historys = useHistory();
   const classes = useStyles();
-  const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      await googleSignIn();
-      historys.push("/home");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      history.push("/dashboard");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (loginErrorMessage === "notUser") {
-      setErrorMessage("Incorrect Username or Password!");
-    }
-  }, [loginErrorMessage]);
-
-  useEffect(() => {
-    if (isLoginSuccess === true) {
-      history.push("/dashboard");
-    }
-  }, [isLoginSuccess]);
+  
 
   const errorCheck = () => {
     if (errorMessage) {
@@ -220,23 +190,7 @@ function Login() {
     // setState({ password: e.target.value });
     setPassword(e.target.value);
   };
-  const loginApiRequest = (loginParams) => {
-    dispatch(loginUser(loginParams));
-    // const { data } = await backEndApi.post("/loginUser", {
-    //   params: loginParams,
-    // });
-
-    if (loginData !== "notUser") {
-      // setState({ errorMessage: "Incorrect Username or Password!" });
-      const token = { data: loginData };
-      // localStorage.setItem("token", JSON.stringify(token));
-      // props.setToken(token);
-      // setState({ token: token, redirect: true, isAdmin: data.isAdmin });
-      setToken(token);
-      setRedirect(true);
-      setIsAdmin(loginData?.isAdmin);
-    }
-  };
+  
   const validateInput = () => {
     const loginDetail = {
       phoneNumber: phoneNumber,
@@ -244,7 +198,6 @@ function Login() {
     };
 
     if (phoneNumber && password) {
-      loginApiRequest(loginDetail);
     } else {
       setErrorMessage("Please fill all the inputs!");
       // setState({ errorMessage: "Please fill all the inputs!" });
