@@ -168,7 +168,7 @@ const Vote = () => {
                     </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'10px',fontWeight: '600' }}>
-                        Voting detail descripition 
+                        Voting detail descripition
                     </Typography>
                   
                  

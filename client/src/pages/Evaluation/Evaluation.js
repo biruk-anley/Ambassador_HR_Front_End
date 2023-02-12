@@ -1,3 +1,6 @@
+
+
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -6,8 +9,12 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
+import Box from '@mui/material/Box';
+import bell from '../images/star.png';
 import { Link } from "react-router-dom";
-import bell from '../images/belll.svg';
+
+const images = process.env.PUBLIC_URL + "/img/evaluatee.png";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -20,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width:'75%',
 
     position: 'relative',
-    top: '-120px',
+    top: '-80px',
     left: '-10px',
      "@media (max-width:960px)": {
           top: '-570px',
@@ -127,11 +134,38 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '56.25%', // 16:9
   },
 }));
-const Evaluation = ()=> {
+
+const Evaluation = () => {
   const classes = useStyles();
 
   return (
-    <Grid item lg={4} xs={12}>
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg={6} >
+            <h3  className={classes.texth} style={{  }}>Ambassader Human resource system</h3>
+            <div className={classes.textt} >
+ 
+            Words  Have <br></br>  Power <br></br> Evaluate Truely 
+          </div>
+          <br></br>
+            <div className={classes.textss}>
+           <p>
+               This HR system will handle Announcements, employments information,<br>
+                </br> voting system for elections  payment status for the employess. It will <br></br> simplify the system and make it  easy to handle the human resource
+            </p>
+          </div>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+          <img src={ images} alt="Image" className={classes.images} />
+
+          </Grid>
+        </Grid>
+        
+          <div className={classes.events}>Evaluation</div>
+       
+        <Grid container spacing={5} className={classes.cardss}>
+          <Grid item lg={4} xs={12}>
           
             
               <Card sx={{ maxWidth: 300}}>
@@ -144,11 +178,11 @@ const Evaluation = ()=> {
                 
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evaluation page
+                      Evalution : Abebe Aregay
                   </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      There will be a meeting on salary  compensation and be there on time
+                      Dead Line : April 22-2023
                     </Typography>
                   
                   
@@ -164,7 +198,72 @@ const Evaluation = ()=> {
                 </CardActions>
               </Card>
           </Grid>
-  )
-}
+          <Grid  item lg={4} xs={12}>
+              <Card sx={{ maxWidth: 300}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    image={bell}
+                    className={classes.imagesb}
+                />
+                
+                <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Evalution : Abebe Aregay
+                  </Typography>
+                  
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
+                      Dead Line : April 22-2023
+                    </Typography>
+                  
+                  
 
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                  <Link className={classes.links} to="/EvaluationDetail">
+                     <button className={classes.buttonone}>Evaluate</button>
+                  </Link>
+                    
+                </CardActions>
+              </Card>
+          </Grid>
+          <Grid  item lg={4} xs={12}>
+              <Card sx={{ maxWidth: 300}}>
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    image={bell}
+                    className={classes.imagesb}
+                />
+                
+                <CardContent>
+                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Evalution : Abebe Aregay
+                  </Typography>
+                  
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
+                      Dead Line : April 22-2023
+                    </Typography>
+                  
+                  
+
+                  
+                  
+                  </CardContent>
+                  <CardActions>
+                  <Link className={classes.links} to="/EvaluationDetail">
+                     <button className={classes.buttonone}>Evaluate</button>
+                  </Link>
+                    
+                </CardActions>
+              </Card>
+            </Grid>
+
+            
+          </Grid>
+      </Grid>
+    </div>)
+}
 export default Evaluation;
