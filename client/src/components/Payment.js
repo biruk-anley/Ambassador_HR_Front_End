@@ -1,147 +1,243 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import { styled } from '@mui/material/styles';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import  { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+// import React, { useState } from 'react';
 
+// const Payment = () => {
+//   const [status, setStatus] = useState('paid');
 
+//   return (
+//     <table>
+//       <thead>
+//         <tr>
+//           <th>Name</th>
+//           <th>Position</th>
+//           <th>Salary</th>
+//           <th>Status</th>
+//           <th>Evaluation</th>
+//         </tr>
+//       </thead>
+//       <tbody>
+//         <tr>
+//           <td>John Doe</td>
+//           <td>Manager</td>
+//           <td>$100,000</td>
+//           <td>
+//             <select value={status} onChange={e => setStatus(e.target.value)}>
+//               <option value="paid">Paid</option>
+//               <option value="rejected">Rejected</option>
+//               <option value="cutoff">Cutoff</option>
+//             </select>
+//           </td>
+//           <td>Good</td>
+//         </tr>
+//       </tbody>
+//     </table>
+//   );
+// };
 
+// export default Payment;
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-const columns = [
-    
-    {
-        id: 'Name',
-        label: 'Name',
-        minWidth: 10
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@mui/material/TextField";
+
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles(theme => ({
+  dropdownItem: {
+
+    backgroundColor: 'white',
+    width:'80%',
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.white,
     },
-    { id: 'Position',
-    label: 'Position',
-    minWidth: 10,
-        align: 'center',
-    },
-    { id: 'Salary',
-    label: 'Salary',
-    minWidth: 10,
-    align: 'center', },
-
+  },
+  lower:{
+    display:'flex',
+    justifyContent:'flex-end',
    
+    alignContent:'center',
+  },
+  buttonone:{
+    paddingLeft: "5px",
+    paddingRight: "15px",
+    background: "#FFE061",
   
-  {
-    id: 'Status',
-    label: 'Status',
-    minWidth: 10,
-    align: 'right',
+    border: "2px solid white",
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center',
     
-    },
-   
+    paddingInline:'50px',
+    borderRadius: "10px",
+    paddingTop:'10px',
+    paddingBottom:'15px',
+    margin: "15px",
+    
+  
+    color: "black",
+    textTransform: "none",
+    width: "100%",
+   fontSize:'18px',
+  },
+  header:{
+    backgroundColor: '#F3F6F9',
+
+  },
+  links:{
+    textDecoration:'none'
+  },
+
+  tables:{
+    color:'white',
+  }
+}));
+
+
+
+const data = [
   {
-    id: 'Evaluation',
-    label: 'Evaluation',
-    minWidth: 10,
-    align: 'right',
- 
+    name: "John Doe",
+    position: "Manager",
+    salary: "$100,000",
+    status: "Paid",
+    evaluation: "Excellent",
+  },
+  {
+    name: "Jane Doe",
+    position: "Developer",
+    salary: "$80,000",
+    status: "Rejected",
+    evaluation: "Good",
+  },
+  {
+    name: "Jim Brown",
+    position: "Designer",
+    salary: "$70,000",
+    status: "Cutoff",
+    evaluation: "Average",
   },
 ];
 
-function createData(Name, Position, Salary, Status, Evaluation) {
+const Payment = () => {
+  const classes = useStyles();
+  const [users, setUsers] = useState(data);
 
-  return { Name, Position, Salary , Status, Evaluation };
-}
+  const handleStatusChange = (event, name) => {
+    const newUsers = users.map((user) => {
+      if (user.name == name) user.status = event.target.value;
 
-const rows = [
-  createData('Solomon Aregay', 'Admnstartion', 25000, "Paid", "Payment Completed"),
-  createData('Debeb Asefa', 'Industrial Marketing',25000, "Unpaid", "Unfinished Project"),
-  createData('Amanuael Kebede', 'IT', 10000, "Unpaid", "Unfinished Project"),
-  createData('Samrawit Mekuanint', 'Finance', 15000, "Paid", "Payment Completed"),
-  createData('Duresa Megersa', 'Management', 15000, "Unpaid", "Unfinished Project"),
-  createData('Kalab Degsew', 'IT', 18000, "Unpaid", "Unfinished Project"),
-  createData('helen Aregay', 'Management', 17000, "Unpaid", "Unfinished Project"),
-  createData('Mekonen Demeke', 'Accountant', 15000, "Unpaid", "Unfinished Project"),
-  createData('Samson Ferede', 'Industrial Marketing', 15000, "Paid", "Payment Completed"),
-  createData('Bzunesh Abebe', 'Human resource', 17000, "Unpaid", "Unfinished Project"),
-  createData('Solomon ayalew', 'Managment', 15000, "Paid", "Payment Completed"),
-  createData('Finiet Abeba', 'Admnstration', 15000, "Unpaid", "Unfinished Project"),
-  createData('Mekonen Demekee', 'Industrial Marketing', 15000, "Unpaid", "Unfinished Project"),
-  createData('Abebe Aregay', 'finance', 18000, "Unpaid", "Unfinished Project"),
-  createData('Demeke Solomon', 'It', 15000, "Unpaid", "Unfinished Project"),
-];
-
-export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+      return user;
+    });
+    setUsers(newUsers);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const onDescriptionChanged = (event,evaluation)=>{
+    const newUserss = users.map((user) => {
+      if (user.evaluation == evaluation) user.status = event.target.value;
+
+      return user;
+    });
+    setUsers(newUserss);
+  }
 
   return (
-    <Paper sx={{ width: '95%', overflow: 'hidden' ,marginLeft:'40px' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <StyledTableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
+   <div>
+
+     <div className="upper">
+     <Table className={classes.table}>
+      <TableHead>
+        <TableRow className={classes.header}>
+          <TableCell>Name</TableCell>
+          <TableCell>Position</TableCell>
+          <TableCell>Salary</TableCell>
+          <TableCell>Status</TableCell>
+          <TableCell>Evaluation</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {data.map((row) => (
+          <TableRow key={row.name}>
+            <TableCell component="th" scope="row">
+              {row.name}
+            </TableCell>
+            <TableCell>{row.position}</TableCell>
+            <TableCell>{row.salary}</TableCell>
+            <TableCell  
+            
+            >
+              <FormControl 
+              variant="outlined"
+              className={classes.dropdownItem}
+              
+              >
+                <Select
+                  value={row.status}
+                  className={classes.dropdownItem}
+                  onChange={(e) => {
+                    handleStatusChange(e, row.name);
+                  }}
+                  displayEmpty
                 >
-                  {column.label}
-                </StyledTableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+                  <MenuItem value="">
+                    <em>{row.status}</em>
+                  </MenuItem>
+                  <MenuItem value="Paid">Un Paid</MenuItem>
+                  <MenuItem value="Rejected">Rejected</MenuItem>
+                  <MenuItem value="Cutoff">Cutoff</MenuItem>
+                </Select>
+              </FormControl>
+            </TableCell>
+            <TableCell>
+              {/* <FormControl>
+                
+              </FormControl>
+              
+              {row.evaluation} */}
+              <FormControl>
+              
+                <TextField
+              
+                  
+                  placeholder="mrrrrrrrr"
+                  rows={4}
+                  variant="outlined"
+                  value={row.evaluation}
+                  onChange={(e) => {
+                    onDescriptionChanged(e, row.name);
+                  }}
+                />
+              
+              </FormControl>
+              
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+     </div>
+     <br></br>
+    <div className={classes.lower}>
+      
+    <Link className={classes.links} to="/readmore">
+         <button className={classes.buttonone}>Save</button>
+    </Link>
+
+    <Link className={classes.links} to="/addemployee" style={{marginLeft:'15px'}}>
+         <button className={classes.buttonone} >Register Employee</button>
+    </Link>
+    </div>
+      
+   </div>
+    
+    
+
   );
-}
+};
+export default Payment;
