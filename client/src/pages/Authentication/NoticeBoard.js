@@ -10,7 +10,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
-import bell from '../images/belll.svg'
+import bell from '../images/belll.svg';
+import { Link } from "react-router-dom";
+
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,25 +35,7 @@ const useStyles = makeStyles((theme) => ({
         width:'45%',
         },
 },
-
-//   @keyframes shake {
-//   10%, 90% {
-//     transform: translate3d(-1px, 0, 0);
-//   }
   
-//   20%, 80% {
-//     transform: translate3d(2px, 0, 0);
-//   }
-
-//   30%, 50%, 70% {
-//     transform: translate3d(-4px, 0, 0);
-//   }
-
-//   40%, 60% {
-//     transform: translate3d(4px, 0, 0);
-//   }
-// }
-    
   
   imagesb:{
     width: '12rem',
@@ -109,6 +93,12 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     width: "40%",
    fontSize:'18px',
+  },
+  links: {
+    textDecoration: "none",
+    width:'100%',
+    fontSize: "13px !important",
+    fontWeight: "bold",
   },
   textt: {
     color: 'black',
@@ -193,38 +183,15 @@ const MyComponent = () => {
                       There will be a meeting on salary  compensation and be there on time
                     </Typography>
                   
-                  <div>
-                      <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        fontSize:'16px',
-                        p: -1,
-                      
-                        bgcolor: 'background.paper',
-                        borderRadius: 1,
-                      }}
-                    >
-                      
-                      <Box sx={{
-                      
-                        fontSize: '18px',
-                        p: -1,
-                       
-                        color: '#7E7A7A',
-                       
-                      }}>14-19,January</Box>
-                          <Box >By Alemayehu Getahun</Box>
-                          
-                      </Box>
-                  </div>
+                  
 
                   
                   
                   </CardContent>
                   <CardActions>
-                <button className={classes.buttonone}>Read More</button>
+                  <Link className={classes.links} to="/readmore">
+                     <button className={classes.buttonone}>Read More</button>
+                  </Link>
                     
                 </CardActions>
               </Card>
@@ -247,38 +214,15 @@ const MyComponent = () => {
                       There will be a meeting on salary  compensation and be there on time
                     </Typography>
                   
-                  <div>
-                      <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        fontSize:'16px',
-                        p: -1,
-                      
-                        bgcolor: 'background.paper',
-                        borderRadius: 1,
-                      }}
-                    >
-                      
-                      <Box sx={{
-                      
-                        fontSize: '18px',
-                        p: -1,
-                       
-                        color: '#7E7A7A',
-                       
-                      }}>14-19,January</Box>
-                          <Box >By Alemayehu Getahun</Box>
-                          
-                      </Box>
-                  </div>
+                  
 
                   
                   
                   </CardContent>
                   <CardActions>
-                <button className={classes.buttonone}>Read More</button>
+                  <Link className={classes.links} to="/readmore">
+                     <button className={classes.buttonone}>Read More</button>
+                  </Link>
                     
                 </CardActions>
               </Card>
@@ -301,38 +245,15 @@ const MyComponent = () => {
                       There will be a meeting on salary  compensation and be there on time
                     </Typography>
                   
-                  <div>
-                      <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        fontSize:'16px',
-                        p: -1,
-                      
-                        bgcolor: 'background.paper',
-                        borderRadius: 1,
-                      }}
-                    >
-                      
-                      <Box sx={{
-                      
-                        fontSize: '18px',
-                        p: -1,
-                       
-                        color: '#7E7A7A',
-                       
-                      }}>14-19,January</Box>
-                          <Box >By Alemayehu Getahun</Box>
-                          
-                      </Box>
-                  </div>
+                  
 
                   
                   
                   </CardContent>
                   <CardActions>
-                <button className={classes.buttonone}>Read More</button>
+                  <Link className={classes.links} to="/readmore">
+                     <button className={classes.buttonone}>Read More</button>
+                  </Link>
                     
                 </CardActions>
               </Card>
