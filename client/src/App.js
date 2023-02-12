@@ -3,12 +3,15 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Container, makeStyles } from "@material-ui/core";
 import NavTabs from "./components/NavTabs";
 import LoginRegister from "./pages/Authentication/Login";
-import NoticeBoard from "./pages/NoticeBoard";
+import NoticeBoard from "./pages/NoticeBoard/NoticeBoard";
 import AddEmployee from './pages/AddEmployee/AddEmployee'
 import UpperFooter from "./components/UpperFooter";
-import Employee from "./pages/Employees";
-import readMore from "./pages/DetailNotice";
-import Vote from "./pages/Vote";
+import Employee from "./pages/Employee/Employees";
+import readMore from "./pages/NoticeBoard/DetailNotice";
+import Vote from "./pages/Vote/Vote";
+import Evaluation from "./pages/Evaluation/Evaluation";
+import EvaluationDetail from "./pages/Evaluation/EvaluationDetail";
+import VoteDetail from './pages/Vote/VoteDetail';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +43,13 @@ function App() {
           </Route>        
           <Route path="/Noticeboard" component={NoticeBoard} />
           <Route path="/ReadMore" component={readMore} />
+
           <Route path="/Vote" component={Vote}/>
+          <Route path="/VoteDetail" component={VoteDetail} />
+
+          <Route path="/Evaluation" component={Evaluation} />
+          <Route path="/EvaluationDetail" component={EvaluationDetail} />
+          
           <Route path="/Employee" component={Employee} />
           <Route path="/addEmployee" component={AddEmployee} />
         </Container>
