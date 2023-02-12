@@ -86,6 +86,7 @@
     "@cypress/webpack-dev-server": "^1.6.0",
     "@material-ui/styles": "^4.11.4",
     "@mui/material": "^5.0.1",
+    "@types/react-router-dom": "^5.3.3",
     "babel-plugin-istanbul": "^6.0.0",
     "clsx": "^1.1.1",
     "components": "^0.1.0",
