@@ -27,6 +27,7 @@ import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import ResetPassword from "./pages/Authentication/ForgotPassword/ResetPassword";
 import { getDashboardData } from "./features/dashboard/dashboardSlice";
 import Payment from "./components/Payment";
+import readMore from "./components/readMore";
 
 
 
@@ -137,6 +138,8 @@ function App() {
           </Route>
           {/* <Route path="/Userlist" component={UserPage} /> */}
           <Route path="/Noticeboard" component={NoticeBoard} />
+          <Route path="/ReadMore" component={readMore} />
+
           <Route path="/payment" component={Payment} />
           <Route path="/addhouse">
             {" "}
