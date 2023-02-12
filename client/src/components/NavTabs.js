@@ -158,7 +158,7 @@ function NavTabs(props) {
           </ListItem>
           <ListItem>
             <Link to="payment" className={classes.links}>
-              <Button className={classes.links}>Payment Status</Button>
+              <Button className={classes.links}>Employees</Button>
             </Link>
           </ListItem>
         </React.Fragment>
