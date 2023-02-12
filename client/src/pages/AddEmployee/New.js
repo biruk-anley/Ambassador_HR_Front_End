@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     "& form": {
       /*[theme.breakpoints.down('sm')]:{
                 padding:'0'
+                    box-shadow: 4px 0px 20px 2px rgb(1 0 0 / 20%), -5px -5px 5px 5px rgb(0 0 0 / 5%);
             }*/
     },
     "@media (max-width:600px)": {
@@ -61,7 +62,11 @@ const useStyles = makeStyles((theme) => ({
   },
   firstGrid: {
     background: "white",
-    boxShadow: "-9px 18px 16px rgba(.50, .5, .5, 0.05)",
+    
+    // boxShadow: "-9px 18px 16px rgba(.50, .5, .5, 0.05)",
+  
+    boxShadow: '4px 0px 20px 2px rgb(1 0 0 / 20%), -5px -5px 5px 5px rgb(0 0 0 / 5%)',
+
     borderRadius: "5px",
     "@media (max-width:600px)": {
         
@@ -160,15 +165,17 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     paddingLeft: "30px",
     paddingRight: "30px",
-    background: "#3293A8",
+    background: "#FFE061",
     paddingTop: "10px",
     paddingBottom: "10px",
     borderRadius: "5px",
     // marginLeft: "15px",
-    color: "#fff",
+    color: "black",
     textTransform: "none",
     marginBottom: "15px",
     marginTop: "25px",
+    fontWeight:'600',
+    fontSize:'17px',
 
     "@media (max-width:980px)": {
       padding: "13px",
@@ -222,17 +229,18 @@ function NewListing({ setSideBar }) {
   
 
   const [Name, setName] = useState("");
-  const [Sex, setSex] = useState("");
-  const [monthlyPayment, setMonthlyPayment] = useState("");
+  const [DateOfBirthDate, setAvailableDate] = useState(new Date());
   const [Gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [guestHouse, setGuestHouse] = useState(false);
-  const [description, setDescription] = useState("");
-  const [squareMeter, setSquareMeter] = useState("");
-  const [file, setFile] = useState(null);
+
+  const [Position, setPosition]=useState("");
+  const [Salary, setSalary] = useState("");
+  const [Email, setEmail] = useState("");
+  const [DateOfEmployment, setDateOfEmployment] = useState(new Date());
+  const [Education, setEducation] = useState("");
+  const [file, setFile] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isRedirectToHomepage, setRedirectToHomePage] = useState(false);
-  const [DateOfBirthDate, setAvailableDate] = useState(new Date());
   const [validity, setValidity] = useState(false);
 
   useEffect(() => {
@@ -247,27 +255,20 @@ function NewListing({ setSideBar }) {
     validateForm(e);
   };
 
-  const listingStatusFilter = (e) => {
-    if (e.currentTarget.value === "Pending") {
-      return "Submitted";
-    } else {
-      return "Draft";
-    }
-  };
+  
 
   const validateForm = (e) => {
     const product = {
       Name: Name,
-      Sex: parseInt(Sex),
-      monthlyPayment: parseInt(monthlyPayment),
-      Gender: parseInt(Gender),
-      squareMeter: squareMeter,
+      Gender:Gender,
       phoneNumber: parseInt(phoneNumber),
-      guestHouse: guestHouse,
-      description: description,
       DateOfBirthDate: moment(DateOfBirthDate).format("DD-MM-YYYY"),
-      listingStatus: listingStatusFilter(e),
-      reviewStatus: e.currentTarget.value,
+
+      Position:Position,
+      Email:Email,
+      DateOfEmployment:moment(DateOfEmployment).format("DD-MM-YYYY"),
+      Salary: parseInt(Salary),
+      Education:Education,
     };
     console.log("come 1 ");
     if (!Name) {
@@ -276,12 +277,12 @@ function NewListing({ setSideBar }) {
     if (!Gender) {
       document.getElementById("GenderError").style.display = "block";
     }
-    if (!monthlyPayment) {
-      document.getElementById("monthlyPaymentError").style.display = "block";
-    }
-    if (!Sex) {
-      document.getElementById("SexError").style.display = "block";
-    }
+    // if (!Salary) {
+    //   document.getElementById("SalaryError").style.display = "block";
+    // }
+    // if (!Sex) {
+    //   document.getElementById("SexError").style.display = "block";
+    // }
 
     if (!phoneNumber) {
       document.getElementById("phoneNumberError").style.display = "block";
@@ -295,7 +296,7 @@ function NewListing({ setSideBar }) {
     // }
     // console.log("come 2 ");
 
-    if (Name && Gender && monthlyPayment && Sex && phoneNumber) {
+    if (Name && Gender && DateOfBirthDate  && phoneNumber) {
       setValidity(true);
       console.log("come 3 ");
       // pass the product as props
@@ -311,29 +312,28 @@ function NewListing({ setSideBar }) {
   const submitNewListingApiRequest = async (newLaunchDetails) => {
     const {
       Name,
-      squareMeter,
-      Sex,
-      monthlyPayment,
+      Salary,
       Gender,
       phoneNumber,
-      guestHouse,
-      description,
-      listingStatus,
-      reviewStatus,
+      Position,
+      Education,
+      Email,
+      DateOfBirthDate,
+      DateOfEmployment,
+
+      
     } = newLaunchDetails;
 
     const formDatas = {
       Name,
-      squareMeter,
-      Sex,
-      monthlyPayment,
+      Salary,
       Gender,
       phoneNumber,
-      guestHouse,
-      description,
-      listingStatus,
-      reviewStatus,
+      Position,
+      Education,
+      Email,
       DateOfBirthDate,
+      DateOfEmployment,
     };
     const formData = new FormData();
     file.forEach((fil) => {
@@ -382,12 +382,8 @@ function NewListing({ setSideBar }) {
     }
   };
 
-  const onDescriptionChanged = (e) => {
-    setDescription(e.target.value);
-  };
-
   const onGenderChanged = (e) => {
-    if (e.target.value === "Select Gender") {
+    if (e.target.value.length === null) {
       document.getElementById("GenderError").style.display = "block";
     } else {
       document.getElementById("GenderError").style.display = "none";
@@ -395,25 +391,26 @@ function NewListing({ setSideBar }) {
     setGender(e.target.value);
   };
 
-  const onMonthlyPaymentChanged = (e) => {
+  const onPositionChange = (e)=>{
     if (e.target.value.length === 0) {
-      document.getElementById("monthlyPaymentError").style.display = "block";
+      document.getElementById("PositionError").style.display = "block";
     } else {
-      document.getElementById("monthlyPaymentError").style.display = "none";
+      document.getElementById("PositionError").style.display = "none";
+    }
+    setPosition(e.target.value);
+    if (e.target.value !== 1) {
+      setPosition(e.target.value);
+    }
+  };
+   const onSalaryChange = (e) => {
+    if (e.target.value.length === 0) {
+      document.getElementById("SalaryError").style.display = "block";
+    } else {
+      document.getElementById("SalaryError").style.display = "none";
     }
 
-    setMonthlyPayment(e.target.value);
+    setSalary(e.target.value);
   };
-
-  const onSexChanged = (e) => {
-    if (e.target.value.length === "Select Bed Rooms") {
-      document.getElementById("SexError").style.display = "block";
-    } else {
-      document.getElementById("SexError").style.display = "none";
-    }
-    setSex(e.target.value);
-  };
-
   const onPhoneNumberChanged = (e) => {
     if (e.target.value.length === 0) {
       document.getElementById("phoneNumberError").style.display = "block";
@@ -432,21 +429,39 @@ function NewListing({ setSideBar }) {
     }
     setAvailableDate(date);
   };
-
-  const onSquareMeterChanged = (e) => {
-    setSquareMeter(e.target.value);
-  };
-
-  const onDropZoneChange = (e) => {
-    if (e[0]) {
-      document.getElementById("dropZoneImage").style.display = "none";
+  const onDateOfEmploymentChange = (date) => {
+    if (date === null) {
+      document.getElementById("DateOfEmploymentError").style.display = "block";
+    } else {
+      document.getElementById("DateOfEmploymentError").style.display = "none";
     }
-    setFile(e);
+    setDateOfEmployment(date);
+  };
+  const onEmailChange = (e) => {
+    if (e.target.value.length === 0) {
+      document.getElementById("EmailError").style.display = "block";
+    } else {
+      document.getElementById("EmailError").style.display = "none";
+    }
+    setEmail(e.target.value);
+    if (e.target.value !== 1) {
+      setEmail(e.target.value);
+    }
+  };
+  const onEducationChange = (e) => {
+    if (e.target.value.length === 0) {
+      document.getElementById("EducationError").style.display = "block";
+    } else {
+      document.getElementById("EducationError").style.display = "none";
+    }
+    setEducation(e.target.value);
+    if (e.target.value !== 1) {
+      setEducation(e.target.value);
+    }
   };
 
-  const onGuestHouseChanged = (e) => {
-    setGuestHouse(e.target.value === "yes");
-  };
+
+  
 
   
 
@@ -475,108 +490,143 @@ function NewListing({ setSideBar }) {
                     </Typography>
                   </div>
                 </div>
-                <img src={mainpic} className={classes.addhouseimage} />
+                
               </div>
             </Grid>
 
             <Grid item xs={12} md={6}>
+             
               <div className={classes.inputsContainer}>
-                <Typography variant="body2" className={classes.leadertitle}>
-                  Upload house image
-                  <span style={{ opacity: "0.5", fontSize: "12px" }}>
-                    (maximum 6 images)
-                  </span>
-                </Typography>
-
-                <Grid style={{ marginTop: "5px" }}>
-                  <Grid
-                    itme
-                    xs={12}
-                    md={8}
-                    className={classes.dropZone}
-                    id="upload"
-                    data-cy="content"
-                  >
-                    {/*Icon ={}*/}
-                    <DropzoneArea
-                      acceptedFiles={["image/*"]}
-                      maxFileSize={6000000}
-                      filesLimit={"6"}
-                      dropzoneText={"Drag and drop an image here or click"}
-                      onChange={onDropZoneChange}
-                    />
-                    {/*<DropzoneArea getPreviewIcon={handlePreviewIcon}
-                                                    dropzoneText="Drag and drop a jpg, png or webp Icon, Or click to add"/>*/}
-                  </Grid>
-                  <Typography
-                    variant="body2"
-                    id="dropZoneImage"
-                    className={classes.inputError}
-                  >
-                    You have to upload an image.
-                  </Typography>
-                </Grid>
-              </div>
-              <div className={classes.inputsContainer}>
-                <Typography variant="body2" className={classes.leadertitle}>
-                  is it Guest House
-                </Typography>
-                <label
-                  htmlFor="guestYes"
-                  className={classes.options}
-                  style={{ background: "#3293A8" }}
-                >
-                  Yes
-                </label>
                 <input
-                  type="radio"
-                  value="yes"
-                  id="guestYes"
-                  name="guestRadio"
-                  placeholder="is it Guest House"
-                  onChange={onGuestHouseChanged}
+                  type="text"
+                  
+                  id="Name"
+                  name="Myname"
+                  className="form__input"
+                  placeholder="Position"
+                  onChange={onPositionChange}
+                  value={Position}
                 />
-                <label
-                  htmlFor="guestNo"
-                  className={classes.options}
-                  style={{ background: "#E21E2A", marginLeft: "10px" }}
-                >
-                  No
-                </label>
+                <div className="form__label">
+                  <label htmlFor="Name" className="form__labels">
+                    Position
+                  </label>
+                </div>
 
-                <input
-                  type="radio"
-                  value="no"
-                  id="guestNo"
-                  name="guestRadio"
-                  onChange={onGuestHouseChanged}
-                />
                 <Typography
                   variant="body2"
-                  id="guestHouseError"
+                  id="PositionError"
                   className={classes.inputError}
                 >
-                  You have specific if it is guesthouse.
+                  Enter The Position You had
                 </Typography>
               </div>
 
               <div className={classes.inputsContainer}>
-                <TextField
-                  id="outlined-multiline-static"
-                  name="short Description"
-                  className={classes.textarea}
-                  label="Short Description"
-                  placeholder="short Description about the house"
-                  multiline
-                  rows={4}
-                  variant="outlined"
-                  value={description}
-                  style={{ marginTop: "5px" }}
-                  onChange={onDescriptionChanged}
+                <input
+                  type="text"
+                  
+                  id="Name"
+                  name="Myname"
+                  className="form__input"
+                  placeholder="Email"
+                  onChange={onEmailChange}
+                  value={Email}
                 />
+                <div className="form__label">
+                  <label htmlFor="Name" className="form__labels">
+                    Email
+                  </label>
+                </div>
+
+                <Typography
+                  variant="body2"
+                  id="EmailError"
+                  className={classes.inputError}
+                >
+                  Enter The Email You had
+                </Typography>
               </div>
 
-              <br />
+              <div className={classes.inputsContainer}>
+                <input
+                  type="text"
+                  
+                  id="Name"
+                  name="Myname"
+                  className="form__input"
+                  placeholder="Education"
+                  onChange={onEducationChange}
+                  value={Education}
+                />
+                <div className="form__label">
+                  <label htmlFor="Name" className="form__labels">
+                    Education
+                  </label>
+                </div>
+
+                <Typography
+                  variant="body2"
+                  id="EducationError"
+                  className={classes.inputError}
+                >
+                  Enter The Education You had
+                </Typography>
+              </div>
+
+              <div className={classes.inputsContainer}>
+                <input
+                  type="text"
+                  
+                  id="Name"
+                  name="Myname"
+                  className="form__input"
+                  placeholder="DateOfEmployment"
+                  onChange={onDateOfEmploymentChange}
+                  value={DateOfEmployment}
+                />
+                <div className="form__label">
+                  <label htmlFor="Name" className="form__labels">
+                    DateOfEmployment
+                  </label>
+                </div>
+
+                <Typography
+                  variant="body2"
+                  id="DateOfEmploymentError"
+                  className={classes.inputError}
+                >
+                  Enter The DateOfEmployment You had
+                </Typography>
+              </div>
+
+              <div className={classes.inputsContainer}>
+                <input
+                  type="text"
+                  
+                  id="Name"
+                  name="Myname"
+                  className="form__input"
+                  placeholder="Salary"
+                  onChange={onSalaryChange}
+                  value={Salary}
+                />
+                <div className="form__label">
+                  <label htmlFor="Name" className="form__labels">
+                    Salary
+                  </label>
+                </div>
+
+                <Typography
+                  variant="body2"
+                  id="SalaryError"
+                  className={classes.inputError}
+                >
+                  Enter The Salary You had
+                </Typography>
+              </div>
+
+             
               <br />
               <div className={classes.buttons}>
                 <Button
@@ -585,19 +635,10 @@ function NewListing({ setSideBar }) {
                   variant="contained"
                   className={classes.buttonone}
                 >
-                  Save As Draft
+                  Save
                 </Button>
 
-                <Button
-                  id="submit"
-                  onClick={onFormSubmit}
-                  value="Pending"
-                  variant="contained"
-                  className={classes.buttonone}
-                  // style={{paddingRight:"500px"}}
-                >
-                  Submit For Review
-                </Button>
+                
               </div>
               <br />
               <br />
@@ -644,11 +685,11 @@ function NewListing({ setSideBar }) {
 
                 {/* <Link to="/addtwohouse"></Link> */}
               </div>
-              <img src={mainpic} className={classes.addhouseimage} alt="" />
+              
               <div className={classes.inputsContainer}>
                 <input
                   type="text"
-                  list="NameOfCondominium"
+                  
                   id="Name"
                   name="Myname"
                   className="form__input"
@@ -678,14 +719,15 @@ function NewListing({ setSideBar }) {
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
-                    sx={{ height: 42 }}
-                    label="Select Gender"
+                    sx={{ height: 40 }}
+                    value={Gender}
+                    label="Bedroom"
                     onChange={onGenderChanged}
-                    name="selectNumberOfSexs"
+                    name="selectNumberOfBedrooms"
                   >
-                    <MenuItem value="0">Male</MenuItem>
+                    <MenuItem value="1">Male</MenuItem>
                     <MenuItem value="1">Female</MenuItem>
-                    
+                
                   </Select>
                 </FormControl>
                 <Typography
