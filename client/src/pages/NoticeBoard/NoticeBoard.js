@@ -190,11 +190,11 @@ const MyComponent = () => {
 
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      notice.title
+                      {notice.title}
                     </Typography>
 
                     <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '30px', padding: '15px' }}>
-                      notice.description
+                      {notice.description}
                     </Typography>
                   </CardContent>
                   <CardActions>
