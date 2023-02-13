@@ -143,7 +143,7 @@ const MyComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(
+      const result = await axios.get(
         'api/v1/internalNotice'
       );
 
@@ -175,6 +175,13 @@ const MyComponent = () => {
         </Grid>
 
         <div className={classes.events}>Events</div>
+        <Grid>
+           
+                  <Link className={classes.links} to="/AddNotice">
+                     <button className={classes.eventt}> Add Notice</button>
+                  </Link>
+           
+        </Grid>
 
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={4} xs={12}>

@@ -165,7 +165,7 @@ const Vote = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(
+      const result = await axios.get(
         'api/v1/poll'
       );
 
