@@ -75,6 +75,28 @@ const useStyles = makeStyles((theme) => ({
   upper:{
     marginTop:'500px'
   },
+  eventt:{
+    position:'relative',
+    left:'68rem',
+    border:'none',
+    paddingLeft: "15px",
+    paddingRight: "15px",
+    background: "#FFE061",
+    paddingTop: "8px",
+    
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center',
+    paddingBottom: "10px",
+    borderRadius: "5px",
+    
+   
+    marginBottom: "7px",
+    color: "black",
+    textTransform: "none",
+    width: "100%",
+   fontSize:'18px',
+  },
   buttonone: {
     paddingLeft: "15px",
     paddingRight: "15px",
@@ -163,6 +185,13 @@ const Evaluation = () => {
         </Grid>
         
           <div className={classes.events}>Evaluation</div>
+          <Grid>
+           
+                  <Link className={classes.links} to="/AddEvaluation">
+                     <button className={classes.eventt}> Add Evaluation</button>
+                  </Link>
+           
+        </Grid>
        
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={4} xs={12}>
