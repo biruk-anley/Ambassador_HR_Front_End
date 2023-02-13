@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
 
   makeStyles,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-
-import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import { useHistory } from "react-router-dom";
-
+import axios from "axios";
+import * as apiEndpoint from "../../apiEndpoints";
 
 
 import backEndApi from "../../services/api";
@@ -20,76 +19,76 @@ import { Redirect } from "react-router-dom";
 const SignupImage = process.env.PUBLIC_URL + "/img/new.png";
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        display:'flex',
-        justifyContent:'center',
-        
-        width: "100%",
-        paddingLeft: "6px",
-        paddingRight: "6px",
-        [theme.breakpoints.down("sm")]: {
-          paddingLeft: 5,
-          paddingRight: 5,
-        },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+
+    width: "100%",
+    paddingLeft: "6px",
+    paddingRight: "6px",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: 5,
+      paddingRight: 5,
+    },
+  },
+  root: {
+    display: "flex",
+    width: '80%',
+    border: "1px solid rgba(0, 0, 0, .2)",
+    justifyContent: 'space-around',
+    flexWrap: "nowrap",
+    background: "white",
+    borderRadius: "15px",
+    height: "550px",
+    padding: 10,
+    "& a": {
+      color: "#3A6351",
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      "& form": {
+        padding: 0,
       },
-      root: {
-        display: "flex",
-        width:'80%',
-        border: "1px solid rgba(0, 0, 0, .2)",
-        justifyContent:'space-around',
-        flexWrap: "nowrap",
-        background: "white",
-        borderRadius: "15px",
-        height: "550px",
-        padding: 10,
-        "& a": {
-          color: "#3A6351",
-        },
-    
-        [theme.breakpoints.down("sm")]: {
-          "& form": {
-            padding: 0,
-          },
-        },
-      },
-      avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-      },
-      form: {
-        marginLeft:'158px',
-        width: "90%",
-        marginTop:'40px',
-        [theme.breakpoints.down("sm")]: {
-          /*width:'80%'*/
-        },
-        "@media (max-width:960px)": {
-          marginLeft:'105px',
-          marginTop:'10px'
-        },
-      },
+    },
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    marginLeft: '158px',
+    width: "90%",
+    marginTop: '40px',
+    [theme.breakpoints.down("sm")]: {
+      /*width:'80%'*/
+    },
+    "@media (max-width:960px)": {
+      marginLeft: '105px',
+      marginTop: '10px'
+    },
+  },
   submit: {
     background: "#3293A8",
     borderRadius: "5px",
     width: "70%",
     height: "50px",
-    
+
     margin: theme.spacing(1, 0, 2),
     "&:hover": {
       background: "rgba(50, 147, 168,0.79)",
     },
     "@media (max-width:760px)": {
-      width:"80%"
+      width: "80%"
     },
   },
 
-  login:{
-    fontWeight:'800',
-    marginLeft:'65px',
+  login: {
+    fontWeight: '800',
+    marginLeft: '65px',
     "@media (max-width:760px)": {
-        
-        marginLeft:'15px'
-      },
+
+      marginLeft: '15px'
+    },
 
   },
   textField: {
@@ -97,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     width: "70%",
 
-   
+
     borderTopLeftRadius: "10px",
     borderBottomLeftRadius: "10px",
     border: "0px solid #eee",
@@ -106,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       color: "rgba(57,50,50,0.25)",
       border: "0px solid #eee",
-      height:'25px',
+      height: '25px',
       borderRadius: "10px",
       width: "100%",
     },
@@ -115,106 +114,57 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   texts:
-  {marginLeft:'-210px',
-  "@media (max-width:760px)": {
-    marginLeft:'-105px',
-  }},
+  {
+    marginLeft: '-210px',
+    "@media (max-width:760px)": {
+      marginLeft: '-105px',
+    }
+  },
   inputAdornment: {
     background: "rgba(215,215,215,0.87)",
     borderRadius: "7px 0px 0px 7px",
   },
   imgHolder: {
-  
+
     backgroundColor: "rgba(215,215,215,0.1)",
-    marginLeft:'25px',
+    marginLeft: '25px',
     borderRadius: "15px",
     marginBottom: "auto",
     display: "flex",
-    width:"70%",
-    marginTop:'auto',
+    width: "70%",
+    marginTop: 'auto',
     height: "auto",
     paddingBottom: "50px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
-    width:'40%',
+    width: '40%',
   },
 }));
 
 function Login() {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  
-
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber]= useState("");
-  const [password, setPassword] = useState("");
-  const [redirect, setRedirect] = useState(false);
-  
-  const [errorMessage, setErrorMessage] = useState("");
-  const [token, setToken] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
-  const historys = useHistory();
   const classes = useStyles();
-  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const history = useHistory();
 
-  const errorCheck = () => {
-    if (errorMessage) {
-      return (
-        <Typography
-          variant="h6"
-          style={{
-            color: "red",
-            marginLeft: "5px",
-            fontSize: "14px",
-          }}
-        >
-          {errorMessage}
-        </Typography>
-      );
-    } else {
-      return (
-        <Typography variant="body2" style={{ color: "red", display: "none" }}>
-          ''
-        </Typography>
-      );
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    await axios.post("/api/v1/employee/login",
+    {
+      email, password
     }
-  };
-
-  const onEmailChange = (e) => {
-    // setState({ email: e.target.value });
-    setEmail(e.target.value);
-  };
- 
-  const onPasswordChange = (e) => {
-    // setState({ password: e.target.value });
-    setPassword(e.target.value);
-  };
-  
-  const validateInput = () => {
-    const loginDetail = {
-      phoneNumber: phoneNumber,
-      password: password,
-    };
-
-    if (phoneNumber && password) {
-    } else {
-      setErrorMessage("Please fill all the inputs!");
-      // setState({ errorMessage: "Please fill all the inputs!" });
-    }
-  };
-  const onSubmit = (e) => {
-  
-    e.preventDefault();
-    console.log('clicked')
-    validateInput();
-    history.push("/Noticeboard");
-  };
-
-  // if (redirect || props.getToken()) {
-  //   return <Redirect to="/dashboard" />;
-  // }
-
+    ).then((response) => {
+      console.log(response)
+      history.push({pathname:"/Noticeboard", state: { detail: response.data }});
+    })
+    .catch((error) => {
+      console.error(error);
+      setError('Incorrect username or password. Please try again.');
+    });
+  }
   return (
     <div className={classes.container}>
       <div className={classes.root}>
@@ -223,7 +173,7 @@ function Login() {
             src={SignupImage}
             alt=""
             width="60%"
-            
+
             style={{
               borderRadius: "8px",
               marginTop: "20px",
@@ -234,26 +184,26 @@ function Login() {
         </div>
 
         <div
-          style={{ display: "flex", flexDirection: "column", heigh: "auto",  marginTop:'20px',marginLeft:'-110px' }}
+          style={{ display: "flex", flexDirection: "column", heigh: "auto", marginTop: '20px', marginLeft: '-110px' }}
         >
-          
+
           <form className={classes.form} noValidate >
             <Typography
-            align="center"
-            component="h1"
-            variant="h5"
-            style={{ padding: 10 }}
-            className={classes.texts}
-          >
-            Login
-          </Typography>
+              align="center"
+              component="h1"
+              variant="h5"
+              style={{ padding: 10 }}
+              className={classes.texts}
+            >
+              Login
+            </Typography>
             <TextField
               variant="outlined"
               margin="none"
               required
               fullWidth
               id="Email"
-              onChange={onEmailChange}
+              onChange={(event) => setEmail(event.target.value)}
               label="Email"
               name="Email"
               autoComplete="Email"
@@ -266,15 +216,15 @@ function Login() {
               required
               fullWidth
               name="password"
-              onChange={onPasswordChange}
+              onChange={(event) => setPassword(event.target.value)}
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
-             
+
               className={classes.textField}
             />
-            
+
             <Button
               id="login"
               type="submit"
@@ -282,15 +232,15 @@ function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={onSubmit}
+              onClick={handleSubmit}
             >
               Log in
             </Button>
-        
-           
-          
-           
-            
+
+
+
+
+
           </form>
         </div>
       </div>
