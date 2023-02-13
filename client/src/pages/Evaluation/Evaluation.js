@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import axios from '../../axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -156,6 +157,22 @@ const useStyles = makeStyles((theme) => ({
 
 const Evaluation = () => {
   const classes = useStyles();
+  const [notices, setNotices] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'api/v1/evaluation'
+      );
+
+      setNotices(result.data);
+    
+
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <div className={classes.root}>
@@ -193,6 +210,7 @@ const Evaluation = () => {
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={4} xs={12}>
           
+          { notices ? (notices.map(notice => (
             
               <Card sx={{ maxWidth: 300}}>
                   <CardMedia
@@ -204,11 +222,11 @@ const Evaluation = () => {
                 
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evalution : Abebe Aregay
+                      Evalution : {notice.evaluatedPerson}
                   </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Dead Line : April 22-2023
+                      Dead Line : {notice.deadLine}
                     </Typography>
                   
                   
@@ -223,69 +241,13 @@ const Evaluation = () => {
                     
                 </CardActions>
               </Card>
+          ))):
+          (
+            <p>There is no Evaluation Here</p>
+          )
+          }
           </Grid>
-          <Grid  item lg={4} xs={12}>
-              <Card sx={{ maxWidth: 300}}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    image={bell}
-                    className={classes.imagesb}
-                />
-                
-                <CardContent>
-                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evalution : Abebe Aregay
-                  </Typography>
-                  
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Dead Line : April 22-2023
-                    </Typography>
-                  
-                  
-
-                  
-                  
-                  </CardContent>
-                  <CardActions>
-                  <Link className={classes.links} to="/EvaluationDetail">
-                     <button className={classes.buttonone}>Evaluate</button>
-                  </Link>
-                    
-                </CardActions>
-              </Card>
-          </Grid>
-          <Grid  item lg={4} xs={12}>
-              <Card sx={{ maxWidth: 300}}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    image={bell}
-                    className={classes.imagesb}
-                />
-                
-                <CardContent>
-                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evalution : Abebe Aregay
-                  </Typography>
-                  
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Dead Line : April 22-2023
-                    </Typography>
-                  
-                  
-
-                  
-                  
-                  </CardContent>
-                  <CardActions>
-                  <Link className={classes.links} to="/EvaluationDetail">
-                     <button className={classes.buttonone}>Evaluate</button>
-                  </Link>
-                    
-                </CardActions>
-              </Card>
-            </Grid>
+          
 
             
           </Grid>
