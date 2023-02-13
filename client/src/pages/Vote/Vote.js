@@ -100,6 +100,28 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "13px !important",
     fontWeight: "bold",
   },
+  eventt:{
+    position:'relative',
+    left:'75rem',
+    border:'none',
+    paddingLeft: "15px",
+    paddingRight: "15px",
+    background: "#FFE061",
+    paddingTop: "8px",
+    
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center',
+    paddingBottom: "10px",
+    borderRadius: "5px",
+    
+   
+    marginBottom: "7px",
+    color: "black",
+    textTransform: "none",
+    width: "100%",
+   fontSize:'18px',
+  },
   textt: {
     color: 'black',
     fontSize: '4rem',
@@ -143,7 +165,12 @@ const Vote = () => {
       <Grid container spacing={3}>
         
         
-          <div className={classes.events}>Votes</div>
+        <div className={classes.events}>Votes</div>
+        <Grid>
+              <Link className={classes.links} to="/AddVote">
+                  <button className={classes.eventt}> Add Vote</button>
+              </Link>
+        </Grid>
        
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={4} xs={12}>
@@ -250,8 +277,16 @@ const Vote = () => {
           
 
             
-          </Grid>
+        </Grid>
+       
+
+          
+
+
+          
       </Grid>
-    </div>)
+     
+    </div>
+    )
 }
 export default Vote;
