@@ -237,7 +237,7 @@ const [personName, setPersonName] = React.useState([]);
     
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <div className={classes.events}>Add Vote</div>
+        <div className={classes.events}>Add Notices</div>
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={8} xs={8}>
               <Card sx={{ maxWidth: 300}}>
@@ -246,23 +246,23 @@ const [personName, setPersonName] = React.useState([]);
                   </CardContent>
                   <CardActions>
                     <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      VoteTitle 
+                      Title 
                     </Typography>
                         <Box
                             sx={{
-                                width: 700,
+                                width: 730,
                                 maxWidth: '100%',
-                                paddingLeft:"28px"
+                                paddingLeft:"58px"
                                 
                             }}
                             >
-                            <TextField fullWidth  id="fullWidth" variant="outlined" placeholder='Vote For Your President'/>
+                            <TextField fullWidth  id="fullWidth" variant="outlined" placeholder='There will be a meeting on Salary'/>
                         </Box>
                 </CardActions>
 
                 <CardActions>
                     <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Descriptions  
+                      Description 
                     </Typography>
                         <Box
                             sx={{
@@ -272,82 +272,17 @@ const [personName, setPersonName] = React.useState([]);
                                 
                             }}
                             >
-                            <TextField fullWidth  id="fullWidth" multiline rows="4" variant="outlined" placeholder='Vote For Your President'/>
+                            <TextField fullWidth  id="fullWidth" multiline rows="4" variant="outlined" placeholder='The meeting includes sales and accountat'/>
                         </Box>
                 </CardActions>
 
-                <CardActions>
-                    <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Position 
-                    </Typography>
-                    <FormControl sx={{ ml: 4,mt:1, width: 675 }}>
-                    <InputLabel id="demo-multiple-chip-label">Positions</InputLabel>
-                        <Select
-                            labelId="demo-multiple-chip-label"
-                            id="demo-multiple-chip"
-                            multiple
-                            value={personPosition}
-                            onChange={handleChange}
-                            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                            renderValue={(selected) => (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.7 }}>
-                                {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                                ))}
-                            </Box>
-                            )}
-                            MenuProps={MenuProps}
-                        >
-                            {positions.map((position) => (
-                            <MenuItem
-                                key={position}
-                                value={position}
-                                style={getStyles(position, personPosition, theme)}
-                            >
-                                {position}
-                            </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </CardActions>
+                
 
 
 
                 {/* voter position */}
 
 
-                <CardActions>
-                    <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Candidates 
-                    </Typography>
-                    <FormControl sx={{ m: 1, width: 675 }}>
-                        <InputLabel id="demo-multiple-checkbox-label">Select Candidates</InputLabel>
-                        <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        rows={4}
-                        value={personName}  
-                        onChange={handleChanges}
-                        input={<OutlinedInput label="Tag" />}
-                        renderValue={(selected) => (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.7 }}>
-                            {selected.map((value) => (
-                            <Chip key={value} label={value} />
-                            ))}
-                        </Box>
-                        )}
-                        MenuProps={MenuProps}
-                        >
-                        {names.map((name) => (
-                            <MenuItem key={name} value={name}>
-                            <Checkbox checked={personName.indexOf(name) > -1} />
-                            <ListItemText primary={name} />
-                            </MenuItem>
-                        ))}
-                        </Select>
-                    </FormControl>
-                </CardActions>
 
 
                  
@@ -355,21 +290,7 @@ const [personName, setPersonName] = React.useState([]);
 
                 <CardActions>
 
-                <CardActions>
-                    <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px',marginInline:'15px' }}>
-                      Dead Line 
-                    </Typography>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Stack spacing={3} ml={3}>
-                            <DateTimePicker
-                             
-                            value={value}
-                            onChange={handleDateChange}
-                            renderInput={(params) => <TextField {...params} />}
-                            />
-                        </Stack>
-                    </LocalizationProvider>
-                </CardActions>
+                
               
                 
             </CardActions>
