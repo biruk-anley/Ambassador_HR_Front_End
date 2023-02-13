@@ -14,6 +14,7 @@ import EvaluationDetail from "./pages/Evaluation/EvaluationDetail";
 import VoteDetail from './pages/Vote/VoteDetail';
 import AddEvaluation from './pages/Evaluation/AddEvaluation';
 import AddVote from './pages/Vote/AddVote'
+import AddNotice from "./pages/NoticeBoard/AddNotice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +46,7 @@ function App() {
           </Route>        
           <Route path="/Noticeboard" component={NoticeBoard} />
           <Route path="/ReadMore" component={readMore} />
+          <Route path='/AddNotice' component={AddNotice}/>
 
           <Route path="/Vote" component={Vote}/>
           <Route path="/VoteDetail" component={VoteDetail} />
