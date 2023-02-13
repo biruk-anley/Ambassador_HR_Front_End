@@ -12,6 +12,8 @@ import Vote from "./pages/Vote/Vote";
 import Evaluation from "./pages/Evaluation/Evaluation";
 import EvaluationDetail from "./pages/Evaluation/EvaluationDetail";
 import VoteDetail from './pages/Vote/VoteDetail';
+import AddEvaluation from './pages/Evaluation/AddEvaluation';
+import AddVote from './pages/Vote/AddVote'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +48,13 @@ function App() {
 
           <Route path="/Vote" component={Vote}/>
           <Route path="/VoteDetail" component={VoteDetail} />
+          <Route path="/AddVote" component={AddVote} />
+          
 
           <Route path="/Evaluation" component={Evaluation} />
           <Route path="/EvaluationDetail" component={EvaluationDetail} />
+          <Route path="/AddEvaluation" component={AddEvaluation} />
+
           
           <Route path="/Employee" component={Employee} />
           <Route path="/addEmployee" component={AddEmployee} />
