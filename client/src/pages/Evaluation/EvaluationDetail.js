@@ -1,7 +1,4 @@
-
-
-
-import React from 'react';
+import React ,{useState}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,8 +6,17 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
-import Box from '@mui/material/Box';
-import { Link } from '@material-ui/core';
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
+
 
 
 
@@ -20,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     padding: theme.spacing(2),
+  },
+  cardd: {
+    border:'1px solid red',
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center'
   },
   
   images: {
@@ -35,23 +47,7 @@ const useStyles = makeStyles((theme) => ({
         },
 },
 
-//   @keyframes shake {
-//   10%, 90% {
-//     transform: translate3d(-1px, 0, 0);
-//   }
-  
-//   20%, 80% {
-//     transform: translate3d(2px, 0, 0);
-//   }
 
-//   30%, 50%, 70% {
-//     transform: translate3d(-4px, 0, 0);
-//   }
-
-//   40%, 60% {
-//     transform: translate3d(4px, 0, 0);
-//   }
-// }
     
   
   imagesb:{
@@ -107,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent:'center',
     paddingBottom: "10px",
     borderRadius: "5px",
-    marginLeft: "115px",
+    marginLeft: "205px",
    
     marginBottom: "7px",
     color: "black",
@@ -150,31 +146,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const data = [
+  {
+    name: "Be Punctual",
+    status: "Fair",
+  },
+  {
+    name: "Figure out Problems and solve them accordingly",
+    status: "Good",
+    
+  },
+  {
+    name: "Decession making and Managemenet",
+    status: "Very Good",
+ 
+  },
+  {
+    name: "Problem solving and critical thinking",
+    status: "Excellent",
+ 
+  },
+];
 const EvaluationDetail = () => {
   const classes = useStyles();
+  const [users, setUsers] = useState(data);
+
+  const handleStatusChange = (event, name) => {
+    const newUsers = users.map((user) => {
+      if (user.name == name) user.status = event.target.value;
+
+      return user;
+    });
+    setUsers(newUsers);
+  };
+
+  const onDescriptionChanged = (event,evaluation)=>{
+    const newUserss = users.map((user) => {
+      if (user.evaluation == evaluation) user.status = event.target.value;
+
+      return user;
+    });
+    setUsers(newUserss);
+  }
+  
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <div className={classes.events}>Event Descriptions</div>
+        <div className={classes.events}>Evaluation Descriptions</div>
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={8} xs={8}>
-          
-            
-              <Card sx={{ maxWidth: 300}}>
+              <Card sx={{ maxWidth: 300}} >
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
                       EvaluationDetail Page
                     </Typography>
-                  
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'10px',fontWeight: '600' }}>
-                      There will be a meeting on salary  compensation and be there on time
-                    </Typography>
-                  
-                 
-
-                  
-                  
                   </CardContent>
                   <CardActions>
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
@@ -182,6 +208,62 @@ const EvaluationDetail = () => {
                       There will be a meeting on salary  compensation and be there on time    
                     </Typography>
                 </CardActions>
+                
+
+                <div className="upper">
+                <Table className={classes.table}>
+                <TableHead>
+                  <TableRow className={classes.header}>
+                    <TableCell>Questions...</TableCell>
+                    <TableCell>Review</TableCell>
+                    
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((row) => (
+                    <TableRow key={row.name}>
+                      <TableCell component="th" scope="row">
+                        {row.name}
+                      </TableCell>
+                      <TableCell  
+                      
+                      >
+                        <FormControl 
+                        variant="outlined"
+                        className={classes.dropdownItem}
+                        
+                        >
+                          <Select
+                            value={row.status}
+                            className={classes.dropdownItem}
+                            onChange={(e) => {
+                              handleStatusChange(e, row.name);
+                            }}
+                          
+                          >
+                            <MenuItem value="">
+                              <em>{row.status}</em>
+                            </MenuItem>
+                            <MenuItem value="Fair">Fair</MenuItem>
+                            <MenuItem value="Good">Good</MenuItem>
+                            <MenuItem value="Very Good">Very Good</MenuItem>
+                            <MenuItem value="Excellent">Excellent</MenuItem>
+
+                          </Select>
+                        </FormControl>
+                      </TableCell>
+                      <TableCell>
+                        
+                        
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+                </Table>
+                </div>
+                <Link className={classes.links} to="/readmore">
+                  <button className={classes.buttonone}>Save</button>
+              </Link>
               </Card>
           </Grid>
           
@@ -192,3 +274,5 @@ const EvaluationDetail = () => {
     </div>)
 }
 export default EvaluationDetail;
+
+
