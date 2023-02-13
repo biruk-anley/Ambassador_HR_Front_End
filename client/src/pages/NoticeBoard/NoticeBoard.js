@@ -11,7 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import bell from '../images/belll.svg';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
 
@@ -137,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MyComponent = () => {
   const classes = useStyles();
-
+  const location = useLocation();
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
