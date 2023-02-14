@@ -1,7 +1,7 @@
 
 
 
-import React from 'react';
+import React,{useState,useEffect,useLocation} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +11,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import { Link } from '@material-ui/core';
+import axios from "../../axios";
+
 
 
 
@@ -35,23 +37,6 @@ const useStyles = makeStyles((theme) => ({
         },
 },
 
-//   @keyframes shake {
-//   10%, 90% {
-//     transform: translate3d(-1px, 0, 0);
-//   }
-  
-//   20%, 80% {
-//     transform: translate3d(2px, 0, 0);
-//   }
-
-//   30%, 50%, 70% {
-//     transform: translate3d(-4px, 0, 0);
-//   }
-
-//   40%, 60% {
-//     transform: translate3d(4px, 0, 0);
-//   }
-// }
     
   
   imagesb:{
@@ -152,6 +137,20 @@ const useStyles = makeStyles((theme) => ({
 
 const ReadMore = () => {
   const classes = useStyles();
+  const [notice, setNotice] = useState({});
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        `api/v1/internalNotice/${location.state.noticeId}`
+      );
+
+      setNotice(result.data);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -164,12 +163,13 @@ const ReadMore = () => {
               <Card sx={{ maxWidth: 300}}>
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Meeting on Salary
+                       Detail about Notice board
                     </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'10px',fontWeight: '600' }}>
-                      There will be a meeting on salary  compensation and be there on time
-                    </Typography>
+                      
+                      {notice.title}
+                  </Typography>
                   
                  
 
@@ -178,15 +178,8 @@ const ReadMore = () => {
                   </CardContent>
                   <CardActions>
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time
-                      There will be a meeting on salary  compensation and be there on time    
+                      {notice.descriptions}    
+
                     </Typography>
                 </CardActions>
               </Card>

@@ -11,7 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import bell from '../images/belll.svg';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useHistory } from "react-router-dom";
 import axios from "../../axios";
 
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
@@ -95,6 +95,26 @@ const useStyles = makeStyles((theme) => ({
     width: "40%",
     fontSize: '18px',
   },
+  buttontwo: {
+    position:'relative',
+    left:'68rem',
+    border:'none',
+    paddingLeft: "15px",
+    paddingRight: "15px",
+    background: "#FFE061",
+    paddingTop: "8px",
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center',
+    paddingBottom: "10px",
+    borderRadius: "5px",
+    marginBottom: "7px",
+    color: "black",
+    textTransform: "none",
+    width: "100%",
+   fontSize:'18px',
+  },
+
   links: {
     textDecoration: "none",
     width: '100%',
@@ -139,7 +159,16 @@ const useStyles = makeStyles((theme) => ({
 const MyComponent = () => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   const [notices, setNotices] = useState([]);
+
+  const handleSubmit = async (event,noticeId) => {
+    event.preventDefault();
+    
+    
+      history.push({pathname:"/detailNotice", state: { noticeId: noticeId}});
+    
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -178,7 +207,7 @@ const MyComponent = () => {
         <Grid>
            
                   <Link className={classes.links} to="/AddNotice">
-                     <button className={classes.eventt}> Add Notice</button>
+                     <button className={classes.buttontwo}> Add Notice</button>
                   </Link>
            
         </Grid>
@@ -205,15 +234,15 @@ const MyComponent = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Link className={classes.links} to="/readmore">
-                      <button className={classes.buttonone}>Read More</button>
+                    <Link className={classes.links}>
+                      <button className={classes.buttonone} onClick={handleSubmit(notice.id)} >Read More</button>
                     </Link>
 
                   </CardActions>
                 </Card>
               ))):
               (
-                <p>No noticeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees yet...</p>
+                <p>No noticeeeeeeeeeeeees yet...</p>
               )
             }
 
