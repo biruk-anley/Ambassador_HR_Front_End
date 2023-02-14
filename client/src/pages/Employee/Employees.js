@@ -1,6 +1,6 @@
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,6 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@mui/material/TextField";
+import axios from "../../axios";
 
 import { Link } from "react-router-dom";
 
@@ -93,6 +94,7 @@ const data = [
 const Payment = () => {
   const classes = useStyles();
   const [users, setUsers] = useState(data);
+  const [employess, setEmployees] = useState([])
 
   const handleStatusChange = (event, name) => {
     const newUsers = users.map((user) => {
@@ -112,6 +114,18 @@ const Payment = () => {
     setUsers(newUserss);
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        'api/v1/employee'
+      );
+
+      setEmployees(result.data.data.internalNot);
+    };
+
+    fetchData();
+  }, []);
+
   return (
    <div>
 
@@ -127,13 +141,13 @@ const Payment = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map((row) => (
-          <TableRow key={row.name}>
+        {employess.map((employee) => (
+          <TableRow key={employee.name}>
             <TableCell component="th" scope="row">
-              {row.name}
+              {employee.firstName}
             </TableCell>
-            <TableCell>{row.position}</TableCell>
-            <TableCell>{row.salary}</TableCell>
+            <TableCell>{employee.position}</TableCell>
+            <TableCell>{employee.salary}</TableCell>
             <TableCell  
             
             >
@@ -143,15 +157,15 @@ const Payment = () => {
               
               >
                 <Select
-                  value={row.status}
+                  value={employee.status}
                   className={classes.dropdownItem}
                   onChange={(e) => {
-                    handleStatusChange(e, row.name);
+                    handleStatusChange(e, employee.name);
                   }}
                   displayEmpty
                 >
                   <MenuItem value="">
-                    <em>{row.status}</em>
+                    <em>{employee.status}</em>
                   </MenuItem>
                   <MenuItem value="Paid">Un Paid</MenuItem>
                   <MenuItem value="Rejected">Rejected</MenuItem>
@@ -160,11 +174,6 @@ const Payment = () => {
               </FormControl>
             </TableCell>
             <TableCell>
-              {/* <FormControl>
-                
-              </FormControl>
-              
-              {row.evaluation} */}
               <FormControl>
               
                 <TextField
@@ -173,9 +182,9 @@ const Payment = () => {
                   placeholder="mrrrrrrrr"
                   rows={4}
                   variant="outlined"
-                  value={row.evaluation}
+                  value={employee.evaluation}
                   onChange={(e) => {
-                    onDescriptionChanged(e, row.name);
+                    onDescriptionChanged(e, employee.name);
                   }}
                 />
               
