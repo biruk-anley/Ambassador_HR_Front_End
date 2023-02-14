@@ -11,7 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import bell from '../images/votee.png';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "../../axios";
 
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
@@ -161,6 +161,7 @@ const useStyles = makeStyles((theme) => ({
 const Vote = () => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   const [polls, setPolls] = useState([]);
 
   useEffect(() => {
@@ -174,6 +175,12 @@ const Vote = () => {
 
     fetchData();
   }, []);
+
+  const onReadMore = async (event, pollId)=>{
+    event.preventDefault();
+    history.push({pathname:"/VoteDetail", state: { pollId: pollId }});
+
+  }
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -207,8 +214,8 @@ const Vote = () => {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                    <Link className={classes.links} to="/VoteDetail">
-                       <button className={classes.buttonone}>Vote</button>
+                    <Link className={classes.links}>
+                       <button className={classes.buttonone} onClick={onReadMore}>Vote</button>
                     </Link>
                       
                   </CardActions>

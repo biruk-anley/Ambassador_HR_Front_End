@@ -1,7 +1,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -22,6 +22,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import successgif from '../images/successs.gif';
+import { useLocation } from 'react-router-dom';
+import axios from "../../axios";
 
 
 
@@ -164,8 +166,22 @@ const useStyles = makeStyles((theme) => ({
 
 const VoteDetail = () => {
   const classes = useStyles();
+  const location = useLocation();
   const [selectedValue, setSelectedValue] = useState("");
   const [open, setOpen] = useState(false);
+  const [poll, setPoll] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        `api/v1/vote/${location.state.pollId}`
+      );
+
+      setPoll(result.data);
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -190,11 +206,11 @@ const VoteDetail = () => {
               <Card sx={{ maxWidth: 300}}>
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Vote For  President
+                      {poll.title}
                     </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '16px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'10px',fontWeight: '400' }}>
-                      Vote for your president which will lead for 2 years
+                      {poll.description}
                     </Typography>
                   
                   <div>
@@ -206,21 +222,16 @@ const VoteDetail = () => {
                         value={selectedValue}
                         onChange={handleChange}
                       >
-                        <FormControlLabel
-                          value="Nuredin Bedru"
+                        {
+                          poll.candidates.map(candidate => (
+                            <FormControlLabel
+                          value={candidate.firstName}
                           control={<Radio />}
-                          label="Nuredin Bedru "
+                          label={candidate.firstName}
                         />
-                        <FormControlLabel
-                          value="Abeniezer Adugna"
-                          control={<Radio />}
-                          label="Abeniezer Adugna"
-                        />
-                        <FormControlLabel
-                          value="Biruk Anley"
-                          control={<Radio />}
-                          label="Biruk Anley"
-                        />
+                          ))
+                        }
+                        
                       </RadioGroup>
                     </FormControl>
                     <br></br>
