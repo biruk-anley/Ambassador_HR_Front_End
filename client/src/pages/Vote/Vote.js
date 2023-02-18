@@ -220,7 +220,7 @@ const Vote = () => {
             
               <CardContent>
                 <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center', fontWeight: '700' }}>
-                  Vote For New president
+                  Vote For CEO
               </Typography>
               
               <Typography style={{ color: 'black', fontSize: '15px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
@@ -254,7 +254,7 @@ const Vote = () => {
             
               <CardContent>
                 <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center', fontWeight: '700' }}>
-                  Vote For New president
+                  Vote For Salary Compensation
               </Typography>
               
               <Typography style={{ color: 'black', fontSize: '15px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
