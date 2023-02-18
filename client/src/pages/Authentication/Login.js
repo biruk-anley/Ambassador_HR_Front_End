@@ -3,18 +3,10 @@ import {
 
   makeStyles,
 } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
-import * as apiEndpoint from "../../apiEndpoints";
-
-
-import backEndApi from "../../services/api";
-import { Redirect } from "react-router-dom";
+import axios from "../../axios";
 
 const SignupImage = process.env.PUBLIC_URL + "/img/new.png";
 
@@ -153,11 +145,11 @@ function Login() {
     event.preventDefault();
     
     await axios.post("/api/v1/employee/login",
+      
     {
-      email, password
+      email, password,
     }
     ).then((response) => {
-      console.log(response)
       history.push({pathname:"/Noticeboard", state: { detail: response.data }});
     })
     .catch((error) => {

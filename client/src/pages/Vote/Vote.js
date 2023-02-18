@@ -1,7 +1,7 @@
 
 
 
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +11,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import bell from '../images/votee.png';
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import axios from "../../axios";
 
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
 
@@ -159,7 +160,27 @@ const useStyles = makeStyles((theme) => ({
 
 const Vote = () => {
   const classes = useStyles();
+  const location = useLocation();
+  const history = useHistory();
+  const [polls, setPolls] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        'api/v1/poll'
+      );
+
+      setPolls(result);
+    };
+
+    fetchData();
+  }, []);
+
+  const onReadMore = async (event, pollId)=>{
+    event.preventDefault();
+    history.push({pathname:"/VoteDetail", state: { pollId: pollId }});
+
+  }
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -173,36 +194,22 @@ const Vote = () => {
         </Grid>
        
         <Grid container spacing={5} className={classes.cardss}>
-          <Grid item lg={4} xs={12}>
-          
-            
-              <Card sx={{ maxWidth: 300}}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    image={bell}
-                    className={classes.imagesb}
-                />
-                
-                  <CardContent>
-                    <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center', fontWeight: '700' }}>
-                      Vote For New president
-                  </Typography>
-                  
-                  <Typography style={{ color: 'black', fontSize: '15px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      DeadLine : March 21:2023
+          {
+            polls ? (polls.map(poll => (
+              <Grid item lg={4} xs={12} key={poll.id}>
+                <Card sx={{ maxWidth: 300}}>
+                    <CardMedia
+                      component="img"
+                      alt="green iguana"
+                      image={bell}
+                      className={classes.imagesb}
+                  />
+                    <CardContent>
+                      <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center', fontWeight: '700' }}>
+                        {poll.title}
                     </Typography>
-                  
-                  
-
-                  
-                  
-                  </CardContent>
-                  <CardActions>
-                  <Link className={classes.links} to="/VoteDetail">
-                     <button className={classes.buttonone}>Vote</button>
-                  </Link>
                     
+<<<<<<< HEAD
                 </CardActions>
               </Card>
           </Grid>
@@ -276,14 +283,25 @@ const Vote = () => {
       </Grid>
           
 
+=======
+                    <Typography style={{ color: 'black', fontSize: '15px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
+                        DeadLine : {poll.deadline}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                    <Link className={classes.links}>
+                       <button className={classes.buttonone} onClick={onReadMore}>Vote</button>
+                    </Link>
+                      
+                  </CardActions>
+                </Card>
+            </Grid> 
+            ))):(<p>No polls yet...</p>)
+>>>>>>> a8c92c83de8dc089c93308bda574ef47ab40167b
             
+          }
+                   
         </Grid>
-       
-
-          
-
-
-          
       </Grid>
      
     </div>

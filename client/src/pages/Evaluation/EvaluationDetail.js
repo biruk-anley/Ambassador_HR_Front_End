@@ -1,4 +1,4 @@
-import React ,{useState}from 'react';
+import React ,{useState, useLocation }from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +16,9 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
+import axios from '../../axios';
+import { useHistory } from "react-router-dom";
+
 
 
 
@@ -180,14 +183,7 @@ const EvaluationDetail = () => {
     setUsers(newUsers);
   };
 
-  const onDescriptionChanged = (event,evaluation)=>{
-    const newUserss = users.map((user) => {
-      if (user.evaluation == evaluation) user.status = event.target.value;
-
-      return user;
-    });
-    setUsers(newUserss);
-  }
+ 
   
 
   return (
@@ -262,7 +258,7 @@ const EvaluationDetail = () => {
                 </Table>
                 </div>
                 <Link className={classes.links} to="/readmore">
-                  <button className={classes.buttonone}>Save</button>
+                  <button className={classes.buttonone} >Save</button>
               </Link>
               </Card>
           </Grid>
