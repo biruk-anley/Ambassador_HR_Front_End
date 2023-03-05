@@ -1,20 +1,13 @@
-
-
-
-import React,{useState,useEffect,useLocation} from 'react';
+import React from 'react';
+import { useHistory, useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
-import Box from '@mui/material/Box';
 import { Link } from '@material-ui/core';
-import axios from "../../axios";
-
-
-
+import { selectNoticeEntities, deleteNotice } from '../../redux/slices/noticesSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -132,63 +125,48 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-  },
+  }
 }));
 
-const ReadMore = () => {
+const NoticeDetail = () => {
   const classes = useStyles();
-  const [notice, setNotice] = useState({});
-  const location = useLocation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(
-        `api/v1/internalNotice/${location.state.noticeId}`
-      );
-
-      setNotice(result.data);
-    };
-
-    fetchData();
-  }, []);
-
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const notice_id = useParams()["id"]
+  const notice = useSelector(selectNoticeEntities)[notice_id]
+  const onDelete = () => {
+    dispatch(deleteNotice(notice._id))
+    history.push({ pathname: "/Noticeboard"});
+  }
+  const onUpdate = () =>{
+    history.push({ pathname: `/UpdateNotice/${notice_id}`});
+  }
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <div className={classes.events}>Event Descriptions</div>
+        <div className={classes.events}>{notice.title}</div>
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={8} xs={8}>
-          
-            
               <Card sx={{ maxWidth: 300}}>
-                  <CardContent>
-                    <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                       Detail about Notice board
-                    </Typography>
-                  
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'10px',fontWeight: '600' }}>
-                      
-                      {notice.title}
-                  </Typography>
-                  
-                 
-
-                  
-                  
-                  </CardContent>
                   <CardActions>
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      {notice.descriptions}    
+                      {notice.subject}    
 
                     </Typography>
                 </CardActions>
+                <CardActions>
+                  <Link className={classes.links} style={{ "margin-left": "50%" }}>
+                    <button className={classes.buttonone} onClick={onUpdate}>Edit</button>
+                  </Link>
+                  <Link className={classes.links}>
+                    <button className={classes.buttonone} onClick={onDelete}>Delete</button>
+                  </Link>
+
+                </CardActions>
               </Card>
           </Grid>
-          
-
-            
           </Grid>
       </Grid>
     </div>)
 }
-export default ReadMore;
+export default NoticeDetail;

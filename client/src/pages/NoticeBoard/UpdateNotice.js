@@ -8,9 +8,9 @@ import CardActions from "@mui/material/CardActions";
 import Box from "@mui/material/Box";
 import { Link } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import { saveNewNotice } from "../../redux/slices/noticesSlice";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { selectNoticeEntities, updateNotice } from "../../redux/slices/noticesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,27 +125,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddNotice = () => {
+const UpdateNotice = () => {
   const classes = useStyles();
-  const [title, setTitle] = useState("");
-  const [subject, setSubject] = useState("");
+  const notice_id = useParams()["id"]
+  const notice = useSelector(selectNoticeEntities)[notice_id]
+  const [title, setTitle] = useState(notice.title)
+  const [subject, setSubject] = useState(notice.subject)
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onAdd = async (e) => {
-    await dispatch(
-      saveNewNotice({
-        title: title,
-        subject: subject,
-      })
-    );
-    history.push({ pathname: "/Noticeboard" });
-  };
+  const onUpdate = async (e) => {
+    await dispatch(updateNotice({
+      _id: notice_id,
+      title: title,
+      subject: subject
+    }))
+    history.push({ pathname: "/Noticeboard"});
+  }
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <div className={classes.events}>Add Notices</div>
+        <div className={classes.events}>Update Notices</div>
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={8} xs={8}>
             <Card sx={{ maxWidth: 300 }}>
@@ -175,9 +176,10 @@ const AddNotice = () => {
                     fullWidth
                     id="fullWidth"
                     variant="outlined"
-                    placeholder="Enter the title"
+                    placeholder= "Enter the title"
                     value={title}
                     onChange={(event) => setTitle(event.target.value)}
+
                   />
                 </Box>
               </CardActions>
@@ -210,15 +212,13 @@ const AddNotice = () => {
                     variant="outlined"
                     value={subject}
                     placeholder="Enter some description about the notice."
-                    onChange={(event) => setSubject(event.target.value)}
+                    onChange={event => setSubject(event.target.value)}
                   />
                 </Box>
               </CardActions>
               <CardActions></CardActions>
               <Link className={classes.links}>
-                <button className={classes.buttonone} onClick={onAdd}>
-                  Add
-                </button>
+                <button className={classes.buttonone} onClick={onUpdate}>Done</button>
               </Link>
             </Card>
           </Grid>
@@ -231,4 +231,4 @@ const AddNotice = () => {
     </div>
   );
 };
-export default AddNotice;
+export default UpdateNotice;

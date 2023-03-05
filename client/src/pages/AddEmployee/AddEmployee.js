@@ -262,19 +262,12 @@ function NewListing({ setSideBar }) {
       Salary: parseInt(Salary),
       Education:Education,
     };
-    console.log("come 1 ");
     if (!Name) {
       document.getElementById("NameError").style.display = "block";
     }
     if (!Gender) {
       document.getElementById("GenderError").style.display = "block";
     }
-    // if (!Salary) {
-    //   document.getElementById("SalaryError").style.display = "block";
-    // }
-    // if (!Sex) {
-    //   document.getElementById("SexError").style.display = "block";
-    // }
 
     if (!phoneNumber) {
       document.getElementById("phoneNumberError").style.display = "block";
@@ -283,22 +276,13 @@ function NewListing({ setSideBar }) {
     if (!DateOfBirthDate) {
       document.getElementById("DateOfBirthError").style.display = "block";
     }
-    // if (!file) {
-    //   document.getElementById("dropZoneImage").style.display = "block";
-    // }
-    // console.log("come 2 ");
-
     if (Name && Gender && DateOfBirthDate  && phoneNumber) {
       setValidity(true);
-      console.log("come 3 ");
       // pass the product as props
     }
     if (file) {
-      console.log("here is");
       submitNewListingApiRequest(product);
-    } else {
-      console.log("come 4 ");
-    }
+    } 
   };
 
   const submitNewListingApiRequest = async (newLaunchDetails) => {
@@ -333,8 +317,6 @@ function NewListing({ setSideBar }) {
     });
 
     formData.append("files[]", file);
-
-    console.log(formDatas, "formDatasssssssssssss");
     const config = {
       headers: {
         "content-type": "multipart/form-data",

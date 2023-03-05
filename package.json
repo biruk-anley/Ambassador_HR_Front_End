@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "@mui/x-date-pickers": "^5.0.18",
-    "moment": "^2.29.4"
+    "@reduxjs/toolkit": "^1.9.3",
+    "moment": "^2.29.4",
+    "redux-devtools-extension": "^2.13.9",
+    "remote-redux-devtools": "^0.5.16"
   }
 }

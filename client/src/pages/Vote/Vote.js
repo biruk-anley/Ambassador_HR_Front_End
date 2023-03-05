@@ -209,81 +209,6 @@ const Vote = () => {
                         {poll.title}
                     </Typography>
                     
-<<<<<<< HEAD
-                </CardActions>
-              </Card>
-          </Grid>
-
-          <Grid item lg={4} xs={12}>
-          
-            
-          <Card sx={{ maxWidth: 300}}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                image={bell}
-                className={classes.imagesb}
-            />
-            
-              <CardContent>
-                <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center', fontWeight: '700' }}>
-                  Vote For CEO
-              </Typography>
-              
-              <Typography style={{ color: 'black', fontSize: '15px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                  DeadLine : March 21:2023
-                </Typography>
-              
-              
-
-              
-              
-              </CardContent>
-              <CardActions>
-              <Link className={classes.links} to="/VoteDetail">
-                 <button className={classes.buttonone}>Vote</button>
-              </Link>
-                
-            </CardActions>
-          </Card>
-      </Grid>
-
-      <Grid item lg={4} xs={12}>
-          
-            
-          <Card sx={{ maxWidth: 300}}>
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                image={bell}
-                className={classes.imagesb}
-            />
-            
-              <CardContent>
-                <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', justifyContent: 'center', fontWeight: '700' }}>
-                  Vote For Salary Compensation
-              </Typography>
-              
-              <Typography style={{ color: 'black', fontSize: '15px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                  DeadLine : March 21:2023
-                </Typography>
-              
-              
-
-              
-              
-              </CardContent>
-              <CardActions>
-              <Link className={classes.links} to="/VoteDetail">
-                 <button className={classes.buttonone}>Vote</button>
-              </Link>
-                
-            </CardActions>
-          </Card>
-      </Grid>
-          
-
-=======
                     <Typography style={{ color: 'black', fontSize: '15px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
                         DeadLine : {poll.deadline}
                       </Typography>
@@ -297,7 +222,6 @@ const Vote = () => {
                 </Card>
             </Grid> 
             ))):(<p>No polls yet...</p>)
->>>>>>> a8c92c83de8dc089c93308bda574ef47ab40167b
             
           }
                    

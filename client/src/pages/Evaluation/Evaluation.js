@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
 import React,{useState,useEffect} from 'react'
 import axios from '../../axios';
->>>>>>> a8c92c83de8dc089c93308bda574ef47ab40167b
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
