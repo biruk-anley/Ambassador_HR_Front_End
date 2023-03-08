@@ -9,8 +9,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import bell from '../images/star.png';
-import { Link } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
+import { selectEmployeeEntities, fetch
+ } from '../../redux/slices/employeeSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEvaluation, selectevaluationEntities } from '../../redux/slices/evaluationSlice';
 const images = process.env.PUBLIC_URL + "/img/evaluatee.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -157,22 +160,23 @@ const useStyles = makeStyles((theme) => ({
 
 const Evaluation = () => {
   const classes = useStyles();
-  const [notices, setNotices] = useState([]);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchEvaluation());
+  }, [])  ;
+  useEffect(()=>{
+    dispatch(fetchEvaluation());
+  })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'api/v1/evaluation'
-      );
+  const handleSubmit = (evaluationID) => (event) => {
+    event.preventDefault();
+    history.push({ pathname: `/EvaluationDetail/${evaluationID}` });
+  };
 
-      setNotices(result.data);
-    
-
-    };
-
-    fetchData();
-  }, []);
-
+  const evaluations = useSelector(selectevaluationEntities);
+  console.log('evaluation',evaluations);
+  const loadingStatus = useSelector((state) => state.notices.status);
 
   return (
     <div className={classes.root}>
@@ -207,12 +211,15 @@ const Evaluation = () => {
            
         </Grid>
        
-        <Grid container spacing={5} className={classes.cardss}>
-          <Grid item lg={4} xs={12}>
-          
-          { notices ? (notices.map(notice => (
-            
-              <Card sx={{ maxWidth: 300}}>
+           <Grid container spacing={5} className={classes.cardss}>
+        {loadingStatus === "loading" ? (
+            <div>
+              <div className="loader" />
+            </div>
+          ) : (
+            Object.values(evaluations).map((evaluation) =>(
+              <Grid item lg={4} xs={12} key={evaluation.id}>
+                <Card sx={{ maxWidth: 300}}>
                   <CardMedia
                     component="img"
                     alt="green iguana"
@@ -222,11 +229,11 @@ const Evaluation = () => {
                 
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evalution : {notice.evaluatedPerson}
+                      Evalution : {evaluation.evaluatedPerson}
                   </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Dead Line : {notice.deadLine}
+                      Dead Line : {evaluation.deadLine}
                     </Typography>
                   
                   
@@ -236,22 +243,20 @@ const Evaluation = () => {
                   </CardContent>
                   <CardActions>
                   <Link className={classes.links} to="/EvaluationDetail">
-                     <button className={classes.buttonone}>Evaluate</button>
+                     <button className={classes.buttonone}
+                     onClick={handleSubmit(evaluation._id)}
+                     >Evaluate</button>
                   </Link>
                     
                 </CardActions>
-              </Card>
-          ))):
-          (
-            <p>There is no Evaluation Here</p>
-          )
-          }
+                </Card>
+              </Grid>
+            ))
+          )}
+           </Grid>
           </Grid>
-          
-
-            
-          </Grid>
-      </Grid>
-    </div>)
-}
+        </div>
+          );
+          };
+     
 export default Evaluation;
