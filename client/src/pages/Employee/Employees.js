@@ -142,7 +142,7 @@ const Employees = () => {
     history.push({ pathname: `/UpdateEmployee/${employee_id}` })
   }
 
-  const onDelete = event => async (employee_id) => {
+  const onDelete = employee_id => event => {
     event.preventDefault();
     dispatch(deleteEmployee(employee_id))
   }
@@ -224,7 +224,7 @@ const Employees = () => {
                     Edit
                   </Button>
                   <Button
-                    onClick={onDelete}
+                    onClick={onDelete(employee._id)}
                     value="NA"
                     variant="contained"
                     className={classes.buttononeE}

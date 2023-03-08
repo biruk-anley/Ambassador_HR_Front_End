@@ -244,7 +244,7 @@ function UpdateEmployee() {
       lastName: lastName,
       gender:Gender,
       phone: parseInt(phoneNumber),
-      birthDate: moment(DateOfBirthDate).format("DD-MM-YYYY"),
+      birthDate: Date(moment(DateOfBirthDate).format("DD-MM-YYYY")),
       position:Position,
       email:Email,
       dateOfEmployment:moment(DateOfEmployment).format("DD-MM-YYYY"),
