@@ -7,8 +7,6 @@ import {
   withStyles,
   makeStyles,
 } from "@material-ui/core/index";
-import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 import { compose } from "recompose";
@@ -88,8 +86,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavTabs(props) {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [isHumActive, setHumActive] = useState(false);
 
   const classes = useStyles();
@@ -119,7 +115,7 @@ function NavTabs(props) {
             </Link>
           </ListItem>
           <ListItem>
-            <Link to="Employee" className={classes.links}>
+            <Link to="Employees" className={classes.links}>
               <Button className={classes.links}>Employees</Button>
             </Link>
           </ListItem>

@@ -4,7 +4,7 @@ import { Container, makeStyles } from "@material-ui/core";
 import NavTabs from "./components/NavTabs";
 import LoginRegister from "./pages/Authentication/Login";
 import NoticeBoard from "./pages/NoticeBoard/NoticeBoard";
-import AddEmployee from './pages/AddEmployee/AddEmployee'
+import AddEmployee from './pages/Employee/AddEmployee';
 import UpperFooter from "./components/UpperFooter";
 import Employee from "./pages/Employee/Employees";
 import noticeDetail from "./pages/NoticeBoard/DetailNotice";
@@ -16,6 +16,8 @@ import AddEvaluation from './pages/Evaluation/AddEvaluation';
 import AddVote from './pages/Vote/AddVote'
 import AddNotice from "./pages/NoticeBoard/AddNotice";
 import UpdateNotice from "./pages/NoticeBoard/UpdateNotice";
+import Employees from "./pages/Employee/Employees";
+import UpdateEmployee from "./pages/Employee/UpdateEmployee";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,8 +61,9 @@ function App() {
           <Route path="/AddEvaluation" component={AddEvaluation} />
 
 
-          <Route path="/Employee" component={Employee} />
-          <Route path="/addEmployee" component={AddEmployee} />
+          <Route path="/Employees" component={Employees} />
+          <Route path="/AddEmployee" component={AddEmployee} />
+          <Route path="/UpdateEmployee/:id" component={UpdateEmployee} />
         </Container>
       </BrowserRouter>
       <UpperFooter></UpperFooter>

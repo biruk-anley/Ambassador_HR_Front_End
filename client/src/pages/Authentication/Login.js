@@ -143,13 +143,14 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
     await axios.post("/api/v1/employee/login",
       
     {
       email, password,
     }
     ).then((response) => {
+      localStorage.setItem('jwt', response.data.token)
+      localStorage.setItem('employee', JSON.stringify(response.data.data))
       history.push({pathname:"/Noticeboard", state: { detail: response.data }});
     })
     .catch((error) => {

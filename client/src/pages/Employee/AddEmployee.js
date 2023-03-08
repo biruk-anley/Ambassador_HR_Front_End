@@ -17,10 +17,10 @@ import FormControl from "@mui/material/FormControl";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import backEndApi from "../../services/api";
 import moment from "moment";
 import { withStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
+import { saveNewEmployee } from "../../redux/slices/employeeSlice";
 
 const AmbassaderImage = process.env.PUBLIC_URL + "/img/new.png";
 
@@ -220,38 +220,50 @@ function NewListing({ setSideBar }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  
-
-
-  
-
-  const [Name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [DateOfBirthDate, setAvailableDate] = useState(new Date());
   const [Gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-
+  const [role, setRole] = useState("");
   const [Position, setPosition]=useState("");
-  const [Salary, setSalary] = useState("");
+  const [Salary, setSalary] = useState(0.0);
   const [Email, setEmail] = useState("");
   const [DateOfEmployment, setDateOfEmployment] = useState(new Date());
   const [Education, setEducation] = useState("");
-  const [file, setFile] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isRedirectToHomepage, setRedirectToHomePage] = useState(false);
   const [validity, setValidity] = useState(false);
 
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-
     validateForm(e);
   };
+  const onSave = async event => {
+    event.preventDefault();
+    const employee = {
+      loggedInUserId: JSON.parse(localStorage.getItem("employee"))._id,
+      firstName: firstName,
+      lastName: lastName,
+      gender:Gender,
+      phone: parseInt(phoneNumber),
+      birthDate: moment(DateOfBirthDate).format("DD-MM-YYYY"),
+      position:Position,
+      email:Email,
+      dateOfEmployment:moment(DateOfEmployment).format("DD-MM-YYYY"),
+      salary: parseInt(Salary),
+      education:Education,
+      role: role
+    };
+    await dispatch(saveNewEmployee(employee))
+    history.push({ pathname: "/Employees"})
 
+  }
   
 
   const validateForm = (e) => {
     const product = {
-      Name: Name,
+      firstName: firstName,
+      lastName: lastName,
       Gender:Gender,
       phoneNumber: parseInt(phoneNumber),
       DateOfBirthDate: moment(DateOfBirthDate).format("DD-MM-YYYY"),
@@ -262,13 +274,18 @@ function NewListing({ setSideBar }) {
       Salary: parseInt(Salary),
       Education:Education,
     };
-    if (!Name) {
-      document.getElementById("NameError").style.display = "block";
+    if (!firstName) {
+      document.getElementById("firstNameError").style.display = "block";
+    }
+    if (!lastName) {
+      document.getElementById("lastNameError").style.display = "block";
     }
     if (!Gender) {
       document.getElementById("GenderError").style.display = "block";
     }
-
+    // if (!role) {
+    //   document.getElementById("RoleError").style.display = "block";
+    // }
     if (!phoneNumber) {
       document.getElementById("phoneNumberError").style.display = "block";
     }
@@ -276,83 +293,32 @@ function NewListing({ setSideBar }) {
     if (!DateOfBirthDate) {
       document.getElementById("DateOfBirthError").style.display = "block";
     }
-    if (Name && Gender && DateOfBirthDate  && phoneNumber) {
+    if (firstName && lastName && Gender && DateOfBirthDate  && phoneNumber) {
       setValidity(true);
       // pass the product as props
     }
-    if (file) {
-      submitNewListingApiRequest(product);
-    } 
   };
 
-  const submitNewListingApiRequest = async (newLaunchDetails) => {
-    const {
-      Name,
-      Salary,
-      Gender,
-      phoneNumber,
-      Position,
-      Education,
-      Email,
-      DateOfBirthDate,
-      DateOfEmployment,
-
-      
-    } = newLaunchDetails;
-
-    const formDatas = {
-      Name,
-      Salary,
-      Gender,
-      phoneNumber,
-      Position,
-      Education,
-      Email,
-      DateOfBirthDate,
-      DateOfEmployment,
-    };
-    const formData = new FormData();
-    file.forEach((fil) => {
-      formData.append("files[]", fil);
-    });
-
-    formData.append("files[]", file);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-        "x-access-token": JSON.parse(localStorage.getItem("token")),
-      },
-    };
-    // dispatch(addHouse(formDatas));
-    // dispatch(addHouseImg(formData));
-
-    let response = await axios.post(
-      "http://localhost:5000/addhouse",
-      formDatas,
-      {
-        headers: {
-          "x-access-token": JSON.parse(localStorage.getItem("token")),
-        },
-      }
-    );
-    let resImage = await axios.post(
-      "http://localhost:5000/uploadHouseImage",
-      formData,
-      config
-    );
-
-    setRedirectToHomePage(true);
-  };
-
-  const onNameChanged = (e) => {
+  const onFirstNameChanged = (e) => {
     if (e.target.value.length === 0) {
-      document.getElementById("NameError").style.display = "block";
+      document.getElementById("FirstNameError").style.display = "block";
     } else {
-      document.getElementById("NameError").style.display = "none";
+      document.getElementById("FirstNameError").style.display = "none";
     }
-    setName(e.target.value);
+    setFirstName(e.target.value);
     if (e.target.value !== 1) {
-      setName(e.target.value);
+      setFirstName(e.target.value);
+    }
+  };
+  const onLastNameChanged = (e) => {
+    if (e.target.value.length === 0) {
+      document.getElementById("LastNameError").style.display = "block";
+    } else {
+      document.getElementById("LastNameError").style.display = "none";
+    }
+    setLastName(e.target.value);
+    if (e.target.value !== 1) {
+      setLastName(e.target.value);
     }
   };
 
@@ -363,6 +329,14 @@ function NewListing({ setSideBar }) {
       document.getElementById("GenderError").style.display = "none";
     }
     setGender(e.target.value);
+  };
+  const onRoleChanged = (e) => {
+    if (e.target.value.length === null) {
+      document.getElementById("RoleError").style.display = "block";
+    } else {
+      document.getElementById("RoleError").style.display = "none";
+    }
+    setRole(e.target.value);
   };
 
   const onPositionChange = (e)=>{
@@ -434,11 +408,6 @@ function NewListing({ setSideBar }) {
     }
   };
 
-
-  
-
-  
-
   if (validity) {
     return (
       <Container maxWidth="md">
@@ -474,15 +443,15 @@ function NewListing({ setSideBar }) {
                 <input
                   type="text"
                   
-                  id="Name"
-                  name="Myname"
+                  id="position"
+                  name="position"
                   className="form__input"
                   placeholder="Position"
                   onChange={onPositionChange}
                   value={Position}
                 />
                 <div className="form__label">
-                  <label htmlFor="Name" className="form__labels">
+                  <label htmlFor="posiion" className="form__labels">
                     Position
                   </label>
                 </div>
@@ -495,13 +464,40 @@ function NewListing({ setSideBar }) {
                   Enter The Position You had
                 </Typography>
               </div>
+              <div className={classes.inputsContainer}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Select employee's Role
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    sx={{ height: 40 }}
+                    value={role}
+                    label="Bedroom"
+                    onChange={onRoleChanged}
+                    name="selectNumberOfBedrooms"
+                  >
+                    <MenuItem value="EMPLOYEE">EMPLOYEE</MenuItem>
+                    <MenuItem value="HR">HR</MenuItem>
+                    <MenuItem value="ADMIN HR">ADMIN HR</MenuItem>
+                
+                  </Select>
+                </FormControl>
+                <Typography
+                  variant="body2"
+                  id="RoleError"
+                  className={classes.inputError}
+                >
+                  you have to select a role.
+                </Typography>
+              </div>
 
               <div className={classes.inputsContainer}>
                 <input
                   type="text"
                   
                   id="Name"
-                  name="Myname"
+                  name="email"
                   className="form__input"
                   placeholder="Email"
                   onChange={onEmailChange}
@@ -526,15 +522,15 @@ function NewListing({ setSideBar }) {
                 <input
                   type="text"
                   
-                  id="Name"
-                  name="Myname"
+                  id="education"
+                  name="education"
                   className="form__input"
                   placeholder="Education"
                   onChange={onEducationChange}
                   value={Education}
                 />
                 <div className="form__label">
-                  <label htmlFor="Name" className="form__labels">
+                  <label htmlFor="education" className="form__labels">
                     Education
                   </label>
                 </div>
@@ -549,37 +545,38 @@ function NewListing({ setSideBar }) {
               </div>
 
               <div className={classes.inputsContainer}>
-                <input
-                  type="text"
-                  
-                  id="Name"
-                  name="Myname"
-                  className="form__input"
-                  placeholder="DateOfEmployment"
-                  onChange={onDateOfEmploymentChange}
-                  value={DateOfEmployment}
-                />
-                <div className="form__label">
-                  <label htmlFor="Name" className="form__labels">
-                    DateOfEmployment
-                  </label>
+               
+                <div className={classes.dataPicker} id="date">
+                  <DatePicker
+                    id="dateOfEmp"
+                    name="dateOfEmp"
+                    dateFormat="dd-MM-yyyy"
+                    dayPlaceholder="21"
+                    // selected={productLaunchDate}
+                    className="form__input"
+                    onChange={onDateOfEmploymentChange}
+                    value={moment(DateOfEmployment).format("DD-MM-YYYY")}
+                  />
+                  <div className="form__label">
+                    <label htmlFor="dateOfEmp" className="form__labelss">
+                      Date of employment
+                    </label>
+                  </div>
                 </div>
-
                 <Typography
                   variant="body2"
                   id="DateOfEmploymentError"
                   className={classes.inputError}
                 >
-                  Enter The DateOfEmployment You had
+                  You have to Set Date of employment.
                 </Typography>
               </div>
-
               <div className={classes.inputsContainer}>
                 <input
                   type="text"
                   
-                  id="Name"
-                  name="Myname"
+                  id="firtsName"
+                  name="firstName"
                   className="form__input"
                   placeholder="Salary"
                   onChange={onSalaryChange}
@@ -604,7 +601,7 @@ function NewListing({ setSideBar }) {
               <br />
               <div className={classes.buttons}>
                 <Button
-                  onClick={onFormSubmit}
+                  onClick={onSave}
                   value="NA"
                   variant="contained"
                   className={classes.buttonone}
@@ -656,33 +653,56 @@ function NewListing({ setSideBar }) {
                     Employees
                   </Typography>
                 </div>
-
-                {/* <Link to="/addtwohouse"></Link> */}
               </div>
               
               <div className={classes.inputsContainer}>
                 <input
                   type="text"
                   
-                  id="Name"
-                  name="Myname"
+                  id="firstName"
+                  name="firstName"
                   className="form__input"
-                  placeholder="Full Name"
-                  onChange={onNameChanged}
-                  value={Name}
+                  placeholder="First Name"
+                  onChange={onFirstNameChanged}
+                  value={firstName}
                 />
                 <div className="form__label">
-                  <label htmlFor="Name" className="form__labels">
+                  <label htmlFor="firstName" className="form__labels">
                     Name
                   </label>
                 </div>
 
                 <Typography
                   variant="body2"
-                  id="NameError"
+                  id="FirstNameError"
                   className={classes.inputError}
                 >
-                  Enter Your full name
+                  Enter Your first name
+                </Typography>
+              </div>
+              <div className={classes.inputsContainer}>
+                <input
+                  type="text"
+                  
+                  id="firstName"
+                  name="firstName"
+                  className="form__input"
+                  placeholder="Last Name"
+                  onChange={onLastNameChanged}
+                  value={lastName}
+                />
+                <div className="form__label">
+                  <label htmlFor="lastName" className="form__labels">
+                    Last Name
+                  </label>
+                </div>
+
+                <Typography
+                  variant="body2"
+                  id="LastNameError"
+                  className={classes.inputError}
+                >
+                  Enter Your last name
                 </Typography>
               </div>
               
@@ -699,8 +719,8 @@ function NewListing({ setSideBar }) {
                     onChange={onGenderChanged}
                     name="selectNumberOfBedrooms"
                   >
-                    <MenuItem value="1">Male</MenuItem>
-                    <MenuItem value="1">Female</MenuItem>
+                    <MenuItem value="MALE">Male</MenuItem>
+                    <MenuItem value="FEMALE">Female</MenuItem>
                 
                   </Select>
                 </FormControl>
