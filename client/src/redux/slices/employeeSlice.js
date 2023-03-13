@@ -35,7 +35,6 @@ export const deleteEmployee = createAsyncThunk(
 export const updateEmployee = createAsyncThunk(
     'employees/updateEmployee',
     async (employee) => {
-      console.log(employee, "employe")
         const response = await axios.patch(`api/v1/employee/${employee._id}`, employee)
         return response.data.data
     }

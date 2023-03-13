@@ -17,6 +17,7 @@ import axios from "../../axios";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEmployee, fetchEmployees, selectEmployeeEntities } from "../../redux/slices/employeeSlice";
+import { saveNewPayroll, selectPayrollEntities, updatePayroll, fetchPayrolls } from "../../redux/slices/payrollSlice";
 
 const useStyles = makeStyles(theme => ({
   dropdownItem: {
@@ -87,56 +88,18 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const data = [
-  {
-    name: "John Doe",
-    position: "Manager",
-    salary: "$100,000",
-    status: "Paid",
-    evaluation: "Excellent",
-  },
-  {
-    name: "Jane Doe",
-    position: "Developer",
-    salary: "$80,000",
-    status: "Rejected",
-    evaluation: "Good",
-  },
-  {
-    name: "Jim Brown",
-    position: "Designer",
-    salary: "$70,000",
-    status: "Cutoff",
-    evaluation: "Average",
-  },
-];
-
 const Employees = () => {
   const classes = useStyles();
-  const [users, setUsers] = useState(data);
   const history = useHistory();
   const dispatch = useDispatch();
-
-
-  const handleStatusChange = (event, name) => {
-    const newUsers = users.map((user) => {
-      if (user.name == name) user.status = event.target.value;
-
-      return user;
-    });
-    setUsers(newUsers);
-  };
   const employees = Object.values(useSelector(selectEmployeeEntities));
-
-  const onDescriptionChanged = (event, evaluation) => {
-    const newUserss = users.map((user) => {
-      if (user.evaluation == evaluation) user.status = event.target.value;
-
-      return user;
-    });
-    setUsers(newUserss);
-  }
-
+  let fetchedPayrolls = useSelector(selectPayrollEntities);
+  const fetchedNPayrolls = useSelector(selectPayrollEntities);
+  const [payrolls, setPayrolls] = useState(fetchedPayrolls);
+  useEffect(() => {
+    dispatch(fetchEmployees());
+    dispatch(fetchPayrolls())
+  }, []);
   const onUpdate = employee_id => event => {
     event.preventDefault();
     history.push({ pathname: `/UpdateEmployee/${employee_id}` })
@@ -147,8 +110,53 @@ const Employees = () => {
     dispatch(deleteEmployee(employee_id))
   }
 
+  const onStatusChange = (employee_id) => async event => {
+    if(employee_id in payrolls){
+      await setPayrolls({
+        ...payrolls,
+        [employee_id]: {...payrolls[employee_id], status: event.target.value}
+      })
+    }else{
+      await setPayrolls({
+        ...payrolls,
+        [employee_id]: {employeeId: employee_id, status: event.target.value, description: ""}
+      })
+    }
+    
+  }
 
+  const onEvaluationChange = (employee_id) => async event => {
+    if(employee_id in payrolls){
+      await setPayrolls({
+        ...payrolls,
+        [employee_id]: {...payrolls[employee_id], description: event.target.value}
+      })
+    }else{
+      await setPayrolls({
+        ...payrolls,
+        [employee_id]: {employeeId: employee_id, status: "", description: event.target.value}
+      })
+    }
+  }
+
+  const onSave = async event => {
+    event.preventDefault();
+    let toBeUpdated = [];
+    let newPayroll = [];
+    for (const [key, value] of Object.entries(payrolls)){
+      if(key in fetchedNPayrolls){
+        toBeUpdated.push(payrolls[key])
+      }else{
+        newPayroll.push(payrolls[key])
+      }
+    };
+    dispatch(saveNewPayroll(newPayroll))
+    dispatch(updatePayroll(toBeUpdated))
+    history({ pathname: '/Employees'})
+  }
+  
   return (
+
     <div>
 
       <div className="upper">
@@ -166,6 +174,7 @@ const Employees = () => {
           </TableHead>
           <TableBody>
             {employees.map((employee, index) => (
+              
               <TableRow key={employee._id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell component="th" scope="row">
@@ -174,41 +183,36 @@ const Employees = () => {
                 <TableCell>{employee.position}</TableCell>
                 <TableCell>{employee.salary}</TableCell>
                 <TableCell
-
                 >
                   <FormControl
                     variant="outlined"
                     className={classes.dropdownItem}
 
                   >
+                    
                     <Select
-                      value={employee.status}
+                      value={payrolls[employee._id] != undefined ?payrolls[employee._id].status:"UNPAID"}
                       className={classes.dropdownItem}
-                      onChange={(e) => {
-                        handleStatusChange(e, employee.name);
-                      }}
+                      onChange={onStatusChange(employee._id)}
                       displayEmpty
                     >
                       <MenuItem value="">
                         <em>{employee.status}</em>
                       </MenuItem>
-                      <MenuItem value="Paid">Un Paid</MenuItem>
-                      <MenuItem value="Rejected">Rejected</MenuItem>
-                      <MenuItem value="Cutoff">Cutoff</MenuItem>
+                      <MenuItem value="UNPAID">UNPAID</MenuItem>
+                      <MenuItem value="REJECTED">Rejected</MenuItem>
+                      <MenuItem value="CUTOFF">Cutoff</MenuItem>
                     </Select>
                   </FormControl>
                 </TableCell>
                 <TableCell>
                   <FormControl className="whyWide">
-
                     <TextField
                       placeholder="reason if un paid/ cut off"
                       rows={4}
                       variant="outlined"
-                      value={employee.evaluation}
-                      onChange={(e) => {
-                        onDescriptionChanged(e, employee.name);
-                      }}
+                      value={payrolls[employee._id] != undefined ?payrolls[employee._id].description:""}
+                      onChange={onEvaluationChange(employee._id)}
                     />
 
                   </FormControl>
@@ -241,7 +245,7 @@ const Employees = () => {
       <div className={classes.lower}>
 
         <Link className={classes.links} to="/readmore">
-          <button className={classes.buttonone}>Save</button>
+          <button className={classes.buttonone} onClick={onSave}>Save</button>
         </Link>
 
         <Link className={classes.links} to="/AddEmployee" style={{ marginLeft: '15px' }}>

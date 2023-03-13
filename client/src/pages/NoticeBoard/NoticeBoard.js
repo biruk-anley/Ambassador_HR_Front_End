@@ -14,6 +14,7 @@ import {
 } from "../../redux/slices/noticesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmployees } from "../../redux/slices/employeeSlice";
+import { fetchPayrolls } from "../../redux/slices/payrollSlice";
 
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
 
@@ -159,10 +160,9 @@ const NoticeBoard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchNotices());
-  }, []);
-  useEffect(() => {
     dispatch(fetchEmployees());
-  });
+    dispatch(fetchPayrolls())
+  }, []);
 
   const handleSubmit = (noticeId) => (event) => {
     event.preventDefault();
