@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import Box from "@mui/material/Box";
 import { Link } from "@material-ui/core";
@@ -19,17 +18,16 @@ import Chip from "@mui/material/Chip";
 import TextField from "@material-ui/core/TextField";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import axios from "../../axios";
+import { useDispatch } from "react-redux";
+import { saveNewEvaluation } from "../../redux/slices/evaluationSlice";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -202,9 +200,7 @@ const AddEvaluation = () => {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
-
-  const location = useLocation();
-  const [evaluation, setEvaluation] = useState([]);
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questionId, setQuestionId] = useState("");
@@ -222,27 +218,21 @@ const AddEvaluation = () => {
   ]);
   const [deadline, setDeadline] = useState("");
 
-  const onSave = async (event) => {
-    event.preventDefault();
-    const result = await axios
-      .post("api/v1/evaluation", {
-        title,
-        description,
-        questionId,
-        evaluatedPosition,
-        evaluatorPostion,
-        deadline,
+  const onSave = async (e) => {
+    await dispatch
+      (saveNewEvaluation( {
+        title : title,
+        description: description,
+        questionId:questionId,
+        evaluatedPosition :evaluatedPosition,
+        evaluatorPostion : evaluatorPostion,
+        deadline : deadline,
       })
-      .then((response) => {
+      );
         history.push({
           pathname: "/Evaluation",
-          state: { detail: response.data },
         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+      }
 
   // Evaluated position
   const [personPosition, setpersonPosition] = React.useState([]);
