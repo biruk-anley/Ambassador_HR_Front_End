@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEvaluationForm, selectevaluationFormEntities } from '../../redux/slices/evaluationFormSlice';
 import { fetchPositions } from '../../redux/slices/positionSlice';
 import { fetchQuestions } from '../../redux/slices/questionSlice';
+import { fetchEvaluation } from '../../redux/slices/evaluationSlice';
 const images = process.env.PUBLIC_URL + "/img/evaluatee.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -168,6 +169,7 @@ const EvaluationForm = () => {
     dispatch(fetchEvaluationForm(loggedInUser._id));
     dispatch(fetchQuestions())
     dispatch(fetchPositions())
+    dispatch(fetchEvaluation())
   }, []);
 
   const handleSubmit = (evaluationID) => (event) => {
