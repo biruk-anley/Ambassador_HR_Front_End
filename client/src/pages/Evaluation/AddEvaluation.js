@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -26,8 +26,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import axios from "../../axios";
-import { useDispatch } from "react-redux";
-import { saveNewEvaluation } from "../../redux/slices/evaluationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { saveNewEvaluationForm } from "../../redux/slices/evaluationFormSlice";
+import { fetchPositions, selectPositionEntities } from "../../redux/slices/positionSlice";
+import { fetchQuestions, selectQuestionEntities } from "../../redux/slices/questionSlice";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -196,79 +198,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddEvaluation = () => {
+const AddEvaluationForm = () => {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
   const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchPositions());
+    dispatch(fetchQuestions());
+  }, []);
+  const [personPosition, setPersonPosition] = React.useState([]);
+  const [personName, setPersonName] = React.useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [questionId, setQuestionId] = useState("");
-  const [evaluatedPosition, setEvaluatedPosition] = useState([
-    "CEO",
-    "Accountant",
-    "Program manager",
-    "Sales and Marketing",
-    "Human Resource",
-  ]);
-  const [evaluatorPostion, setEvaluatorPostion] = useState([
-    "Program manager",
-    "Sales and Marketing",
-    "Human Resource",
-  ]);
-  const [deadline, setDeadline] = useState("");
+  const fetchedPositions = useSelector(selectPositionEntities);
+  const fetchedQuestions = useSelector(selectQuestionEntities);
+  const [evaluatorPostionDis, setEvaluatorPositionDis] = useState([]);
+  const [evaluatedPositionDis, setEvaluatedPositionDis] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [deadline, setDeadline] = useState(dayjs(new Date()));
+  let positionTitles = [];
+  let questionDesc = [];
 
-  const onSave = async (e) => {
-    await dispatch
-      (saveNewEvaluation( {
-        title : title,
-        description: description,
-        questionId:questionId,
-        evaluatedPosition :evaluatedPosition,
-        evaluatorPostion : evaluatorPostion,
-        deadline : deadline,
-      })
-      );
-        history.push({
-          pathname: "/Evaluation",
-        });
-      }
+  Object.values(fetchedPositions).map((position) => {
+    positionTitles.push(position.title)
+  })
+  Object.values(fetchedQuestions).map((question) => {
+    questionDesc.push(question.description)
+  })
 
-  // Evaluated position
-  const [personPosition, setpersonPosition] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setpersonPosition(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  // Evaluater Postion
-  const [personPositionEvaluater, setpersonPositionEvaluater] = React.useState(
-    []
-  );
-
-  const handleEvaluaterChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setpersonPositionEvaluater(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  const [value, setValue] = React.useState(dayjs("2014-08-18T21:11:54"));
-
-  const handleDateChange = (newValue) => {
-    setValue(newValue);
-  };
-
-  const [personName, setPersonName] = React.useState([]);
 
   const handleChanges = (event) => {
     const {
@@ -279,11 +237,57 @@ const AddEvaluation = () => {
       typeof value === "string" ? value.split(",") : value
     );
   };
+  const onSave = async (e) => {
+    await dispatch
+      (saveNewEvaluationForm( {
+        title : title,
+        description: description,
+        questionId: questions,
+        evaluatedPositions : evaluatedPositionDis,
+        evaluatorPositions : evaluatorPostionDis,
+        deadline : deadline,
+      })
+      );
+        history.push({
+          pathname: "/Evaluation",
+        });
+      }
+
+
+  const onEvaluatorPositionChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setEvaluatorPositionDis(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const onEvaluatedPositionChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setEvaluatedPositionDis(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const onQuestionChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setQuestions(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const onDeadlineChange = (newDate) => {
+    setDeadline(newDate)
+  }
+
+
 
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <div className={classes.events}>Add Evaluation</div>
+        <div className={classes.events}>Add EvaluationForm</div>
         <Grid container spacing={5} className={classes.cardss}>
           <Grid item lg={8} xs={8}>
             <Card sx={{ maxWidth: 300 }}>
@@ -314,7 +318,7 @@ const AddEvaluation = () => {
                     onChange={(event) => setTitle(event.target.value)}
                     id="fullWidth"
                     variant="outlined"
-                    placeholder="Evaluation On Employees Performance"
+                    placeholder="EvaluationForm On Employees Performance"
                   />
                 </Box>
               </CardActions>
@@ -363,18 +367,18 @@ const AddEvaluation = () => {
                     padding: "15px",
                   }}
                 >
-                  EvaluatedPosition
+                  Evaluated Position
                 </Typography>
                 <FormControl sx={{ ml: 1, mt: 1, width: 610 }}>
                   <InputLabel id="demo-multiple-chip-label">
-                    Evaluatedpositions
+                    Evaluated positions
                   </InputLabel>
                   <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={personPosition}
-                    onChange={handleChange}
+                    value={evaluatedPositionDis}
+                    onChange={onEvaluatedPositionChange}
                     input={
                       <OutlinedInput id="select-multiple-chip" label="Chip" />
                     }
@@ -385,15 +389,16 @@ const AddEvaluation = () => {
                         ))}
                       </Box>
                     )}
+                      
                     MenuProps={MenuProps}
                   >
-                    {Evaluatedpositions.map((position) => (
+                    {positionTitles.map((title) => (
                       <MenuItem
-                        key={position}
-                        value={position}
-                        style={getStyles(position, personPosition, theme)}
+                        key={title}
+                        value={title}
+                        style={getStyles(title, personPosition, theme)}
                       >
-                        {position}
+                        {title}
                       </MenuItem>
                     ))}
                   </Select>
@@ -412,19 +417,19 @@ const AddEvaluation = () => {
                     padding: "15px",
                   }}
                 >
-                  EvaluaterPosition
+                  Evaluator Position
                 </Typography>
 
                 <FormControl sx={{ ml: 1, mt: 1, width: 610 }}>
                   <InputLabel id="demo-multiple-chip-label">
-                    Evaluaterpositions
+                    Evaluator positions
                   </InputLabel>
                   <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={personPositionEvaluater}
-                    onChange={handleEvaluaterChange}
+                    value={evaluatorPostionDis}
+                    onChange={onEvaluatorPositionChange}
                     input={
                       <OutlinedInput id="select-multiple-chip" label="Chip" />
                     }
@@ -437,13 +442,13 @@ const AddEvaluation = () => {
                     )}
                     MenuProps={MenuProps}
                   >
-                    {Evaluatedpositions.map((position) => (
+                    {positionTitles.map((title) => (
                       <MenuItem
-                        key={position}
-                        value={position}
-                        style={getStyles(position, personPosition, theme)}
+                        key={title}
+                        value={title}
+                        style={getStyles(title, personPosition, theme)}
                       >
-                        {position}
+                        {title}
                       </MenuItem>
                     ))}
                   </Select>
@@ -468,16 +473,15 @@ const AddEvaluation = () => {
                 </Typography>
                 <FormControl sx={{ m: 1, width: 675 }}>
                   <InputLabel id="demo-multiple-checkbox-label">
-                    {" "}
-                    Candidates
+                    Select questions
                   </InputLabel>
                   <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
                     multiple
                     rows={4}
-                    value={personName}
-                    onChange={handleChanges}
+                    value={questions}
+                    onChange={onQuestionChange}
                     input={<OutlinedInput label="Tag" />}
                     renderValue={(selected) => (
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.7 }}>
@@ -488,10 +492,10 @@ const AddEvaluation = () => {
                     )}
                     MenuProps={MenuProps}
                   >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        <Checkbox checked={personName.indexOf(name) > -1} />
-                        <ListItemText primary={name} />
+                    {questionDesc.map((question) => (
+                      <MenuItem key={question} value={question}>
+                        <Checkbox checked={questions.indexOf(question) > -1} />
+                        <ListItemText primary={question} />
                       </MenuItem>
                     ))}
                   </Select>
@@ -517,15 +521,15 @@ const AddEvaluation = () => {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Stack spacing={3} ml={3}>
                       <DateTimePicker
-                        value={value}
-                        onChange={handleDateChange}
+                        value={deadline}
+                        onChange={onDeadlineChange}
                         renderInput={(params) => <TextField {...params} />}
                       />
                     </Stack>
                   </LocalizationProvider>
                 </CardActions>
               </CardActions>
-              <Link className={classes.links} onChange={onSave}>
+              <Link className={classes.links} onClick={onSave}>
                 <button className={classes.buttonone}>Add</button>
               </Link>
             </Card>
@@ -539,4 +543,4 @@ const AddEvaluation = () => {
     </div>
   );
 };
-export default AddEvaluation;
+export default AddEvaluationForm;

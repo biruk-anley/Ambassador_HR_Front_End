@@ -10,10 +10,11 @@ import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import bell from '../images/star.png';
 import { Link, useHistory } from "react-router-dom";
-import { selectEmployeeEntities, fetch
- } from '../../redux/slices/employeeSlice';
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEvaluation, selectevaluationEntities } from '../../redux/slices/evaluationSlice';
+import { fetchEvaluationForm, selectevaluationFormEntities } from '../../redux/slices/evaluationFormSlice';
+import { fetchPositions } from '../../redux/slices/positionSlice';
+import { fetchQuestions } from '../../redux/slices/questionSlice';
 const images = process.env.PUBLIC_URL + "/img/evaluatee.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -158,25 +159,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Evaluation = () => {
+const EvaluationForm = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const loggedInUser = JSON.parse(localStorage.getItem("employee"))
   useEffect(()=>{
-    dispatch(fetchEvaluation());
-  }, [])  ;
-  useEffect(()=>{
-    dispatch(fetchEvaluation());
-  })
+    dispatch(fetchEvaluationForm(loggedInUser._id));
+    dispatch(fetchQuestions())
+    dispatch(fetchPositions())
+  }, []);
 
   const handleSubmit = (evaluationID) => (event) => {
     event.preventDefault();
-    history.push({ pathname: `/EvaluationDetail/${evaluationID}` });
+    history.push({ pathname: "/EvaluationFormDetail", state: {evaluationId: evaluationID}});
   };
 
-  const evaluations = useSelector(selectevaluationEntities);
-  console.log('evaluation',evaluations);
-  const loadingStatus = useSelector((state) => state.notices.status);
+  const evaluations = useSelector(selectevaluationFormEntities);
+  const loadingStatus = useSelector((state) => state.evaluationForm.status);
 
   return (
     <div className={classes.root}>
@@ -202,11 +202,11 @@ const Evaluation = () => {
           </Grid>
         </Grid>
         
-          <div className={classes.events}>Evaluation</div>
+          <div className={classes.events}>EvaluationForm</div>
           <Grid>
            
-                  <Link className={classes.links} to="/AddEvaluation">
-                     <button className={classes.eventt}> Add Evaluation</button>
+                  <Link className={classes.links} to="/AddEvaluationForm">
+                     <button className={classes.eventt}> Add EvaluationForm</button>
                   </Link>
            
         </Grid>
@@ -218,7 +218,7 @@ const Evaluation = () => {
             </div>
           ) : (
             Object.values(evaluations).map((evaluation) =>(
-              <Grid item lg={4} xs={12} key={evaluation.id}>
+              <Grid item lg={4} xs={12} key={evaluation._id}>
                 <Card sx={{ maxWidth: 300}}>
                   <CardMedia
                     component="img"
@@ -229,11 +229,14 @@ const Evaluation = () => {
                 
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evalution : {evaluation.evaluatedPerson}
+                      Evalution : {evaluation.title}
+                  </Typography>
+                  <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
+                      Evalution : {evaluation.description}
                   </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Dead Line : {evaluation.deadLine}
+                      Dead Line : {moment(evaluation.deadline).format("DD-MM-YYYY")}
                     </Typography>
                   
                   
@@ -242,7 +245,7 @@ const Evaluation = () => {
                   
                   </CardContent>
                   <CardActions>
-                  <Link className={classes.links} to="/EvaluationDetail">
+                  <Link className={classes.links} to="/EvaluationFormDetail">
                      <button className={classes.buttonone}
                      onClick={handleSubmit(evaluation._id)}
                      >Evaluate</button>
@@ -259,4 +262,4 @@ const Evaluation = () => {
           );
           };
      
-export default Evaluation;
+export default EvaluationForm;

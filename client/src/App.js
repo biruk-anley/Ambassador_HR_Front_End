@@ -57,8 +57,8 @@ function App() {
 
 
           <Route path="/Evaluation" component={Evaluation} />
-          <Route path="/EvaluationDetail" component={EvaluationDetail} />
-          <Route path="/AddEvaluation" component={AddEvaluation} />
+          <Route path="/EvaluationFormDetail" component={EvaluationDetail} />
+          <Route path="/AddEvaluationForm" component={AddEvaluation} />
 
 
           <Route path="/Employees" component={Employees} />

@@ -170,7 +170,6 @@ const NoticeBoard = () => {
   };
 
   const notices = useSelector(selectNoticeEntities);
-  console.log(notices);
   const loadingStatus = useSelector((state) => state.notices.status);
   return (
     <div className={classes.root}>

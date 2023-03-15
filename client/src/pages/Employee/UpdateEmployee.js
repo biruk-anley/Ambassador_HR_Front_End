@@ -341,7 +341,6 @@ function UpdateEmployee() {
     }
     setPosition(e.target.value);
     if (e.target.value !== 1) {
-      console.log(e.target.value, "In front end")
       setPosition(e.target.value);
     }
   };

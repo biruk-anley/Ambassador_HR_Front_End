@@ -34,7 +34,6 @@ export const deleteNotice = createAsyncThunk(
 export const updateNotice = createAsyncThunk(
     'notices/updateNotice',
     async (notice) => {
-      console.log(notice, "notice")
         const response = await axios.patch(`api/v1/internalNotice/${notice._id}`, notice)
         return response
     }

@@ -19,7 +19,6 @@ export const saveNewEmployee = createAsyncThunk(
   'employees/saveNewEmployee',
   async (employee) => {
     const response = await axios.post("api/v1/employee", employee )
-    console.log(response.data.data)
     return response.data.data
   }
 )
