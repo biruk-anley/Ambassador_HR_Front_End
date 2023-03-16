@@ -12,11 +12,10 @@ import bell from '../images/star.png';
 import { Link, useHistory } from "react-router-dom";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEvaluationForm, selectevaluationFormEntities, selectEvaluationFormEntitiesById } from '../../redux/slices/evaluationFormSlice';
+import { fetchEvaluationForm, selectevaluationFormEntities } from '../../redux/slices/evaluationFormSlice';
 import { fetchPositions } from '../../redux/slices/positionSlice';
 import { fetchQuestions } from '../../redux/slices/questionSlice';
-import { fetchEvaluation, selectevaluationEntities } from '../../redux/slices/evaluationSlice';
-import { selectEmployeeEntities } from '../../redux/slices/employeeSlice';
+import { fetchEvaluation } from '../../redux/slices/evaluationSlice';
 const images = process.env.PUBLIC_URL + "/img/evaluatee.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -175,17 +174,48 @@ const EvaluationForm = () => {
 
   const handleSubmit = (evaluationID) => (event) => {
     event.preventDefault();
-    history.push({ pathname: "/EvaluationDetail", state: {evaluationId: evaluationID}});
+    history.push({ pathname: "/EvaluationFormDetail", state: {evaluationId: evaluationID}});
   };
 
-  const employees = useSelector(selectEmployeeEntities)
-  const evaluationForms = useSelector(selectevaluationFormEntities)
-  const evaluations = useSelector(selectevaluationEntities);
-  const loadingStatus = useSelector((state) => state.evaluation.status);
+  const evaluations = useSelector(selectevaluationFormEntities);
+  const loadingStatus = useSelector((state) => state.evaluationForm.status);
 
   return (
     <div className={classes.root}>
-          
+      <Grid container spacing={3}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg={6} >
+            <h3  className={classes.texth} style={{}}>Ambassader Human resource system</h3>
+            <div className={classes.textt} >
+ 
+            Words  Have <br></br>  Power <br></br> Evaluate Truely 
+          </div>
+          <br></br>
+            <div className={classes.textss}>
+           <p>
+               This HR system will handle Announcements, employments information,<br>
+                </br> voting system for elections  payment status for the employess. It will <br></br> simplify the system and make it  easy to handle the human resource
+            </p>
+          </div>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+          <img src={ images} alt="Image" className={classes.images} />
+
+          </Grid>
+        </Grid>
+        
+          <div className={classes.events}>EvaluationForm</div>
+          <Grid>
+              <Link className={classes.links} to="/AddEvaluationForm">
+                 <button className={classes.eventt}>Add EvaluationForm</button>
+              </Link>
+        </Grid>
+        <Grid>
+        <Link className={classes.links} to="/Evaluation">
+                 <button className={classes.eventt}>Access Evaluations</button>
+              </Link>
+        </Grid>
+       
            <Grid container spacing={5} className={classes.cardss}>
         {loadingStatus === "loading" ? (
             <div>
@@ -204,14 +234,14 @@ const EvaluationForm = () => {
                 
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evaluator: {employees[evaluation.evaluatedId].firstName} {employees[evaluation.evaluatedId].lastName}
+                      {evaluation.title}
                   </Typography>
                   <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                  Evaluated: {employees[evaluation.evaluatorId].firstName} {employees[evaluation.evaluatorId].lastName}
+                       {evaluation.description}
                   </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>
-                      Form title : {evaluationForms[evaluation.formId].title}
+                      Dead Line : {moment(evaluation.deadline).format("DD-MM-YYYY")}
                     </Typography>
                   
                   
@@ -220,10 +250,10 @@ const EvaluationForm = () => {
                   
                   </CardContent>
                   <CardActions>
-                  <Link className={classes.links} to="/EvaluationDetail">
+                  <Link className={classes.links} to="/EvaluationFormDetail">
                      <button className={classes.buttonone}
                      onClick={handleSubmit(evaluation._id)}
-                     >Details</button>
+                     >Evaluate</button>
                   </Link>
                     
                 </CardActions>
@@ -232,6 +262,7 @@ const EvaluationForm = () => {
             ))
           )}
            </Grid>
+          </Grid>
         </div>
           );
           };

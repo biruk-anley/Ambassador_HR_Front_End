@@ -18,11 +18,11 @@ import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import axios from '../../axios';
 import { useHistory, useLocation } from "react-router-dom";
-import { fetchEvaluationForm, selectEvaluationFormEntitiesById } from '../../redux/slices/evaluationFormSlice';
+import { selectEvaluationFormEntitiesById } from '../../redux/slices/evaluationFormSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestions, selectQuestionEntitiesById } from '../../redux/slices/questionSlice';
 import { selectEmployeeEntities } from '../../redux/slices/employeeSlice';
-import { fetchEvaluation, saveNewEvaluation, selectevaluationEntities, selectEvaluationEntitiesByFormId, selectEvaluationEntitiesById, updateEvaluation } from '../../redux/slices/evaluationSlice';
+import { fetchEvaluation, saveNewEvaluation, selectevaluationEntities, selectEvaluationEntitiesByFormId, updateEvaluation } from '../../redux/slices/evaluationSlice';
 import { fetchPositions, selectPositionEntities } from '../../redux/slices/positionSlice';
 
 
@@ -164,49 +164,115 @@ const EvaluationDetail = () => {
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
-  const history = useHistory();
   useEffect(() => {
     dispatch(fetchQuestions());
     dispatch(fetchEvaluation());
     dispatch(fetchPositions())
   }, []);
-  const evaluation = useSelector(selectEvaluationEntitiesById(location.state.evaluationId))
-  const fetchedEvaluationForm = useSelector(selectEvaluationFormEntitiesById(evaluation[0].formId));
-  const fetchedQuestions = useSelector(selectQuestionEntitiesById(fetchedEvaluationForm[0].questionId))
+  const fetchedEvaluationForm = useSelector(selectEvaluationFormEntitiesById(location.state.evaluationId));
+  const [evaluationForm, setEvaluationForm] = useState(fetchedEvaluationForm);
+  const fetchedEvaluation = useSelector(selectEvaluationEntitiesByFormId(evaluationForm[0]._id))
+  const fetchedQuestions = useSelector(selectQuestionEntitiesById(evaluationForm[0].questionId))
   const [questions, setQuestions] = useState(fetchedQuestions);
   const fetchedEmployees = useSelector(selectEmployeeEntities);
+  const fetchedPositions = useSelector(selectPositionEntities)
+  const loggedInUserId = JSON.parse(localStorage.getItem("employee"))._id
+  let evaluatedPositions = [];
+  let existingEvaluations = {};
 
-  const onDone = (event) => {
+
+  fetchedEvaluationForm[0].evaluatedPositions.forEach(position => {
+    Object.values(fetchedEmployees).forEach(employee => {
+      if (fetchedPositions[position].title === employee.position) {
+        evaluatedPositions.push(employee._id)
+      }
+    }
+    )
+  });
+  fetchedEvaluation.forEach((evaluation) => {
+    existingEvaluations[evaluation.evaluatedId] = evaluation
+  })
+  
+
+  const [evaluations, setEvaluations] = useState(existingEvaluations)
+  const onAnswerChange = (questionId, evaluatedId, formId) => (event) => {
     event.preventDefault()
-    history.push({ pathname: "/Evaluation"});
-  }
+    if (evaluatedId in evaluations && evaluations[evaluatedId].formId === formId) {
+      setEvaluations({
+        ...evaluations,
+        [evaluatedId]: {
+          ...evaluations[evaluatedId],
+          result: {
+            ...evaluations[evaluatedId].result,
+            [questionId]: event.target.value
+          },
+          savedStatus: "Save"
+        }
+      })
+    } else {
+      setEvaluations({
+        ...evaluations,
+        [evaluatedId]: {
+          evaluatorId: loggedInUserId,
+          evaluatedId: evaluatedId,
+          formId: formId,
+          result: {
+            [questionId]: event.target.value
+          },
+          savedStatus: "Save"
+        }
+      })
+    }
 
+  }
+  const onSave = (evaluatedId, form_id) => async event => {
+    event.preventDefault()
+    if (evaluatedId in existingEvaluations && evaluations[evaluatedId].formId === form_id) {
+      const _id = evaluations[evaluatedId]._id
+      evaluations[evaluatedId] = {
+        ...evaluations[evaluatedId],
+        _id: _id
+      }
+      dispatch(updateEvaluation({"evaluation":evaluations[evaluatedId], "form_id":form_id}))
+      setEvaluations({
+        ...evaluations,
+        [evaluatedId]: {
+          ...evaluations[evaluatedId],
+          savedStatus: "Evaluation updated"
+        }
+      })
+    } else {
+      dispatch(saveNewEvaluation(evaluations[evaluatedId], form_id))
+      setEvaluations({
+        ...evaluations,
+        [evaluatedId]: {
+          ...evaluations[evaluatedId],
+          savedStatus: "Evaluation saved"
+        }
+      })
+    }
+  }
   return (
     <div className={classes.root}>
-        <Grid container spacing={3} className={classes.cardss_main}>
+      {evaluatedPositions.map(evaluated => (
+        <Grid container spacing={3} className={classes.cardss_main} key={evaluated}>
           <Grid container spacing={5} className={classes.cardss}>
             <Grid item lg={8} xs={8}>
               <Card sx={{ maxWidth: 300 }} >
                 <CardContent>
                   <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                    {fetchedEvaluationForm[0].title}
+                    {evaluationForm[0].title}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '5px', padding: '15px' }}>
-                    {fetchedEvaluationForm[0].description}
+                  <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '30px', padding: '15px' }}>
+                    {evaluationForm[0].description}
                   </Typography>
 
                 </CardActions>
-                <CardActions>
-                <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '5px', padding: '15px' }}>
-                      Evaluator: {fetchedEmployees[evaluation[0].evaluatedId].firstName} {fetchedEmployees[evaluation[0].evaluatedId].lastName}
-                  </Typography>
-                </CardActions>
-                <CardActions>
-                <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '30px', padding: '15px' }}>
-                  Evaluated: {fetchedEmployees[evaluation[0].evaluatorId].firstName} {fetchedEmployees[evaluation[0].evaluatorId].lastName}
-                  </Typography>
+                <CardActions><Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '30px', padding: '15px' }}>
+                  Evaluated: {fetchedEmployees[evaluated].firstName} {fetchedEmployees[evaluated].lastName}
+                </Typography>
                 </CardActions>
                 <div className="upper">
                   <Table className={classes.table}>
@@ -232,8 +298,8 @@ const EvaluationDetail = () => {
                               <Select
                                 // value={row.status}
                                 className={classes.dropdownItem}
-                                onChange={()=>{}}
-                                value={evaluation[0].result[question._id]}
+                                onChange={onAnswerChange(question._id, evaluated, evaluationForm[0]._id)}
+                                value={evaluated in evaluations ? evaluations[evaluated].result[question._id] : ""}
                               >
                                 {question.answer.map(ans => (
                                   <MenuItem value={ans} key={ans}>{ans}</MenuItem>
@@ -251,8 +317,8 @@ const EvaluationDetail = () => {
                     </TableBody>
                   </Table>
                 </div>
-                <Link className={classes.links} onClick={onDone}>
-                  <button className={classes.buttonone}>Done</button>
+                <Link className={classes.links} onClick={onSave(evaluated, evaluationForm[0]._id)}>
+                  <button className={classes.buttonone}>{evaluated in evaluations ? ("savedStatus" in evaluations[evaluated] ? evaluations[evaluated].savedStatus : "Save") : "Save"}</button>
                 </Link>
               </Card>
             </Grid>
@@ -261,7 +327,7 @@ const EvaluationDetail = () => {
 
           </Grid>
         </Grid>
-      
+      ))}
     </div>)
 }
 export default EvaluationDetail;

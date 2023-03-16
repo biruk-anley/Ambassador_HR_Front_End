@@ -9,14 +9,16 @@ import UpperFooter from "./components/UpperFooter";
 import Employee from "./pages/Employee/Employees";
 import noticeDetail from "./pages/NoticeBoard/DetailNotice";
 import Vote from "./pages/Vote/Vote";
-import Evaluation from "./pages/Evaluation/Evaluation";
-import EvaluationDetail from "./pages/Evaluation/EvaluationDetail";
+import EvaluationForm from "./pages/EvaluationForm/Evaluation";
+import EvaluationFormDetail from "./pages/EvaluationForm/EvaluationDetail";
 import VoteDetail from './pages/Vote/VoteDetail';
-import AddEvaluation from './pages/Evaluation/AddEvaluation';
+import AddEvaluation from './pages/EvaluationForm/AddEvaluation';
 import AddVote from './pages/Vote/AddVote'
 import AddNotice from "./pages/NoticeBoard/AddNotice";
 import UpdateNotice from "./pages/NoticeBoard/UpdateNotice";
 import Employees from "./pages/Employee/Employees";
+import Evaluation from "./pages/Evaluation/Evaluation";
+import EvaluationDetail from "./pages/Evaluation/EvaluationDetail";
 import UpdateEmployee from "./pages/Employee/UpdateEmployee";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,10 +58,13 @@ function App() {
           <Route path="/AddVote" component={AddVote} />
 
 
-          <Route path="/Evaluation" component={Evaluation} />
-          <Route path="/EvaluationFormDetail" component={EvaluationDetail} />
+          <Route path="/EvaluationForm" component={EvaluationForm} />
+          <Route path="/EvaluationFormDetail" component={EvaluationFormDetail} />
           <Route path="/AddEvaluationForm" component={AddEvaluation} />
 
+
+          <Route path="/Evaluation" component={Evaluation} />
+          <Route path="/EvaluationDetail" component={EvaluationDetail} />
 
           <Route path="/Employees" component={Employees} />
           <Route path="/AddEmployee" component={AddEmployee} />
