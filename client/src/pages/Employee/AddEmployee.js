@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, Grid, Typography, makeStyles } from "@material-ui/core";
-import { DropzoneArea } from "material-ui-dropzone";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import mainpic from "../images/main.png";
 import smallhouse from "../images/addd.png";
 import "./inputlocation.css";
 
@@ -18,11 +15,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import { withStyles } from "@material-ui/styles";
 import Container from "@material-ui/core/Container";
 import { saveNewEmployee } from "../../redux/slices/employeeSlice";
-
-const AmbassaderImage = process.env.PUBLIC_URL + "/img/new.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -254,8 +248,8 @@ function NewListing({ setSideBar }) {
       education:Education,
       role: role
     };
-    await dispatch(saveNewEmployee(employee))
-    history.push({ pathname: "/Employees"})
+    const registerdEmployee = await dispatch(saveNewEmployee(employee))
+    history.push({ pathname: "/ShowEmployeeCredentail", state: {employeeEmail: registerdEmployee.payload.email, employeePassword: registerdEmployee.payload.password}})
 
   }
   

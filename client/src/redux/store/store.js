@@ -6,6 +6,7 @@ import evaluationFormReducer from '../slices/evaluationFormSlice';
 import questionReducer from "../slices/questionSlice";
 import evaluationReducer from "../slices/evaluationSlice";
 import positionReducer from "../slices/positionSlice";
+import voteReducer from "../slices/voteSlice";
 
 const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
         evaluationForm: evaluationFormReducer,
         questions: questionReducer,
         evaluation: evaluationReducer,
-        positions: positionReducer
+        positions: positionReducer,
+        votes: voteReducer
     }
 })
 

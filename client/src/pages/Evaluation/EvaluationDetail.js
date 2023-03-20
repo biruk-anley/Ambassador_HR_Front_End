@@ -200,12 +200,12 @@ const EvaluationDetail = () => {
                 </CardActions>
                 <CardActions>
                 <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '5px', padding: '15px' }}>
-                      Evaluator: {fetchedEmployees[evaluation[0].evaluatedId].firstName} {fetchedEmployees[evaluation[0].evaluatedId].lastName}
+                      Evaluated: {fetchedEmployees[evaluation[0].evaluatedId].firstName} {fetchedEmployees[evaluation[0].evaluatedId].lastName}
                   </Typography>
                 </CardActions>
                 <CardActions>
                 <Typography style={{ color: 'black', fontSize: '18px', display: 'flex', textAlign: 'center', justifyContent: 'center', lineHeight: '30px', padding: '15px' }}>
-                  Evaluated: {fetchedEmployees[evaluation[0].evaluatorId].firstName} {fetchedEmployees[evaluation[0].evaluatorId].lastName}
+                  Evaluator: {fetchedEmployees[evaluation[0].evaluatorId].firstName} {fetchedEmployees[evaluation[0].evaluatorId].lastName}
                   </Typography>
                 </CardActions>
                 <div className="upper">

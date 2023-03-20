@@ -20,6 +20,7 @@ import Employees from "./pages/Employee/Employees";
 import Evaluation from "./pages/Evaluation/Evaluation";
 import EvaluationDetail from "./pages/Evaluation/EvaluationDetail";
 import UpdateEmployee from "./pages/Employee/UpdateEmployee";
+import ShowUserCredentials from "./pages/Employee/ShowUserCredentials";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +70,7 @@ function App() {
           <Route path="/Employees" component={Employees} />
           <Route path="/AddEmployee" component={AddEmployee} />
           <Route path="/UpdateEmployee/:id" component={UpdateEmployee} />
+          <Route path="/ShowEmployeeCredentail" component={ShowUserCredentials} />
         </Container>
       </BrowserRouter>
       <UpperFooter></UpperFooter>

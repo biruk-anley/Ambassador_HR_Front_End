@@ -204,10 +204,10 @@ const EvaluationForm = () => {
                 
                   <CardContent>
                     <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                      Evaluator: {employees[evaluation.evaluatedId].firstName} {employees[evaluation.evaluatedId].lastName}
+                      Evaluated: {employees[evaluation.evaluatedId].firstName} {employees[evaluation.evaluatedId].lastName}
                   </Typography>
                   <Typography style={{ color: 'black', fontSize: '20px', display: 'flex', justifyContent: 'center', fontWeight: '900' }}>
-                  Evaluated: {employees[evaluation.evaluatorId].firstName} {employees[evaluation.evaluatorId].lastName}
+                  Evaluator: {employees[evaluation.evaluatorId].firstName} {employees[evaluation.evaluatorId].lastName}
                   </Typography>
                   
                   <Typography style={{ color: 'black', fontSize: '18px', display: 'flex',textAlign:'center', justifyContent: 'center',lineHeight:'30px', padding:'15px' }}>

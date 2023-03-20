@@ -13,6 +13,9 @@ import Box from '@mui/material/Box';
 import bell from '../images/votee.png';
 import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "../../axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchVotes, selectPollsEntitiesByVoterPosition, selectVoteEntities } from '../../redux/slices/voteSlice';
+import { selectPositionEntities, selectPositionEntitiesById, selectPositionEntitiesByTitle } from '../../redux/slices/positionSlice';
 
 const images = process.env.PUBLIC_URL + "/img/bellbg1.png";
 
@@ -159,22 +162,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Vote = () => {
+  useEffect(() => {
+    dispatch(fetchVotes())
+  }, []);
+
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
-  const [polls, setPolls] = useState([]);
+  const dispatch = useDispatch();
+  const loggedInUser = JSON.parse(localStorage.getItem("employee"))
+  const fetchedPolls = useSelector(selectPollsEntitiesByVoterPosition(loggedInUser._id))
+  const [polls, setPolls] = useState(fetchedPolls);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(
-        'api/v1/poll'
-      );
-
-      setPolls(result);
-    };
-
-    fetchData();
-  }, []);
+  
 
   const onReadMore = async (event, pollId)=>{
     event.preventDefault();
@@ -195,7 +195,7 @@ const Vote = () => {
        
         <Grid container spacing={5} className={classes.cardss}>
           {
-            polls ? (polls.map(poll => (
+            polls ? (Object.values(polls).map(poll => (
               <Grid item lg={4} xs={12} key={poll.id}>
                 <Card sx={{ maxWidth: 300}}>
                     <CardMedia

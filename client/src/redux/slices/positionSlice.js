@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createEntityAdapter, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
 const positionsAdapter = createEntityAdapter({
@@ -40,7 +40,14 @@ export const updatePosition = createAsyncThunk(
 )
 
 export const selectPositionEntities = (state) => state.positions.entities
-
+export const selectPositionEntitiesById = (position_id) => createSelector(
+  selectPositionEntities, 
+  positions => Object.values(positions).filter(position => position._id === position_id)
+)
+export const selectPositionEntitiesByTitle = (title) => createSelector(
+  selectPositionEntities, 
+  positions => Object.values(positions).filter(position => position.title === title)
+)
 const positionsSlice = createSlice({
     name: "positions",
     initialState,
